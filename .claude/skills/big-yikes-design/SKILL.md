@@ -19,6 +19,8 @@ Hard rules:
 - Tanker for headings only (capitals only), Switzer for text, JetBrains Mono only for things people copy.
 - Brand purple only on the `<Big Yikes>` mark. Each game page sets `data-game` and uses that game's accent.
 - Icons: Tabler only, inline SVG, from `assets/icons/` or `https://api.iconify.design/tabler/<name>.svg`.
+- Motion: GSAP 3.15.0 from jsDelivr with SRI, following DESIGN.md's Motion section (one intro, one reveal,
+  click responses, reduced-motion safe). Copy the script tags and the head failsafe from `valheim/index.html`.
 - Every page needs og tags plus a 1200x630 image built in `tools/` and rendered with `pwsh tools/render.ps1`.
 - Check text contrast (WCAG AA) in light and dark for any new color, tap targets of at least 48px, and a
   layout that works at 390px width.

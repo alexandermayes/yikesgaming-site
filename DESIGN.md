@@ -50,6 +50,25 @@ The **in-game tooltip** (`--tip-*`) is always dark, in both themes, because that
 `nameplate`, `card` + `status` + `field`, `btn` (copy buttons via `data-copy`), `steps`, `key` (keycap for
 menu buttons), `tooltip`, `note`, `details` (FAQ rows), `footer`.
 
+## Motion (GSAP 3.15)
+
+GSAP core, SplitText and ScrambleText load from jsDelivr, pinned to `3.15.0` with SRI hashes (see the
+`<head>` of `valheim/index.html`). All GSAP plugins are free; no account or token needed. Behaviour is in
+`assets/js/site.js`.
+
+- **One intro per page:** the `<` `>` brackets settle around the mark, headline lines rise from a mask
+  (SplitText), lede and card follow, the server address decodes (ScrambleText). About 1.2s total.
+  Mark elements with `data-intro`; the address with `data-scramble`.
+- **One reveal:** `data-reveal` pops in once when first seen (the item tooltip), like hovering an item.
+- **Responses to actions:** the copy check pops, FAQ answers fade in when opened.
+- Nothing loops, no scroll-jacking, no smooth-scroll. Skip ScrollTrigger unless a page needs real
+  scroll-driven sections; IntersectionObserver covers one-off reveals.
+- **Reduced motion:** the head script hides `data-intro` elements only when the visitor allows motion. With
+  reduced motion (or if GSAP fails to load), nothing is hidden and nothing animates. A 2.5s failsafe and a
+  `try/finally` always reveal the page. Windows' "Animation effects" setting off counts as reduced motion.
+- Headless Chrome reports reduced motion and doesn't advance animation frames. To test the intro there,
+  override `matchMedia` and set `requestAnimationFrame = null` in a throwaway copy of the page.
+
 ## Rules from the checklist
 
 - Tap targets at least 48px (Apple HIG says 44pt).

@@ -28,20 +28,31 @@
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;display=swap">
 <link rel="stylesheet" href="/assets/css/brand.css">
+<script>
+  // Hide intro elements only when motion is allowed; failsafe shows them if GSAP never starts.
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    document.documentElement.classList.add('js-anim');
+    setTimeout(function () { if (!window.__introStarted) document.documentElement.classList.remove('js-anim'); }, 2500);
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" integrity="sha384-SWJ0lLVRoipvHh59xj0pL7uC7Ih51F+5smaFtrG+2nr+TlDZU5SYJHmxfolbeNTr" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js" integrity="sha384-QQ7Drnaxr6AM+cySvZNVNIFsvXLGtDLoS5tlUIt2XvIwnqtBtuD7A2KwqlSAWMi1" crossorigin="anonymous" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </head>
 <body>
 <div class="page">
 
   <header class="nameplate">
-    <a class="mark" href="/" aria-label="Big Yikes home">&lt;Big Yikes&gt;</a>
+    <a class="mark" href="/" aria-label="Big Yikes home" data-intro><span class="br">&lt;</span><span class="nm">Big Yikes</span><span class="br">&gt;</span></a>
     <span class="where">Valheim server</span>
   </header>
 
   <main>
-    <h1>Join Big Yikes on Valheim</h1>
-    <p class="lede">No mods and nothing to download. If you have Valheim on Steam, you can be in the world in about a minute.</p>
+    <h1 data-intro>Join Big Yikes on Valheim</h1>
+    <p class="lede" data-intro>No mods and nothing to download. If you have Valheim on Steam, you can be in the world in about a minute.</p>
 
-    <section class="card" aria-label="Server details">
+    <section class="card" aria-label="Server details" data-intro>
       <div class="status">
         <span class="online"><span class="dot" aria-hidden="true"></span>Online around the clock</span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"/></svg>Steam on PC</span>
@@ -49,7 +60,7 @@
       </div>
       <div class="field">
         <div class="label" id="addr-label">Server address</div>
-        <div class="value" aria-labelledby="addr-label">149.28.193.152:2456</div>
+        <div class="value" aria-labelledby="addr-label" data-scramble>149.28.193.152:2456</div>
         <button class="btn" type="button" data-copy="149.28.193.152:2456" data-copy-name="Address">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></g></svg>
           Copy
@@ -82,7 +93,7 @@
 
     <h2>What's different</h2>
     <p>It's normal Valheim with one world setting turned up.</p>
-    <div class="tooltip" role="group" aria-label="World modifier: Resources, Much more">
+    <div class="tooltip" role="group" aria-label="World modifier: Resources, Much more" data-reveal>
       <div class="t-title">Resources: Much more</div>
       <div class="t-sub">World modifier</div>
       <ul>
@@ -126,6 +137,5 @@
   </footer>
 </div>
 <div id="live" class="sr-only" role="status" aria-live="polite"></div>
-<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

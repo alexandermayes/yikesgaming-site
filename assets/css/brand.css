@@ -146,6 +146,11 @@ code { background: var(--accent-soft); color: var(--accent-text); padding: .1em 
   white-space: nowrap;
 }
 .nameplate .where { color: var(--muted); font-size: var(--fs-sm); font-weight: 500; }
+.mark .br, .mark .nm { display: inline-block; }
+
+/* Motion (GSAP, see DESIGN.md). The head script adds .js-anim only when motion is allowed;
+   site.js removes it once the intro timeline has taken over, or a 2.5s failsafe does. */
+.js-anim [data-intro] { visibility: hidden; }
 
 .lede { color: var(--muted); font-size: var(--fs-lg); line-height: 1.5; margin-top: var(--gap-2); }
 
