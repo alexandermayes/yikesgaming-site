@@ -257,6 +257,8 @@ code { background: var(--accent-soft); color: var(--accent-text); padding: .1em 
   white-space: nowrap;
 }
 .path .then { color: var(--muted); }
+.ways { margin: 10px 0 0; padding-left: 1.1em; display: grid; gap: 8px; color: var(--muted); }
+.ways strong { color: var(--ink); }
 
 /* In-game tooltip. The page's one bold element. */
 .tooltip {

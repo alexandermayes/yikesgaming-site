@@ -1,5 +1,5 @@
 # Renders the site's raster images with headless Chrome:
-#   tools/og-valheim.html      -> assets/img/og-valheim.png       (1200x630 link preview for Discord etc.)
+#   tools/og-valheim.html      -> assets/img/og-yikesheim-v3.png       (1200x630 link preview for Discord etc.)
 #   assets/img/favicon.svg     -> assets/img/apple-touch-icon.png (180x180)
 # Usage: pwsh tools/render.ps1
 $ErrorActionPreference = 'Stop'
@@ -16,7 +16,7 @@ function Shot($src, $out, $w, $h) {
   "{0} ({1} KB)" -f $out.Substring($root.Length + 1), [math]::Round((Get-Item $out).Length / 1KB)
 }
 
-Shot "$root\tools\og-valheim.html" "$root\assets\img\og-valheim.png" 1200 630
+Shot "$root\tools\og-valheim.html" "$root\assets\img\og-yikesheim-v3.png" 1200 630
 
 $icon = Join-Path $profile 'icon.html'
 New-Item -ItemType Directory -Force $profile | Out-Null

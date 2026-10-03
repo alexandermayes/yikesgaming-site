@@ -12,9 +12,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Big Yikes">
 <meta property="og:title" content="Join Yikesheim, the Big Yikes Valheim server">
-<meta property="og:description" content="Valheim Plus server: 2x drops, half weight, bigger stacks, always on. One command installs the mods, then Join IP.">
+<meta property="og:description" content="Valheim Plus server: 2x drops, half weight, bigger stacks, new characters only, always on. Install with one command, a mod manager or a zip.">
 <meta property="og:url" content="https://yikesgaming.com/valheim/">
-<meta property="og:image" content="https://yikesgaming.com/assets/img/og-valheim.png">
+<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Yikesheim server card with the server address">
@@ -60,7 +60,7 @@
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0M16 19h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/></svg>New characters only</span>
       </div>
       <div class="field">
-        <div class="label" id="cmd-label">Install command</div>
+        <div class="label" id="cmd-label">Install command (PowerShell)</div>
         <div class="value cmd" aria-labelledby="cmd-label">irm https://yikesgaming.com/valheim/install.ps1 | iex</div>
         <button class="btn" type="button" data-copy="irm https://yikesgaming.com/valheim/install.ps1 | iex" data-copy-name="Install command">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></g></svg>
@@ -87,8 +87,12 @@
     <ol class="steps">
       <li><div>
         <h3>Install the mods</h3>
-        <div class="path"><span class="key">Windows key</span><span class="then" aria-hidden="true">then</span><span class="key">powershell</span><span class="then" aria-hidden="true">then</span><span class="key">Enter</span></div>
-        <p class="muted">Close Valheim first. In the PowerShell window, paste the install command and press Enter. It finds your Valheim, downloads BepInEx, Valheim Plus and Runic Character Vault from Thunderstore, checks every file, and installs them. <a href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer</a> if you want to see exactly what it does.</p>
+        <p class="muted">Close Valheim first, then pick whichever way you like. All three install the same three mods: BepInEx, Valheim Plus and Runic Character Vault.</p>
+        <ul class="ways">
+          <li><strong>Paste one command (fastest).</strong> Press the Windows key, type <span class="key">powershell</span>, press Enter, paste the install command from the card above and press Enter. <a href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer</a>.</li>
+          <li><strong>Use a mod manager.</strong> In r2modman or Thunderstore Mod Manager, pick Valheim, then <strong>Profiles</strong>, <strong>Import / Update</strong>, <strong>From code</strong>, and paste <span class="mono">01a10413-e3eb-f0f6-0785-ab4286387bf8</span>. Start the game with <strong>Start modded</strong> each time you play here.</li>
+          <li><strong>Drag and drop.</strong> Download <a href="/valheim/Yikesheim-mods.zip" download>Yikesheim-mods.zip</a>. In Steam, right-click Valheim, choose <strong>Manage</strong> then <strong>Browse local files</strong>, and extract the zip into that folder so <span class="mono">winhttp.dll</span> sits next to <span class="mono">valheim.exe</span>.</li>
+        </ul>
       </div></li>
       <li><div>
         <h3>Open Valheim and create a new character</h3>
@@ -152,10 +156,6 @@
     <details>
       <summary>"Invalid password"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #other-games.</p></div>
-    </details>
-    <details>
-      <summary>I'd rather use a mod manager<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>In r2modman or Thunderstore Mod Manager, pick Valheim, then <strong>Profiles</strong>, <strong>Import / Update</strong>, <strong>From code</strong>, and paste <span class="mono">01a10329-41f7-3532-fb7c-5304e0e693ee</span>. Launch with <strong>Start modded</strong> each time you play here.</p></div>
     </details>
     <details>
       <summary>I want to play unmodded or on other servers<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
