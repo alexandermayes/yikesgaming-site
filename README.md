@@ -6,6 +6,12 @@ Website for the Big Yikes guild, served by GitHub Pages.
 |---|---|
 | `index.html` | Placeholder home page. It redirects to `/valheim/` until the real Big Yikes home page is built. |
 | `valheim/index.html` | Valheim server join guide (address, three steps; the password is kept in the guild Discord). |
+| `assets/css/brand.css` | Shared design system: colors, type, components. Rules in `DESIGN.md`. |
+| `assets/js/site.js` | Copy buttons. |
+| `assets/icons/` | Tabler icon set (SVG) used across the site. |
+| `assets/img/` | Favicon, home-screen icon, link-preview images. |
+| `tools/` | Sources for the preview images. Re-render with `pwsh tools/render.ps1`. |
+| `.claude/skills/big-yikes-design/` | Claude Code skill that keeps new pages in the design system. |
 | `CNAME` | Tells GitHub Pages to serve this site at `yikesgaming.com`. |
 | `robots.txt` | Asks search engines not to list the site (it's for guild members). |
 | `.nojekyll` | Serves files as-is, without GitHub's Jekyll processing. |
