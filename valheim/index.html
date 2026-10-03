@@ -50,13 +50,14 @@
 
   <main>
     <h1 data-intro>Join Yikesheim</h1>
-    <p class="lede" data-intro>Yikesheim is the guild's Valheim server, running Valheim Plus. One command installs it, then you join from Steam like any other server. About two minutes, start to finish.</p>
+    <p class="lede" data-intro>Yikesheim is the guild's Valheim server, running Valheim Plus. One command installs it. Everyone starts fresh with a new character made just for this server.</p>
 
     <section class="card" aria-label="Server details" data-intro>
       <div class="status">
         <span class="online"><span class="dot" aria-hidden="true"></span>Online around the clock</span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"/></svg>Steam on PC</span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2m1-17.87a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg>Up to 20 players</span>
+        <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0M16 19h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/></svg>New characters only</span>
       </div>
       <div class="field">
         <div class="label" id="cmd-label">Install command</div>
@@ -87,12 +88,12 @@
       <li><div>
         <h3>Install the mods</h3>
         <div class="path"><span class="key">Windows key</span><span class="then" aria-hidden="true">then</span><span class="key">powershell</span><span class="then" aria-hidden="true">then</span><span class="key">Enter</span></div>
-        <p class="muted">Close Valheim first. In the PowerShell window, paste the install command and press Enter. It finds your Valheim, downloads BepInEx and Valheim Plus from Thunderstore, checks both files, and installs them. <a href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer</a> if you want to see exactly what it does.</p>
+        <p class="muted">Close Valheim first. In the PowerShell window, paste the install command and press Enter. It finds your Valheim, downloads BepInEx, Valheim Plus and Runic Character Vault from Thunderstore, checks every file, and installs them. <a href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer</a> if you want to see exactly what it does.</p>
       </div></li>
       <li><div>
-        <h3>Open Valheim and pick a character</h3>
+        <h3>Open Valheim and create a new character</h3>
         <div class="path"><span class="key">Start Game</span><span class="then" aria-hidden="true">then</span><span class="key">Start</span></div>
-        <p class="muted">Launch it from Steam like normal. Any character works, including your main.</p>
+        <p class="muted">Launch it from Steam like normal. Yikesheim only accepts brand-new characters, so make one just for this server. Your other characters stay exactly as they are for your own worlds.</p>
       </div></li>
       <li><div>
         <h3>Join by address</h3>
@@ -101,7 +102,7 @@
       </div></li>
       <li><div>
         <h3>Enter the password</h3>
-        <p class="muted">It's pinned in #other-games on Discord. Next time, Yikesheim is waiting in the <strong>Recent</strong> tab, so it's one click plus the password.</p>
+        <p class="muted">It's pinned in #other-games on Discord. Next time, Yikesheim is waiting in the <strong>Recent</strong> tab, so it's one click plus the password. The server keeps your Yikesheim character safe: when you quit, wait for <strong>Saved</strong> under the minimap first.</p>
       </div></li>
     </ol>
 
@@ -124,6 +125,14 @@
     </div>
 
     <h2>Trouble?</h2>
+    <details>
+      <summary>"Yikesheim needs a brand-new character"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <div><p>You picked a character that has already played somewhere else. Go back, create a new character, and join with that one. Existing characters can't be brought over. That's the point: everyone starts on equal footing. Your old character isn't changed.</p></div>
+    </details>
+    <details>
+      <summary>"You already have a character on Yikesheim"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <div><p>Each Steam account gets one character on this server. Select the character named in the message and join with it.</p></div>
+    </details>
     <details>
       <summary>"Windows blocked writing to the Valheim folder"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Some PCs protect the Steam folder. Press the Windows key, type powershell, right-click it, choose <strong>Run as administrator</strong>, and paste the install command again.</p></div>
@@ -155,7 +164,7 @@
   </main>
 
   <footer class="footer">
-    <p>Valheim Plus 10.2.0 on BepInEx 5.4.2351, for Valheim 1.0.16. Hosted in San Jose, California, and running around the clock.</p>
+    <p>Valheim Plus 10.2.0 and Runic Character Vault 1.0.3 on BepInEx 5.4.2351, for Valheim 1.0.16. Hosted in San Jose, California, and running around the clock.</p>
   </footer>
 </div>
 <div id="live" class="sr-only" role="status" aria-live="polite"></div>

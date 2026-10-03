@@ -1,5 +1,6 @@
-# Big Yikes Valheim mods installer
-# Installs BepInEx 5.4.2351 + Valheim Plus 10.2.0 (Grantapher) into your Steam copy of Valheim.
+# Big Yikes Valheim mods installer (Yikesheim)
+# Installs BepInEx 5.4.2351 + Valheim Plus 10.2.0 (Grantapher) + Runic Character Vault 1.0.3 into your Steam copy of Valheim.
+# Runic Character Vault keeps your Yikesheim character on the server; the server only accepts brand-new characters.
 # Run it from PowerShell:   irm https://yikesgaming.com/valheim/install.ps1 | iex
 # Turn the mods off again:  irm https://yikesgaming.com/valheim/uninstall.ps1 | iex
 #
@@ -13,8 +14,16 @@
 
   $mods = @(
     @{ Name = 'BepInEx 5.4.2351'; Url = 'https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/5.4.2351/'; Sha256 = 'BCE631497976A93977CEB08E166712E6C31D15244956F89F17DF092A9B62E29F' },
-    @{ Name = 'Valheim Plus 10.2.0'; Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.2.0/'; Sha256 = '1D53F0636538D2F21273CA8CB0CA75B2A00F0B373BC54B02F5369E1CFBED1539' }
+    @{ Name = 'Valheim Plus 10.2.0'; Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.2.0/'; Sha256 = '1D53F0636538D2F21273CA8CB0CA75B2A00F0B373BC54B02F5369E1CFBED1539' },
+    @{ Name = 'Runic Character Vault 1.0.3'; Url = 'https://thunderstore.io/package/download/Chazman/RunicCharacterVault/1.0.3/'; Sha256 = 'D1B63EA6BC648C92DB78DA7DB51F550F8539E4786A0979EBAD5EE6F2A3E216B7' }
   )
+
+  # Plain-language replacements for Runic Character Vault's join messages (keys from its English.json)
+  $vaultMessages = @{
+    'text_25ddcadc5976' = 'Yikesheim needs a brand-new character. Go back, create a new character, and join with that one. Your existing character is safe and still works everywhere else.'
+    'text_cf24dc035c05' = 'You already have a character on Yikesheim: {0}. Join with that character.'
+    'text_b99199e4c3cc' = 'You already have characters on Yikesheim: {0}. Join with one of those.'
+  }
 
   function Say($msg, $color = 'Gray') { Write-Host $msg -ForegroundColor $color }
   function Fail($msg) { Write-Host ''; Write-Host $msg -ForegroundColor Red; Write-Host 'Nothing was changed. Ask in the guild Discord if you get stuck.' -ForegroundColor Red; throw 'stop' }
@@ -69,6 +78,13 @@
       $plugins = Join-Path $game 'BepInEx\plugins'
       New-Item -ItemType Directory -Force $plugins | Out-Null
       Copy-Item (Join-Path $work 'mod2\BepInEx\plugins\ValheimPlus.dll') $plugins -Force
+      Copy-Item (Join-Path $work 'mod3\plugins\RunicCharacterVault') $plugins -Recurse -Force
+      $lang = Join-Path $plugins 'RunicCharacterVault\Translations\RunicCharacterVault\English.json'
+      if (Test-Path $lang) {
+        $text = Get-Content $lang -Raw -Encoding UTF8 | ConvertFrom-Json
+        foreach ($k in $vaultMessages.Keys) { $text | Add-Member -NotePropertyName $k -NotePropertyValue $vaultMessages[$k] -Force }
+        [IO.File]::WriteAllText($lang, ($text | ConvertTo-Json -Depth 3), (New-Object Text.UTF8Encoding $false))
+      }
       if (Test-Path $off) { Remove-Item $off -Force }
     } catch [UnauthorizedAccessException] {
       Fail 'Windows blocked writing to the Valheim folder. Open PowerShell with "Run as administrator" and run the command again.'
@@ -76,8 +92,9 @@
     Remove-Item $work -Recurse -Force -ErrorAction SilentlyContinue
 
     Say ''
-    Say 'Done. BepInEx and Valheim Plus are installed.' 'Green'
-    Say 'Launch Valheim from Steam as usual and join Big Yikes. The server sends its settings when you connect.'
+    Say 'Done. BepInEx, Valheim Plus and Runic Character Vault are installed.' 'Green'
+    Say 'Launch Valheim from Steam, CREATE A NEW CHARACTER, and join Yikesheim. Existing characters are refused there.' 'Yellow'
+    Say 'Your other characters are untouched and still work in your own worlds.'
     Say 'To play unmodded later: irm https://yikesgaming.com/valheim/uninstall.ps1 | iex'
   } catch {
     if ($_.Exception.Message -ne 'stop') { Write-Host "Install failed: $($_.Exception.Message)" -ForegroundColor Red }
