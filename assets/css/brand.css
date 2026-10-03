@@ -195,6 +195,11 @@ code { background: var(--accent-soft); color: var(--accent-text); padding: .1em 
   min-width: 0;
   user-select: all;
 }
+.field .value.cmd {
+  font-size: clamp(.82rem, 3.3vw, 1rem);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
 .field .value.plain {
   font-family: var(--body);
   font-size: var(--fs-lg);
