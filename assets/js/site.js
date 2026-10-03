@@ -41,7 +41,7 @@
 
     var addr = document.querySelector('[data-scramble]');
     if (addr && window.ScrambleTextPlugin) {
-      tl.to(addr, { duration: 0.8, scrambleText: { text: addr.textContent, chars: '0123456789', revealDelay: 0.15, speed: 0.7 } }, 0.75);
+      tl.to(addr, { duration: 0.8, scrambleText: { text: addr.textContent, chars: 'abcdefghijklmnopqrstuvwxyz0123456789', revealDelay: 0.15, speed: 0.7 } }, 0.75);
     }
   }
 
