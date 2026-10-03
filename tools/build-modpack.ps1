@@ -61,6 +61,37 @@ Unmodified releases of the following, repackaged for one-step install:
 To turn the mods off, rename winhttp.dll in your Valheim folder to winhttp.dll.off.
 '@ | Set-Content (Join-Path $notices 'README.txt') -Encoding utf8NoBOM
 
+# Shown first when someone opens the zip
+@'
+<BIG YIKES>  YIKESHEIM
+Valheim Plus server for the Big Yikes guild
+valheim.yikesgaming.com
+====================================================
+
+WHAT'S IN HERE
+  BepInEx 5.4.2351        the mod loader everything else runs on
+  Valheim Plus 10.2.0     2x drops, half weight, bigger stacks
+                          (the server sends its own settings when you join)
+  Runic Character Vault   keeps your Yikesheim character safe on the server
+
+INSTALL (about a minute)
+  1. Close Valheim.
+  2. In Steam, right-click Valheim > Manage > Browse local files.
+  3. Extract everything in this zip into that folder, so winhttp.dll
+     sits next to valheim.exe. Say yes if Windows asks to replace files.
+  4. Launch Valheim from Steam and CREATE A NEW CHARACTER.
+     Yikesheim only accepts brand-new characters.
+  5. Join Game > Join IP > valheim.yikesgaming.com > Connect.
+     The password is pinned in #other-games on the Big Yikes Discord.
+
+TURN THE MODS OFF
+  Rename winhttp.dll in your Valheim folder to winhttp.dll.off.
+  Rename it back to turn them on again.
+
+Full guide and troubleshooting: https://yikesgaming.com/valheim/
+Licenses and sources: BepInEx\Yikesheim-mods\README.txt
+'@ | Set-Content (Join-Path $stage 'Yikesheim - READ ME FIRST.txt') -Encoding utf8NoBOM
+
 $out = Join-Path $root 'valheim\Yikesheim-mods.zip'
 Compress-Archive (Join-Path $stage '*') $out -Force
 Remove-Item $work -Recurse -Force

@@ -29,8 +29,20 @@
   function Fail($msg) { Write-Host ''; Write-Host $msg -ForegroundColor Red; Write-Host 'Nothing was changed. Ask in the guild Discord if you get stuck.' -ForegroundColor Red; throw 'stop' }
 
   try {
+    Write-Host ''
+    Write-Host '  +------------------------------------------------------------+' -ForegroundColor DarkMagenta
+    Write-Host '  |  ' -NoNewline -ForegroundColor DarkMagenta; Write-Host '<BIG YIKES>' -NoNewline -ForegroundColor Magenta; Write-Host '                                               |' -ForegroundColor DarkMagenta
+    Write-Host '  |  ' -NoNewline -ForegroundColor DarkMagenta; Write-Host 'YIKESHEIM' -NoNewline -ForegroundColor White; Write-Host '  Valheim server mod installer' -NoNewline -ForegroundColor Gray; Write-Host '                   |' -ForegroundColor DarkMagenta
+    Write-Host '  |  ' -NoNewline -ForegroundColor DarkMagenta; Write-Host 'valheim.yikesgaming.com' -NoNewline -ForegroundColor Cyan; Write-Host '                                   |' -ForegroundColor DarkMagenta
+    Write-Host '  +------------------------------------------------------------+' -ForegroundColor DarkMagenta
+    Write-Host ''
+    Say "  What you're getting:" 'White'
+    Say '    BepInEx 5.4.2351         the mod loader everything else runs on'
+    Say '    Valheim Plus 10.2.0      2x drops, half weight, bigger stacks (the server sends its settings)'
+    Say '    Runic Character Vault    keeps your Yikesheim character safe on the server'
+    Say '  Nothing else on your PC changes. Your other characters and worlds are untouched.'
     Say ''
-    Say '<Big Yikes> Valheim mods installer' 'Magenta'
+    Say '  [1/4] Finding Valheim...' 'White'
 
     # 1. Find Valheim through Steam's library list
     $steam = $null
@@ -51,11 +63,12 @@
       if (Test-Path (Join-Path $c 'valheim.exe')) { $game = $c; break }
     }
     if (-not $game) { Fail 'Found Steam, but not Valheim. Install Valheim from your Steam Library first.' }
-    Say "Found Valheim: $game"
+    Say "        $game"
 
     # 2. Valheim must be closed so its files can be replaced
     if (Get-Process valheim -ErrorAction SilentlyContinue) { Fail 'Valheim is running. Close the game, then run this again.' }
 
+    Say '  [2/4] Downloading and checking the mods...' 'White'
     # 3. Download and verify
     $work = Join-Path $env:TEMP ('bigyikes-mods-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
     New-Item -ItemType Directory -Force $work | Out-Null
@@ -64,13 +77,14 @@
     foreach ($mod in $mods) {
       $i++
       $zip = Join-Path $work "mod$i.zip"
-      Say "Downloading $($mod.Name)..."
+      Say "        $($mod.Name)"
       Invoke-WebRequest $mod.Url -OutFile $zip -UseBasicParsing
       $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
       if ($hash -ne $mod.Sha256) { Fail "The $($mod.Name) download didn't match its expected checksum, so it wasn't installed." }
       Expand-Archive $zip -DestinationPath (Join-Path $work "mod$i") -Force
     }
 
+    Say '  [3/4] Installing...' 'White'
     # 4. Install: BepInEx pack contents go next to valheim.exe, the V+ plugin goes into BepInEx\plugins
     $off = Join-Path $game 'winhttp.dll.off'
     try {
@@ -91,11 +105,16 @@
     }
     Remove-Item $work -Recurse -Force -ErrorAction SilentlyContinue
 
+    Say '  [4/4] Done.' 'White'
     Say ''
-    Say 'Done. BepInEx, Valheim Plus and Runic Character Vault are installed.' 'Green'
-    Say 'Launch Valheim from Steam, CREATE A NEW CHARACTER, and join Yikesheim. Existing characters are refused there.' 'Yellow'
-    Say 'Your other characters are untouched and still work in your own worlds.'
-    Say 'To play unmodded later: irm https://yikesgaming.com/valheim/uninstall.ps1 | iex'
+    Say '  You are ready for Yikesheim.' 'Green'
+    Say '    1. Launch Valheim from Steam and CREATE A NEW CHARACTER (existing ones are refused).' 'Yellow'
+    Say '    2. Join Game > Join IP > valheim.yikesgaming.com > Connect'
+    Say '    3. Password: pinned in #other-games on the Big Yikes Discord'
+    Say ''
+    Say '  Guide: https://yikesgaming.com/valheim/'
+    Say '  Play unmodded later: irm https://yikesgaming.com/valheim/uninstall.ps1 | iex'
+    Say ''
   } catch {
     if ($_.Exception.Message -ne 'stop') { Write-Host "Install failed: $($_.Exception.Message)" -ForegroundColor Red }
   }
