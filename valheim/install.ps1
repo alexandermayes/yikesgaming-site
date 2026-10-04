@@ -110,7 +110,7 @@
     Say '  You are ready for Yikesheim.' 'Green'
     Say '    1. Launch Valheim from Steam and CREATE A NEW CHARACTER (existing ones are refused).' 'Yellow'
     Say '    2. Join Game > Join IP > valheim.yikesgaming.com > Connect'
-    Say '    3. Password: pinned in #other-games on the Big Yikes Discord'
+    Say '    3. Password: pinned in #valheim on the Big Yikes Discord'
     Say ''
     Say '  Guide: https://yikesgaming.com/valheim/'
     Say '  Play unmodded later: irm https://yikesgaming.com/uninstall | iex'

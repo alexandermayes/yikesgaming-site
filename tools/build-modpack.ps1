@@ -82,7 +82,7 @@ INSTALL (about a minute)
   4. Launch Valheim from Steam and CREATE A NEW CHARACTER.
      Yikesheim only accepts brand-new characters.
   5. Join Game > Join IP > valheim.yikesgaming.com > Connect.
-     The password is pinned in #other-games on the Big Yikes Discord.
+     The password is pinned in #valheim on the Big Yikes Discord.
 
 TURN THE MODS OFF
   Rename winhttp.dll in your Valheim folder to winhttp.dll.off.

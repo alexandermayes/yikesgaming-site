@@ -13,7 +13,7 @@
 <meta property="og:title" content="Join Yikesheim, the Big Yikes Valheim server">
 <meta property="og:description" content="Valheim Plus server: 2x drops, half weight, bigger stacks, new characters only, always on. Install with one command, a mod manager or a zip.">
 <meta property="og:url" content="https://yikesgaming.com/valheim/">
-<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v5.png">
+<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v6.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Yikesheim server card with the server address">
@@ -24,6 +24,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
 <link rel="stylesheet" href="/assets/css/brand.css">
+<style>
+  .title-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gap-3); align-items: center; }
+  .title-row .badge { width: 168px; height: auto; filter: drop-shadow(0 14px 24px rgb(0 0 0 / .6)); }
+  @media (max-width: 560px) { .title-row { grid-template-columns: 1fr; } .title-row .badge { order: -1; width: 132px; } }
+</style>
 <script>
   // Hide intro elements only when motion is allowed; failsafe shows them if GSAP never starts.
   if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
@@ -47,8 +52,13 @@
 <div class="page">
 
   <main>
-    <h1 data-intro>Join Yikesheim</h1>
-    <p class="lede" data-intro>Yikesheim is the guild's Valheim server, running Valheim Plus. One command installs it. Everyone starts fresh with a new character made just for this server.</p>
+    <div class="title-row">
+      <div>
+        <h1 data-intro>Join Yikesheim</h1>
+        <p class="lede" data-intro>Yikesheim is the guild's Valheim server, running Valheim Plus. One command installs it. Everyone starts fresh with a new character made just for this server.</p>
+      </div>
+      <img class="badge" src="/assets/brand/yikesheim-sticker.png" alt="Yikesheim badge: Bing and Beti in Viking helmets with crossed axes" width="512" height="482" data-intro>
+    </div>
 
     <section class="card" aria-label="Server details" data-intro>
       <div class="status">
@@ -77,7 +87,7 @@
       </div>
       <div class="field">
         <div class="label" id="pw-label">Password</div>
-        <div class="value plain" aria-labelledby="pw-label"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0-2 0m6 0a1 1 0 1 0 2 0a1 1 0 0 0-2 0"/><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833-1.667 3.5-3c.667-1.667.5-5.833-1.5-11.5c-1.457-1.015-3-1.34-4.5-1.5l-.972 1.923a11.9 11.9 0 0 0-4.053 0L9 4c-1.5.16-3.043.485-4.5 1.5c-2 5.667-2.167 9.833-1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2-2 2-3"/><path d="M7 16.5c3.5 1 6.5 1 10 0"/></g></svg>Pinned in #other-games on Discord</div>
+        <div class="value plain" aria-labelledby="pw-label"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0-2 0m6 0a1 1 0 1 0 2 0a1 1 0 0 0-2 0"/><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833-1.667 3.5-3c.667-1.667.5-5.833-1.5-11.5c-1.457-1.015-3-1.34-4.5-1.5l-.972 1.923a11.9 11.9 0 0 0-4.053 0L9 4c-1.5.16-3.043.485-4.5 1.5c-2 5.667-2.167 9.833-1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2-2 2-3"/><path d="M7 16.5c3.5 1 6.5 1 10 0"/></g></svg>Pinned in #valheim on Discord</div>
       </div>
     </section>
 
@@ -104,7 +114,7 @@
       </div></li>
       <li><div>
         <h3>Enter the password</h3>
-        <p class="muted">It's pinned in #other-games on Discord. Next time, Yikesheim is waiting in the <strong>Recent</strong> tab, so it's one click plus the password. The server keeps your Yikesheim character safe: when you quit, wait for <strong>Saved</strong> under the minimap first.</p>
+        <p class="muted">It's pinned in #valheim on Discord. Next time, Yikesheim is waiting in the <strong>Recent</strong> tab, so it's one click plus the password. The server keeps your Yikesheim character safe: when you quit, wait for <strong>Saved</strong> under the minimap first.</p>
       </div></li>
     </ol>
 
@@ -153,7 +163,7 @@
     </details>
     <details>
       <summary>"Invalid password"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #other-games.</p></div>
+      <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #valheim.</p></div>
     </details>
     <details>
       <summary>I want to play unmodded or on other servers<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
