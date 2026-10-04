@@ -208,5 +208,6 @@ details > div { padding-bottom: 14px; color: var(--muted); }
 
 /* Motion (GSAP) */
 .js-anim [data-intro] { visibility: hidden; }
+h1 .line-mask { padding-bottom: .16em; margin-bottom: -.16em; }   /* SplitText line masks: room for descenders */
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }

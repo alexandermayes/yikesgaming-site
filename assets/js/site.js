@@ -12,6 +12,8 @@
     var fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
     Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 1200); })]).then(function () {
       window.__introStarted = true;
+      // A background tab gets no animation frames, so it would sit mid-intro: just show the page.
+      if (document.hidden) { root.classList.remove('js-anim'); return; }
       try { intro(); } catch (e) { gsap.set('[data-intro]', { clearProps: 'all' }); } finally { root.classList.remove('js-anim'); }
     });
     try { revealOnView(); } catch (e) {}
@@ -31,8 +33,9 @@
     }
     if (h1 && window.SplitText) {
       var split = window.SplitText.create(h1, { type: 'lines', mask: 'lines', linesClass: 'line' });
+      // Masks clip descenders on tight display leading (see .line-mask in brand.css), so unsplit once done.
       tl.set(h1, { autoAlpha: 1 }, 0.1)
-        .from(split.lines, { yPercent: 105, duration: 0.7, stagger: 0.09, ease: 'power4.out' }, 0.1);
+        .from(split.lines, { yPercent: 125, duration: 0.7, stagger: 0.09, ease: 'power4.out', onComplete: function () { split.revert(); } }, 0.1);
     } else if (h1) {
       tl.from(h1, { autoAlpha: 0, y: 14, duration: 0.5 }, 0.1);
     }
