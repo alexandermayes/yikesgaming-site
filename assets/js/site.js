@@ -19,7 +19,7 @@
     root.classList.remove('js-anim');
   }
 
-  // Page-load sequence: nameplate, headline, lede, card, then the address decodes.
+  // Page-load sequence: headline, lede, card and other [data-intro] parts, then the address decodes.
   function intro() {
     var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     var mark = document.querySelector('.mark');
@@ -38,6 +38,10 @@
     }
     tl.from('.lede[data-intro]', { autoAlpha: 0, y: 10, duration: 0.5 }, 0.45)
       .from('.card[data-intro]', { autoAlpha: 0, y: 18, duration: 0.55 }, 0.55);
+    var others = Array.prototype.filter.call(document.querySelectorAll('[data-intro]'), function (el) {
+      return el !== mark && el !== h1 && !el.matches('.lede, .card');
+    });
+    if (others.length) tl.from(others, { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.08 }, 0.55);
 
     var addr = document.querySelector('[data-scramble]');
     if (addr && window.ScrambleTextPlugin) {

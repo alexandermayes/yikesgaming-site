@@ -1,6 +1,8 @@
-# Renders the site's raster images with headless Chrome:
-#   tools/og-valheim.html      -> assets/img/og-yikesheim-v4.png       (1200x630 link preview for Discord etc.)
-#   assets/img/favicon.svg     -> assets/img/apple-touch-icon.png (180x180)
+# Renders the site's link-preview images with headless Chrome:
+#   tools/og-valheim.html  -> assets/img/og-yikesheim-v5.png  (1200x630, Valheim pages)
+#   tools/og-home.html     -> assets/img/og-home-v1.png       (1200x630, home page)
+# When an image changes, bump the version in its file name (and the og:image tags) so Discord fetches it again.
+# The favicon and home-screen icon come from the real guild icon in assets/brand/ and aren't rendered here.
 # Usage: pwsh tools/render.ps1
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
@@ -16,11 +18,5 @@ function Shot($src, $out, $w, $h) {
   "{0} ({1} KB)" -f $out.Substring($root.Length + 1), [math]::Round((Get-Item $out).Length / 1KB)
 }
 
-Shot "$root\tools\og-valheim.html" "$root\assets\img\og-yikesheim-v4.png" 1200 630
-
-$icon = Join-Path $profile 'icon.html'
-New-Item -ItemType Directory -Force $profile | Out-Null
-"<!doctype html><style>html,body{margin:0;width:180px;height:180px;background:#7E2BC4}img{width:180px;height:180px;display:block}</style><img src='file:///$(("$root\assets\img\favicon.svg") -replace '\\','/')'>" | Set-Content $icon -Encoding utf8NoBOM
-Shot $icon "$root\assets\img\apple-touch-icon.png" 180 180
-
-Remove-Item $profile -Recurse -Force -ErrorAction SilentlyContinue
+Shot "$root\tools\og-valheim.html" "$root\assets\img\og-yikesheim-v5.png" 1200 630
+Shot "$root\tools\og-home.html" "$root\assets\img\og-home-v1.png" 1200 630

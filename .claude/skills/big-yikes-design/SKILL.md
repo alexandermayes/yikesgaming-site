@@ -1,27 +1,32 @@
 ---
 name: big-yikes-design
-description: Build or change any page on yikesgaming.com (the <Big Yikes> guild site) in the guild's design system. Use for new pages, new sections, link-preview images, or restyling.
+description: Build or change any page on yikesgaming.com (the <Big Yikes> guild site) in the guild's design system (Figma "BY Tactile"). Use for new pages, new sections, link-preview images, or restyling.
 ---
 
 # Big Yikes design system
 
 Before writing any HTML or CSS in this repo:
 
-1. Read `DESIGN.md` (rules, tokens, components) and `assets/css/brand.css` (the implementation).
-2. Start new pages from `valheim/index.html`: copy its `<head>` (fonts, brand.css, favicon, og tags) and its
-   `nameplate` header and `footer`.
+1. Read `DESIGN.md` (rules, tokens, components) and `assets/css/brand.css` (the implementation). The Figma file
+   linked at the top of DESIGN.md is the source of truth.
+2. Start new pages from `valheim/index.html` (reading page) or `index.html` (stage page): copy the `<head>`
+   (Source Sans 3, brand.css, favicon, og tags), the `site-head` header with its menu script, and the footer.
 3. Reuse brand.css components. Add new CSS to brand.css only when a component will be used on more than one
    page; otherwise add a small `<style>` block in the page.
 
 Hard rules:
 
 - Plain HTML/CSS/JS with no build step. GitHub Pages serves the repo as-is from `main`.
-- Tanker for headings only (capitals only), Switzer for text, JetBrains Mono only for things people copy.
-- Brand purple only on the `<Big Yikes>` mark. Each game page sets `data-game` and uses that game's accent.
-- Icons: Tabler only, inline SVG, from `assets/icons/` or `https://api.iconify.design/tabler/<name>.svg`.
+- Single dark theme: canvas `#101110`, text `#F3F3ED` / `#AFB3AA`, borders `#50554D`, yellow `#FFCD00`.
+- Source Sans 3 for everything; Display 56/60, Title 28/32, Body 18/26, Meta 14/20. JetBrains Mono only for
+  things people copy.
+- One yellow `btn` per task area; every other action is `btn ghost` (dark enamel). Hover and press change
+  color and shadow in 120ms, never position.
+- Use the real brand art in `assets/brand/` (logo, Bing and Beti, guild emoji). Never redraw or fake it.
+- Icons: Tabler only, inline SVG, from `https://api.iconify.design/tabler/<name>.svg`.
 - Motion: GSAP 3.15.0 from jsDelivr with SRI, following DESIGN.md's Motion section (one intro, one reveal,
-  click responses, reduced-motion safe). Copy the script tags and the head failsafe from `valheim/index.html`.
+  click responses, reduced-motion safe).
 - Every page needs og tags plus a 1200x630 image built in `tools/` and rendered with `pwsh tools/render.ps1`.
-- Check text contrast (WCAG AA) in light and dark for any new color, tap targets of at least 48px, and a
-  layout that works at 390px width.
+- Check contrast (WCAG AA), 44px targets, visible focus, status words next to status colors, and a layout that
+  works at 390px (test with a 390px iframe; headless Chrome won't go below 500px).
 - The repo is public: never commit passwords, keys or tokens.
