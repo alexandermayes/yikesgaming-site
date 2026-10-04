@@ -19,39 +19,68 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
 <script src="/assets/js/season.js"></script>
 <link rel="stylesheet" href="/assets/css/brand.css">
 <style>
-  .board { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-  .board th, .board td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .board th { color: var(--muted); font-size: var(--fs-sm); font-weight: 600; }
-  .board td.num { text-align: right; white-space: nowrap; }
-  .board th.num { text-align: right; }
-  .board .rank { font-family: var(--display); color: var(--accent-text); width: 2.2em; }
-  .board .who { font-weight: 600; }
-  .board .tags { color: var(--muted); font-size: var(--fs-sm); }
-  .tablewrap { overflow-x: auto; }
-  /* Boss trophies and biome drops are Valheim's own inventory icons (assets/valheim, see CREDITS.txt). */
+  /* Hall of Fame, after the reference's leaderboard: badge row for world progress, a thick progress bar, medal ranks,
+     initials avatars. Boss trophies and biome drops are Valheim's own inventory icons (assets/valheim, CREDITS.txt). */
   .vi { filter: drop-shadow(0 2px 2px rgb(0 0 0 / .6)); }
-  .bosses { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
-  .boss { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 10px; align-items: center; }
-  .boss .vi { grid-row: span 2; width: 48px; height: 48px; }
-  .boss:not(.down) .vi { filter: grayscale(1) drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: .75; }
-  .boss b { font-size: 1rem; line-height: 1.2; }
-  .boss span { color: var(--muted); font-size: var(--fs-sm); line-height: 20px; }
-  .boss.down { border-color: rgb(255 205 0 / .55); background: rgb(255 205 0 / .07); }
-  .boss.down span { color: var(--yikes); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); font-weight: 600; padding: 5px 12px 5px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+
+  .now { padding: 0; }
+  .now .who { display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 18px; }
+  .now .empty { color: var(--muted); font-weight: 700; }
+  .chip-user { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); font-weight: 800; }
+
+  .avatar { --c: var(--yikes); width: 36px; height: 36px; border-radius: 50%; flex: none; display: grid; place-items: center;
+    font: 800 .95rem/1 var(--body); color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--surface)); border: 2px solid color-mix(in srgb, var(--c) 45%, transparent); }
+
+  .progress { display: flex; align-items: center; gap: 14px; margin: 4px 0 18px; }
+  .bar { position: relative; flex: 1; height: 18px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); overflow: hidden; }
+  .bar > span { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--yikes); border-radius: 999px; box-shadow: inset 0 -4px 0 rgb(0 0 0 / .18); transition: width 600ms ease; }
+  .progress b { font-weight: 800; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .trophies { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+  @media (max-width: 640px) { .trophies { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .trophy { display: grid; justify-items: center; gap: 6px; padding: 12px 6px 10px; text-align: center; border-radius: 16px;
+    background: var(--surface); border: 2px solid var(--line); border-bottom-width: calc(var(--lip) + 2px); }
+  .trophy .vi { width: 52px; height: 52px; }
+  .trophy:not(.down) .vi { filter: grayscale(1) drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: .7; }
+  .trophy b { font-size: .875rem; line-height: 1.15; font-weight: 800; }
+  .trophy span { color: var(--muted); font-size: .75rem; line-height: 1.2; font-weight: 700; }
+  .trophy.down { border-color: var(--yikes-lip); background: color-mix(in srgb, var(--yikes) 9%, var(--surface)); }
+  .trophy.down span { color: var(--yikes); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); font-weight: 800; padding: 5px 12px 5px 6px; border-radius: 999px;
+    background: color-mix(in srgb, var(--yikes) 12%, var(--surface)); border: 2px solid var(--yikes-lip); color: var(--ink); }
   .chip .vi { width: 22px; height: 22px; }
-  .chip.off { background: rgb(175 179 170 / .1); color: var(--muted); }
+  .chip.off { background: var(--surface); border-color: var(--line); color: var(--muted); }
   .chip.off .vi { filter: grayscale(1); opacity: .85; }
-  .board th .vi { width: 20px; height: 20px; display: inline-block; vertical-align: -5px; margin-right: 4px; }
-  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-  .seg button { appearance: none; border: 0; background: var(--surface); color: var(--muted); font: 600 var(--fs-sm) var(--body); padding: 8px 14px; min-height: 40px; cursor: pointer; }
-  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
-  .warm { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px; color: var(--muted); }
+
+  .seg { display: inline-flex; padding: 4px; gap: 4px; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; margin-bottom: 14px; }
+  .seg button { appearance: none; border: 0; background: none; color: var(--muted); font: 800 .8125rem var(--body); letter-spacing: .06em; text-transform: uppercase;
+    padding: 0 16px; min-height: 40px; border-radius: 11px; cursor: pointer; transition: background-color var(--ease), color var(--ease); }
+  .seg button:hover { color: var(--ink); }
+  .seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); box-shadow: inset 0 -3px 0 var(--yikes); }
+
+  .board { list-style: none; margin: 0; padding: 0; font-variant-numeric: tabular-nums; }
+  .row { display: grid; grid-template-columns: 40px 36px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 16px; }
+  .row + .row { margin-top: 4px; }
+  .row:nth-child(-n+3) { background: var(--surface); }
+  .rank { display: grid; place-items: center; width: 36px; height: 36px; font: 1.15rem/1 var(--display); color: var(--muted); }
+  .medal { border-radius: 50%; color: var(--yikes-ink); }
+  .medal.m1 { background: #FFCD00; box-shadow: 0 3px 0 #B38F00; }
+  .medal.m2 { background: #C9CEC4; box-shadow: 0 3px 0 #8C9187; }
+  .medal.m3 { background: #D9894A; box-shadow: 0 3px 0 #9A5B2A; }
+  .row .who b { display: block; font-weight: 800; }
+  .row .who span { display: block; color: var(--muted); font-size: var(--fs-sm); line-height: 20px; }
+  .row .stats { display: flex; gap: 16px; align-items: center; color: var(--muted); font-size: var(--fs-sm); font-weight: 700; white-space: nowrap; }
+  .row .stats b { color: var(--ink); font-size: 1rem; }
+  .row .stats .vi { width: 20px; height: 20px; display: inline-block; vertical-align: -5px; margin-right: 4px; }
+  @media (max-width: 520px) { .row { grid-template-columns: 36px 36px minmax(0, 1fr); } .row .stats { grid-column: 3; } }
+  .warm { background: var(--surface); border: 2px solid var(--line); border-radius: var(--radius-card); padding: 18px; color: var(--muted); }
+  .empty-row { color: var(--muted); padding: 14px; }
 </style>
 </head>
 <body>
@@ -68,18 +97,19 @@
     <h1>Yikesheim Hall of Fame</h1>
     <p class="lede" id="lede">Who's on, which bosses have fallen, and who's carrying the clan.</p>
 
-    <section class="card" aria-label="Server right now" id="now">
+    <section class="card now" aria-label="Server right now" id="now">
       <div class="status"><span class="online"><span class="dot" aria-hidden="true"></span><span id="now-state">Checking the server…</span></span><span id="now-day"></span><span id="now-ever"></span></div>
-      <div class="field"><div class="label">Online right now</div><div class="value plain" id="now-players">…</div></div>
+      <div class="who" id="now-players"><span class="empty">…</span></div>
     </section>
 
     <h2>World progress</h2>
-    <div class="bosses" id="bosses"></div>
+    <div class="progress"><div class="bar" role="img" aria-labelledby="boss-count"><span id="boss-bar"></span></div><b id="boss-count">Bosses not tracked yet</b></div>
+    <div class="trophies" id="bosses"></div>
     <div class="chips" id="biomes" aria-label="Biomes reached"></div>
 
     <h2>Hall of Fame</h2>
     <div class="seg" role="group" aria-label="Time range"><button type="button" data-range="week" aria-pressed="true">This week</button><button type="button" data-range="allTime" aria-pressed="false">All time</button></div>
-    <div class="tablewrap"><table class="board"><thead><tr><th scope="col" class="rank">#</th><th scope="col">Viking</th><th scope="col" class="num">Played</th><th scope="col" class="num"><img class="vi" src="/assets/valheim/death.png" alt="" width="20" height="20">Valhalla trips</th></tr></thead><tbody id="board"></tbody></table></div>
+    <ol class="board" id="board" aria-label="Most time played"></ol>
     <p class="warm" id="warm" hidden></p>
   </main>
 
@@ -92,36 +122,48 @@
 (function () {
   var BOSSES = ['Eikthyr', 'The Elder', 'Bonemass', 'Moder', 'Yagluth', 'The Queen', 'Fader'];
   var BIOMES = ['Meadows', 'Black Forest', 'Swamp', 'Mountains', 'Plains', 'Ocean', 'Mistlands', 'Ashlands', 'Deep North'];
+  // Avatar tints, picked by name so a viking keeps their colour.
+  var TINTS = ['#FFCD00', '#3DDC84', '#5AB8FF', '#FF8A4C', '#E879C8', '#A3E635'];
   var data = null, range = 'week';
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function hm(m) { return m >= 60 ? Math.floor(m / 60) + 'h ' + ('0' + (m % 60)).slice(-2) + 'm' : m + ' min'; }
   function list(xs) { return xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]; }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function icon(name, size) { return '<img class="vi" src="/assets/valheim/' + name + '.png" alt="" width="' + size + '" height="' + size + '" loading="lazy">'; }
-  function bossTile(b, label, down) { return '<div class="boss' + (down ? ' down' : '') + '">' + icon(slug(b), 48) + '<b>' + b + '</b><span>' + label + '</span></div>'; }
+  function avatar(name) {
+    var h = 0; for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    var initials = name.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+    return '<span class="avatar" style="--c:' + TINTS[h % TINTS.length] + '" aria-hidden="true">' + esc(initials) + '</span>';
+  }
+  function trophy(b, label, down) { return '<div class="trophy' + (down ? ' down' : '') + '">' + icon(slug(b), 52) + '<b>' + b + '</b><span>' + label + '</span></div>'; }
 
   function renderBoard() {
     var rows = (data && data[range]) || [];
     var body = document.getElementById('board');
-    if (!rows.length) { body.innerHTML = '<tr><td colspan="4" class="tags">No sessions recorded ' + (range === 'week' ? 'this week' : 'yet') + '. Go make some history.</td></tr>'; return; }
+    if (!rows.length) { body.innerHTML = '<li class="empty-row">No sessions recorded ' + (range === 'week' ? 'this week' : 'yet') + '. Go make some history.</li>'; return; }
     body.innerHTML = rows.map(function (r, i) {
       var tags = [].concat(r.bosses.length ? ['slew ' + list(r.bosses)] : [], r.firsts);
-      return '<tr><td class="rank">' + (i + 1) + '</td><td><div class="who">' + esc(r.player) + '</div>' + (tags.length ? '<div class="tags">' + esc(tags.join(' · ')) + '</div>' : '') + '</td><td class="num">' + hm(r.minutes) + '</td><td class="num">' + r.deaths + '</td></tr>';
+      var rank = i < 3 ? '<span class="rank medal m' + (i + 1) + '">' + (i + 1) + '</span>' : '<span class="rank">' + (i + 1) + '</span>';
+      return '<li class="row">' + rank + avatar(r.player) + '<div class="who"><b>' + esc(r.player) + '</b>' + (tags.length ? '<span>' + esc(tags.join(' · ')) + '</span>' : '') + '</div>' +
+        '<div class="stats"><span><b>' + hm(r.minutes) + '</b> played</span><span>' + icon('death', 20) + '<b>' + r.deaths + '</b><span class="sr-only"> Valhalla trips</span></span></div></li>';
     }).join('');
   }
 
   function render() {
     var d = data;
     document.getElementById('now-state').textContent = d.online ? 'Online' : 'Offline';
-    document.querySelector('#now .dot').style.background = d.online ? '' : '#B33A3A';
+    document.querySelector('#now .dot').classList.toggle('off', !d.online);
     document.getElementById('now-day').textContent = d.day != null ? 'Day ' + d.day : '';
     document.getElementById('now-ever').textContent = d.playersEver ? d.playersEver + ' vikings have joined' : '';
     var count = d.playerCount != null ? d.playerCount : d.players.length, extra = Math.max(0, count - d.players.length);
-    var names = d.players.slice(); if (extra) names.push(extra + ' more');
-    document.getElementById('now-players').textContent = count ? list(names) : 'Nobody right now';
-    // Before Skald reports (no "updated" time), boss and biome progress isn't tracked yet: say so rather than guess.
-    var tracked = !!d.updated;
-    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { var down = d.bosses.indexOf(b) >= 0; return bossTile(b, !tracked ? 'Not tracked yet' : down ? 'Defeated' : 'Still standing', down); }).join('');
+    document.getElementById('now-players').innerHTML = count
+      ? d.players.map(function (p) { return '<span class="chip-user">' + avatar(p) + esc(p) + '</span>'; }).join('') + (extra ? '<span class="chip-user">+' + extra + ' more</span>' : '')
+      : '<span class="empty">Nobody right now. The longhouse is quiet.</span>';
+    // Before Skald reports (no "updated" time), progress isn't tracked yet: say so rather than guess.
+    var tracked = !!d.updated, down = d.bosses.filter(function (b) { return BOSSES.indexOf(b) >= 0; }).length;
+    document.getElementById('boss-bar').style.width = (tracked ? down / BOSSES.length * 100 : 0) + '%';
+    document.getElementById('boss-count').textContent = tracked ? down + ' of 7 bosses down' : 'Bosses not tracked yet';
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { var dn = d.bosses.indexOf(b) >= 0; return trophy(b, !tracked ? 'Not tracked' : dn ? 'Defeated' : 'Standing', dn); }).join('');
     document.getElementById('biomes').innerHTML = BIOMES.map(function (b) { var got = d.biomes.indexOf(b) >= 0; return '<span class="chip' + (got ? '' : ' off') + '">' + icon(slug(b), 22) + b + '<span class="sr-only">' + (got ? ', reached' : ', not reached yet') + '</span></span>'; }).join('');
     renderBoard();
   }
@@ -129,8 +171,8 @@
   function warm(msg) {
     var w = document.getElementById('warm'); w.hidden = false; w.textContent = msg;
     document.getElementById('now-state').textContent = 'Stats are warming up';
-    document.getElementById('now-players').textContent = 'Check back soon';
-    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { return bossTile(b, 'Unknown', false); }).join('');
+    document.getElementById('now-players').innerHTML = '<span class="empty">Check back soon</span>';
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { return trophy(b, 'Unknown', false); }).join('');
     document.getElementById('board').innerHTML = '';
   }
 
@@ -149,7 +191,7 @@
       .catch(function () { warm("Stats aren't available right now. The Hall of Fame fills in live once the server's stats service is online."); });
   }
   load();
-  setInterval(load, 60000);
+  setInterval(function () { if (!document.hidden) load(); }, 60000);
 })();
 </script>
 <script>

@@ -3,9 +3,41 @@
 The rulebook for every page on yikesgaming.com. Tokens and components live in `assets/css/brand.css`.
 New pages link that file and follow these rules, so the site stays one design as it grows.
 
-**Source of truth:** the Figma file *Big Yikes Design System* (kit name "BY Tactile"),
-https://www.figma.com/design/NPB8kVk568RPWnkJNLd8p1/Big-Yikes-Design-System (Getting started page). When
-Figma and this file disagree, Figma wins; update this file and brand.css to match.
+**Sources:** the Figma file *Big Yikes Design System* (kit "BY Tactile",
+https://www.figma.com/design/NPB8kVk568RPWnkJNLd8p1/Big-Yikes-Design-System) for brand rules, and the v4 reference
+lock below (Refero research, 2026-10-04) for the component language. Colors, logos and mascots never change; fonts,
+buttons and interface follow the reference lock.
+
+## Research and reference lock (v4, 2026-10-04)
+
+Refero's style index returned nothing for any query that day, so the research used ~50 Refero screens: Duolingo
+(landing, quests, leaderboard, settings), Discord (home, Discover), Xbox and PlayStation (game and community pages),
+Linear and Kraken (settings), plus 404 and leaderboard patterns.
+
+- **Primary: Duolingo's product UI.** A mascot-led brand with tactile controls, which is what the Figma kit's
+  "Tactile" name points at. Preserve: buttons on a darker lip that sink when pressed; 2px outlines with a heavier
+  bottom edge instead of shadows; bold uppercase tracked button labels; thick rounded progress bars and medal
+  ranks; a left navigation rail with icon + label where the active item is tinted and outlined; mascot art as the
+  main imagery.
+- **Borrow only, from Discord:** headline scale (one heavy display face, big) and real product snippets used as
+  imagery (a Yikesheim feed post, a Longhouse panel) instead of abstract graphics.
+- **Role rules:** yellow = the primary action, the active nav item, progress fill, reached/defeated states and the
+  focus ring. Green = "on" and "online" only, always with the word. Lips are the darker shade of their own fill.
+- **Reject:** hairline-border-plus-soft-shadow cards, glassy dark SaaS chrome, pill-shaped everything, decorative
+  gradients, light mode (the brand is charcoal), one-word color or italic swaps in headlines.
+
+| Decision | Source | Role kept | Why |
+|---|---|---|---|
+| Lilita One headlines | Duolingo's chunky rounded display; Discord's heavy hero type | display only, one weight, sentence case | reads like the games the guild plays and matches the brush logo and mascots |
+| Nunito for UI and body | Duolingo's rounded DIN | all running text, labels, buttons | rounded and friendly; 800 for labels gives the reference's punch |
+| Lip buttons that sink on press | Duolingo buttons | yellow = one primary per area; enamel = everything else | tactile feel promised by "BY Tactile"; transform only, so no layout shift |
+| Uppercase tracked button and nav labels | Duolingo buttons and rail | buttons and the Longhouse rail only | the reference's button voice; never on headings or body |
+| 2px outline + heavy bottom edge on cards | Duolingo cards | interactive containers only | depth without the AI-style soft shadow |
+| Left rail navigation in Longhouse | Duolingo app shell | 8 sections with Valheim icons; phones get scrolling tabs | faster switching and clearer "where am I" than thin top tabs |
+| Medal ranks, thick progress bars, trophy badges | Duolingo leaderboard and quests | Hall of Fame and Longhouse overview | world progress and the leaderboard read like a game |
+| Chunky rounded-square toggle with a lip | Duolingo settings toggle | green + "On"/"Off" word | state is visible without relying on color |
+
+
 
 **Status:** the home page (`index.html`) is an under-construction placeholder. The full home page in progress lives
 at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready. Words follow the
@@ -33,11 +65,12 @@ at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready
 |---|---|---|---|
 | `--ground` | `#101110` | by-tactile-bg-canvas | page background |
 | `--ground-2` | `#171916` | | alternate full-width band |
-| `--surface` | `#1D201C` | | dark enamel: secondary buttons, interactive containers, keycaps |
+| `--surface` / `--surface-2` | `#1B1E1A` / `#242822` | | dark enamel: secondary buttons, interactive containers; hover |
 | `--ink` | `#F3F3ED` | by-tactile-text-primary | text |
 | `--muted` | `#AFB3AA` | by-tactile-text-secondary | secondary text, labels |
-| `--line` | `#50554D` | by-tactile-border-subtle | borders, dividers |
-| `--yikes` | `#FFCD00` | brand yellow | logo, the one primary action per area, focus ring, selected marker |
+| `--line` | `#383D35` | | 2px outlines and dividers |
+| `--line-strong` | `#5A6056` | | control outlines and their lip |
+| `--yikes` / `--yikes-lip` | `#FFCD00` / `#B38F00` | brand yellow | primary action, active nav, progress, reached states, focus; the lip under yellow |
 
 Yellow is a signal, not a decoration: never a background band, never body text. Green (`--online`) and red
 (`--danger`) are status colors and always sit next to a written label. The **in-game tooltip** (`--tip-*`)
@@ -45,11 +78,10 @@ keeps Valheim's own colors because it imitates the game UI. WoW class colors app
 
 ## Type
 
-- **Source Sans 3** (Google Fonts), the kit's UI family. Figma notes it's a proposed stand-in for the brand's
-  Lateral/Figura faces, so don't claim those rendered.
-  - Display 56/60 bold (`h1`, home section titles), Title 28/32 bold (`h2`, `h3` on the home page),
-    Body 18/26 regular, Meta 14/20 (labels, captions).
-  - The home hero is the one poster-scale moment: up to 88px, weight 900.
+- **Lilita One** (Google Fonts, one weight): `h1`, `h2`, panel titles, step medallions. Display 52/56, Title 26/30,
+  poster up to 84px for a hero. Never set a weight on it (the browser would fake-bold it).
+- **Nunito** (Google Fonts, 400 to 900): everything else. Body 17/26, lead 20/30, meta 14/20; labels and buttons 800.
+  Buttons and the Longhouse rail use uppercase with .06em tracking; nothing else is uppercase.
 - **JetBrains Mono**: only for things people copy or type (server address, install command, profile code).
 - Sentence case everywhere. No all-caps labels, no eyebrow labels above headings.
 
@@ -65,9 +97,11 @@ keeps Valheim's own colors because it imitates the game UI. WoW class colors app
 
 - `site-head` with `wordmark`, `site-nav` (selected page: `aria-current="page"`, yellow underline on desktop,
   yellow left bar in the mobile menu) and `menu-toggle`.
-- `btn`: yellow enamel primary. **One per task area.** `btn ghost` / `btn secondary`: dark enamel for every
-  other action. `btn small` is 44px tall. Feedback is 120ms color and shadow only: nothing moves.
-- `card` + `status` + `field` (copy buttons via `data-copy`), `steps`, `key` (keycap for game menu buttons),
+- `btn`: yellow on a darker lip. **One per task area.** `btn ghost` / `btn secondary`: dark enamel with a 2px
+  outline and lip for every other action. Pressing sinks the button into its lip (transform only, no layout
+  shift); hover lightens the fill in 120ms. `btn small` is 44px tall.
+- `card` (2px outline, heavy bottom edge) + `status` + `field` (copy buttons via `data-copy`), `steps` (yellow
+  medallions), `key` (keycap with a lip, for game menu buttons),
   `tooltip` (the Valheim item tooltip), `note`, `details` (FAQ rows), `footer`, `live` + `dot`, `season-deco`.
 
 ## Seasonal theming

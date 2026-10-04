@@ -18,10 +18,10 @@ Hard rules:
 
 - Plain HTML/CSS/JS with no build step. GitHub Pages serves the repo as-is from `main`.
 - Single dark theme: canvas `#101110`, text `#F3F3ED` / `#AFB3AA`, borders `#50554D`, yellow `#FFCD00`.
-- Source Sans 3 for everything; Display 56/60, Title 28/32, Body 18/26, Meta 14/20. JetBrains Mono only for
-  things people copy.
-- One yellow `btn` per task area; every other action is `btn ghost` (dark enamel). Hover and press change
-  color and shadow in 120ms, never position.
+- Lilita One for headlines (never set a weight on it), Nunito for everything else; JetBrains Mono only for
+  things people copy. Follow the v4 reference lock and decision ledger in DESIGN.md.
+- One yellow `btn` per task area; every other action is `btn ghost` (dark enamel). Buttons sit on a lip and
+  sink into it when pressed (transform only). Cards: 2px outline with a heavier bottom edge, never soft shadows.
 - Use the real brand art in `assets/brand/` (logo, Bing and Beti, guild emoji). Never redraw or fake it.
 - Icons: Tabler only, inline SVG, from `https://api.iconify.design/tabler/<name>.svg`.
 - Motion: GSAP 3.15.0 from jsDelivr with SRI, following DESIGN.md's Motion section (one intro, one reveal,
