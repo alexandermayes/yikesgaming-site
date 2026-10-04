@@ -291,6 +291,11 @@ html[data-season="halloween"] .season-deco::before, html[data-season="halloween"
   background: url("/assets/brand/web.svg") no-repeat center / contain; }
 .season-deco::before { top: 0; left: 0; }
 .season-deco::after { right: 0; bottom: 0; transform: rotate(180deg); }
+/* Winter (Dec 1 to Jan 6): icicles from a snowy eave in the top corner, a snowdrift in the opposite one; the same faint
+   white line art as Halloween's webs. */
+html[data-season="winter"] .season-deco::before, html[data-season="winter"] .season-deco::after { content: ""; position: absolute; width: min(38vw, 360px); aspect-ratio: 1; z-index: -1; pointer-events: none; opacity: .24; }
+html[data-season="winter"] .season-deco::before { background: url("/assets/brand/winter-top.svg") no-repeat center / contain; }
+html[data-season="winter"] .season-deco::after { background: url("/assets/brand/winter-bottom.svg") no-repeat center / contain; transform: none; }
 
 /* Motion (GSAP) */
 .js-anim [data-intro] { visibility: hidden; }

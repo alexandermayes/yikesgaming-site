@@ -59,6 +59,8 @@ at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready
   - `lockup.png`: Bing (bigfoot) and Beti (yeti) above the logo, the mascot moment on the home page.
   - `stickers/*.png`: real guild emoji, for the sticker wall.
   - `web.svg`: spider-web corners from the Halloween banner. Halloween only (see Seasonal theming).
+  - `winter-top.svg` / `winter-bottom.svg`: icicles from a snowy eave plus snowflakes, and a snowdrift for the opposite
+    corner. Winter only (Dec 1 to Jan 6). Same faint white line art as the webs.
   - `favicon-*.png`, `banner.jpg`: from the guild icon and banner.
 
 ## Color (single dark theme)
