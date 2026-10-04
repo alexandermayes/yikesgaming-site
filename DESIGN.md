@@ -7,6 +7,13 @@ New pages link that file and follow these rules, so the site stays one design as
 https://www.figma.com/design/NPB8kVk568RPWnkJNLd8p1/Big-Yikes-Design-System (Getting started page). When
 Figma and this file disagree, Figma wins; update this file and brand.css to match.
 
+**Status:** the home page (`index.html`) is an under-construction placeholder. The full home page in progress lives
+at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready. Words follow the
+`big-yikes-voice` skill.
+
+**Checks before shipping:** `npx impeccable detect <url>` (desktop and `--viewport 390x844`) and an axe-core run
+(WCAG 2.1 AA) should both come back clean; they did on 2026-10-04 for every page and every Longhouse tab.
+
 ## Identity
 
 - **Subject:** `<Big Yikes>`, a gaming community of about 400 people. WoW first (it started on Grobbulus, US),
