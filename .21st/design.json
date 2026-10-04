@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "project": {
+    "name": "yikesgaming-site",
+    "productType": "Gaming community website (Big Yikes guild): home page, Valheim server join guide, Valheim Hall of Fame",
+    "stack": ["static HTML", "hand-written CSS (assets/css/brand.css)", "vanilla JS", "GSAP 3.15 for one page-load intro", "GitHub Pages"]
+  },
+  "sources": {
+    "tokens": ["assets/css/brand.css"],
+    "components": ["assets/css/brand.css", "assets/js/progress.js", "assets/js/site.js"],
+    "assets": ["assets/brand", "assets/brand/stickers", "assets/valheim"],
+    "instructions": ["DESIGN.md", ".claude/skills/big-yikes-design/SKILL.md", ".claude/skills/big-yikes-voice/SKILL.md"]
+  },
+  "design": {
+    "colorMode": "dark-only",
+    "colors": {
+      "ground": "#090908",
+      "ground-2": "#10100E",
+      "surface": "#171715",
+      "surface-2": "#222220",
+      "ink": "#FBFBF6",
+      "muted": "#B4B4AB",
+      "line": "#2E2E2A",
+      "line-strong": "#66665E",
+      "yikes (brand yellow: primary action, focus, selected, reached/earned only)": "#FFCD00",
+      "yikes-hover": "#FFD633",
+      "yikes-lip (edge under yellow buttons)": "#B38F00",
+      "yikes-ink (text on yellow)": "#090908",
+      "online (status, always with a word)": "#3DDC84",
+      "danger (status, always with a word)": "#F05252"
+    },
+    "typography": {
+      "display": "Lilita One, single weight (never bold it); headlines only",
+      "body": "Nunito 400-900; buttons and labels 800, uppercase, letter-spacing .07em",
+      "mono": "JetBrains Mono 600, for codes, IPs and commands only",
+      "scale": "meta 14/20, body 17/26, lead 20/30, title 26/30, hero clamp(2.4rem,5.6vw,3.25rem), poster clamp(2.8rem,7.5vw,5.25rem)"
+    },
+    "spacing": { "scale": "6, 12, 20, 32, 56, 96px", "pageGutter": "24px desktop, 16px phone", "readingWidth": "720px for guide pages" },
+    "radius": { "control": "14px", "card": "16px", "badge": "7px (squared, never a pill)" },
+    "shadows": {
+      "tactile": "no soft drop shadows on UI. Buttons sit on a solid 4px lip (box-shadow: 0 4px 0 <darker edge>) and sink on :active with translateY(4px)",
+      "cards": "2px outline (--line) with a heavier bottom edge (border-bottom-width: 6px)"
+    },
+    "motion": { "feedback": "120ms ease", "rule": "one orchestrated page-load intro at most; motion otherwise only answers a user action; honour prefers-reduced-motion" },
+    "density": "comfortable"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [
+      ".btn (yellow primary on a lip), .btn.ghost (outlined secondary), .btn.small",
+      ".badge (.hot, .good, .bad): squared uppercase label token",
+      ".live + .dot (.off): status line, always with words",
+      "progress kit: .journey/.node/.coin (reached, next, locked), .trophies/.trophy (earned, locked), .meters/.bar",
+      ".key keycaps, .mono codelines with a copy button (data-copy)",
+      "details/summary troubleshooting rows with an icon and a chevron"
+    ],
+    "patterns": [
+      "where you are (navigation) = the icon sits in a raised yellow coin, or a small coin before a text label; which option is picked (segmented, tabs, chips) = a lit key: solid near-white fill, dark text, its own lip. Never tint+outline, never a side stripe",
+      "completed/reached = raised yellow coin + green check badge; next = dashed yellow ring; locked = sunken silhouette + lock",
+      "real Discord UI snippets as product imagery (Discord colours only inside the snippet)",
+      "Valheim wiki inventory icons for in-game things (assets/valheim)"
+    ]
+  },
+  "constraints": {
+    "must": [
+      "keep Big Yikes yellow #FFCD00 and the charcoal/near-black canvas; keep the logos, Bing and Beti mascots and stickers",
+      "one yellow primary action per task area",
+      "status always in words, never colour alone",
+      "touch targets >= 44px; visible yellow focus ring",
+      "works at 390px wide with no horizontal scroll",
+      "plain HTML/CSS/JS output that can live in a static page (no React runtime on the live site)",
+      "copy in the Big Yikes voice: plain, warm, a little funny, sentence case, no hype"
+    ],
+    "avoid": [
+      "side-stripe accents on cards, rows or selectors (left border/inset shadow stripes)", "tinted fill + coloured outline as a selected state",
+      "progress states that look 'selected' rather than completed",
+      "pill badges, soft grey drop shadows, gradient washes, glassmorphism",
+      "generic shadcn/SaaS card grids, numbered 01/02/03 markers on non-sequences, tracked uppercase eyebrows above every heading",
+      "indigo/violet accents, cream backgrounds, serif display type",
+      "decorative motion on scroll; fade-up on every section"
+    ]
+  },
+  "decisions": [
+    { "date": "2026-10-04", "decision": "Design system v4 'tactile': Duolingo product UI owns the component language; Discord lends headline scale and product snippets", "source": "DESIGN.md" },
+    { "date": "2026-10-03", "decision": "v4.5 palette: near-black canvas #090908 and neutral enamel; the old greys read washed out", "source": "user feedback" }
+  ],
+  "evidence": [
+    { "fact": "tokens and components", "source": "assets/css/brand.css" },
+    { "fact": "reference lock, decision ledger, ship checks", "source": "DESIGN.md" }
+  ],
+  "generatedAt": "2026-10-04T06:55:51.008Z"
+}

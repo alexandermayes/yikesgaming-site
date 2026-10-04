@@ -17,7 +17,7 @@ Linear and Kraken (settings), plus 404 and leaderboard patterns.
 - **Primary: Duolingo's product UI.** A mascot-led brand with tactile controls, which is what the Figma kit's
   "Tactile" name points at. Preserve: buttons on a darker lip that sink when pressed; 2px outlines with a heavier
   bottom edge instead of shadows; bold uppercase tracked button labels; thick rounded progress bars and medal
-  ranks; a left navigation rail with icon + label where the active item is tinted and outlined; mascot art as the
+  ranks; a left navigation rail with icon + label where the active item's icon sits in a raised yellow coin; mascot art as the
   main imagery.
 - **Borrow only, from Discord:** headline scale (one heavy display face, big) and real product snippets used as
   imagery (a Yikesheim feed post, a Longhouse panel) instead of abstract graphics.
@@ -101,8 +101,13 @@ keeps Valheim's own colors because it imitates the game UI. WoW class colors app
 
 ## Components (in brand.css)
 
-- `site-head` with `wordmark`, `site-nav` (selected page: `aria-current="page"`, yellow underline on desktop,
-  yellow left bar in the mobile menu) and `menu-toggle`.
+- `site-head` with `wordmark`, `site-nav` (selected page: `aria-current="page"`, a small raised yellow coin before
+  the label) and `menu-toggle`.
+- **Selected states (v4.6).** Tinted fill + coloured outline read as generic AI UI (user feedback), same as side
+  stripes, so neither is used. *Where you are* (navigation): the item's icon sits in a raised yellow coin (Longhouse
+  rail), or a small coin precedes a text label (site nav). *Which option is picked* (segmented controls, file tabs,
+  day chips): a lit key, solid near-white with dark text on its own lip. Completed/reached keep the progress kit's
+  raised gold coin + green check seal.
 - `btn`: yellow on a darker lip. **One per task area.** `btn ghost` / `btn secondary`: dark enamel with a 2px
   outline and lip for every other action. Pressing sinks the button into its lip (transform only, no layout
   shift); hover lightens the fill in 120ms. `btn small` is 44px tall.
