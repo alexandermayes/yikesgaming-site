@@ -200,12 +200,14 @@ details > div { padding-bottom: 14px; color: var(--muted); }
 
 .footer { margin-top: var(--gap-5); padding-top: var(--gap-3); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-sm); }
 
-/* Seasonal spider-web corners (from the guild's Halloween banner). Decorative only. */
-.webs { position: relative; isolation: isolate; }
-.webs::before, .webs::after { content: ""; position: absolute; width: min(38vw, 360px); aspect-ratio: 1; z-index: -1; pointer-events: none; opacity: .22;
+/* Seasonal decorations. Big Yikes themes for holidays: assets/js/season.js sets <html data-season>, and each season's
+   decoration only draws inside it. .season-deco marks a section that can carry one. */
+.season-deco { position: relative; isolation: isolate; }
+/* Halloween: spider-web corners from the guild's Halloween banner. */
+html[data-season="halloween"] .season-deco::before, html[data-season="halloween"] .season-deco::after { content: ""; position: absolute; width: min(38vw, 360px); aspect-ratio: 1; z-index: -1; pointer-events: none; opacity: .22;
   background: url("/assets/brand/web.svg") no-repeat center / contain; }
-.webs::before { top: 0; left: 0; }
-.webs::after { right: 0; bottom: 0; transform: rotate(180deg); }
+.season-deco::before { top: 0; left: 0; }
+.season-deco::after { right: 0; bottom: 0; transform: rotate(180deg); }
 
 /* Motion (GSAP) */
 .js-anim [data-intro] { visibility: hidden; }

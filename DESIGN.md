@@ -24,7 +24,7 @@ at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready
   - `logo-head.png`: the same logo with the "GROBBULUS • US" line (Figma "Big Yikes Head txt"), for large use only.
   - `lockup.png`: Bing (bigfoot) and Beti (yeti) above the logo, the mascot moment on the home page.
   - `stickers/*.png`: real guild emoji, for the sticker wall.
-  - `web.svg`: spider-web corners from the Halloween banner (seasonal, decorative, 20% opacity).
+  - `web.svg`: spider-web corners from the Halloween banner. Halloween only (see Seasonal theming).
   - `favicon-*.png`, `banner.jpg`: from the guild icon and banner.
 
 ## Color (single dark theme)
@@ -68,7 +68,16 @@ keeps Valheim's own colors because it imitates the game UI. WoW class colors app
 - `btn`: yellow enamel primary. **One per task area.** `btn ghost` / `btn secondary`: dark enamel for every
   other action. `btn small` is 44px tall. Feedback is 120ms color and shadow only: nothing moves.
 - `card` + `status` + `field` (copy buttons via `data-copy`), `steps`, `key` (keycap for game menu buttons),
-  `tooltip` (the Valheim item tooltip), `note`, `details` (FAQ rows), `footer`, `live` + `dot`, `webs`.
+  `tooltip` (the Valheim item tooltip), `note`, `details` (FAQ rows), `footer`, `live` + `dot`, `season-deco`.
+
+## Seasonal theming
+
+Big Yikes themes for holidays (the guild icon and banner change too), so seasonal art is never part of the base design.
+`assets/js/season.js` sets `<html data-season>` from the date (Halloween: Oct 1 to Nov 1; winter: Dec 1 to Jan 6) and
+decorations only draw under `html[data-season="…"]` on sections marked `.season-deco`. To add a holiday: add its
+date range to `SEASONS`, its art to `assets/brand/`, and an `html[data-season="name"] .season-deco::before/::after` rule.
+Preview with `?season=halloween` or `?season=none`. Link previews (og images) stay season-neutral because Discord
+caches them.
 
 ## Motion (GSAP 3.15)
 
