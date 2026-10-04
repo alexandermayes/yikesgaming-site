@@ -84,6 +84,7 @@
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap">
     <a class="wordmark" href="/" aria-label="Big Yikes home"><img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334"></a>
@@ -93,7 +94,7 @@
 </header>
 <div class="page">
 
-  <main>
+  <main id="main">
     <h1>Yikesheim Hall of Fame</h1>
     <p class="lede" id="lede">Who's on, which bosses have fallen, and who's carrying the clan.</p>
 
@@ -132,7 +133,8 @@
   function icon(name, size) { return '<img class="vi" src="/assets/valheim/' + name + '.png" alt="" width="' + size + '" height="' + size + '" loading="lazy">'; }
   function avatar(name) {
     var h = 0; for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
-    var initials = name.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+    var words = name.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean);
+    var initials = (words.length > 1 ? words[0][0] + words[words.length - 1][0] : (words[0] || '?').slice(0, 2)).toUpperCase();  // first + last word
     return '<span class="avatar" style="--c:' + TINTS[h % TINTS.length] + '" aria-hidden="true">' + esc(initials) + '</span>';
   }
   function trophy(b, label, down) { return '<div class="trophy' + (down ? ' down' : '') + '">' + icon(slug(b), 52) + '<b>' + b + '</b><span>' + label + '</span></div>'; }

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Page not found · Big Yikes</title>
+<meta name="theme-color" content="#101110">
+<link rel="icon" href="/assets/brand/favicon-64.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
+<script src="/assets/js/season.js"></script>
+<link rel="stylesheet" href="/assets/css/brand.css">
+<style>
+  body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+  .lost { display: grid; place-items: center; text-align: center; padding-block: 48px 72px; }
+  .lost .wrap { display: grid; justify-items: center; }
+  .lost img.bing { width: 168px; height: auto; filter: drop-shadow(0 16px 24px rgb(0 0 0 / .6)); }
+  .lost h1 { margin-top: var(--gap-3); }
+  .lost .lede { margin-inline: auto; max-width: 40ch; }
+  .lost code { font-size: .85em; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px 16px; justify-content: center; margin-top: var(--gap-4); }
+  @media (max-width: 600px) { .cta-row .btn { flex: 1 1 100%; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="Big Yikes home"><img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334"></a>
+    <nav class="site-nav" id="site-nav" aria-label="Site" style="display:flex"><a href="/valheim/">Valheim</a><a href="/valheim/hall/">Hall of Fame</a></nav>
+  </div>
+</header>
+<main class="lost season-deco" id="main">
+  <div class="wrap">
+    <img class="bing" src="/assets/brand/stickers/bingoof.png" alt="Bing the bigfoot saying OOF" width="128" height="128">
+    <h1>This page wiped.</h1>
+    <p class="lede">There's nothing at <code id="path"></code>. It happens to the best raid groups. Run it back from one of these:</p>
+    <div class="cta-row">
+      <a class="btn" href="/">Back to Big Yikes</a>
+      <a class="btn ghost" href="/valheim/">Join Yikesheim</a>
+    </div>
+  </div>
+</main>
+<script>document.getElementById('path').textContent = location.pathname;</script>
+</body>
+</html>
