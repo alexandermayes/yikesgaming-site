@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Big Yikes</title>
+<meta name="description" content="Big Yikes is a gaming community of about 400 people. World of Warcraft first, plus our own Valheim server. Join us on Discord.">
+<meta name="theme-color" content="#101110">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Big Yikes">
+<meta property="og:title" content="Big Yikes">
+<meta property="og:description" content="We wipe. We laugh. We pull again. A gaming community of about 400 people, World of Warcraft first.">
+<meta property="og:url" content="https://yikesgaming.com/preview/">
+<meta property="og:image" content="https://yikesgaming.com/assets/img/og-home-v1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/brand/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/brand.css">
+<style>
+  /* Home: stages, not cards. Each section is a full-width band. */
+  .stage { padding-block: var(--gap-6); }
+  .stage.band { background: var(--ground-2); border-block: 1px solid var(--line); }
+  .stage h2 { font-size: var(--fs-hero); line-height: 1.07; letter-spacing: -.01em; margin-bottom: var(--gap-4); }
+  .hero { padding-block: clamp(48px, 9vw, 120px) clamp(56px, 9vw, 110px); overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr); gap: var(--gap-5); align-items: center; }
+  .hero h1 { font-size: var(--fs-poster); font-weight: 900; line-height: .98; letter-spacing: -.02em; }
+  .hero .lede { max-width: 46ch; margin-top: var(--gap-3); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; margin-top: var(--gap-4); }
+  .hero .live { margin-top: var(--gap-3); }
+  .mascots { position: relative; justify-self: center; width: min(100%, 360px); }
+  .mascots img { width: 100%; height: auto; filter: drop-shadow(0 24px 40px rgb(0 0 0 / .65)); }
+  .mascots figcaption { text-align: center; color: var(--muted); font-size: var(--fs-sm); margin-top: 10px; }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .mascots { order: -1; width: min(70%, 300px); } }
+
+  .play { display: grid; grid-template-columns: 1fr 1fr; }
+  .play > div { padding: 0 var(--gap-5) 0 0; }
+  .play > div + div { padding: 0 0 0 var(--gap-5); border-left: 1px solid var(--line); }
+  @media (max-width: 860px) { .play { grid-template-columns: 1fr; gap: var(--gap-5); } .play > div, .play > div + div { padding: 0; border: 0; } .play > div + div { border-top: 1px solid var(--line); padding-top: var(--gap-5); } }
+  .play h3 { font-family: var(--display); font-weight: 700; font-size: var(--fs-xl); line-height: 32px; margin-bottom: var(--gap-2); }
+  .play p { color: var(--muted); }
+  .classes { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: var(--gap-3) 0 0; padding: 0; list-style: none; font-size: var(--fs-sm); font-weight: 600; }
+  .classes li { display: inline-flex; align-items: center; gap: 6px; }
+  .classes i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .play .cta-row { margin-top: var(--gap-3); }
+  .stat-line { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: var(--fs-sm); font-weight: 600; margin-top: var(--gap-2); }
+  .stat-line b { color: var(--ink); }
+  /* Boss trophies (Valheim inventory art, assets/valheim): grey until the clan kills that boss. */
+  .trophies { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: var(--gap-3) 0 0; padding: 0; }
+  .trophies li { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; }
+  .trophies img { width: 40px; height: 40px; filter: grayscale(1) drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: .75; }
+  .trophies li.down { border-color: rgb(255 205 0 / .55); background: rgb(255 205 0 / .07); }
+  .trophies li.down img { filter: drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: 1; }
+  .trophy-note { color: var(--muted); font-size: var(--fs-sm); line-height: 20px; margin-top: 8px; }
+
+  .wall { position: relative; min-height: 440px; margin-top: var(--gap-4); }
+  .wall img { position: absolute; width: clamp(72px, 9vw, 118px); height: auto; filter: drop-shadow(0 6px 0 #0A0A0A) drop-shadow(0 14px 18px rgb(0 0 0 / .5)); }
+  @media (max-width: 720px) {
+    .wall { min-height: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .wall img { position: static; width: 74px; transform: rotate(var(--r, 0deg)); }
+    .wall img:last-child { display: none; }
+  }
+  @media (max-width: 600px) { .cta-row .btn { flex: 1 1 100%; } }
+  .wall-copy { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--gap-3); }
+  .wall-copy h2 { margin: 0; max-width: 16ch; }
+  .wall-copy p { color: var(--muted); max-width: 40ch; }
+
+  .tools { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .tools li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gap-2) var(--gap-4); align-items: center; padding: var(--gap-3) 0; border-bottom: 1px solid var(--line); }
+  .tools h3 { margin-bottom: 4px; }
+  .tools p { color: var(--muted); margin: 0; }
+  @media (max-width: 560px) { .tools li { grid-template-columns: 1fr; } }
+
+  .site-foot { padding-block: var(--gap-5); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-sm); }
+  .site-foot .wrap { display: flex; flex-wrap: wrap; gap: var(--gap-3); align-items: center; justify-content: space-between; }
+  .site-foot img { height: 36px; width: auto; }
+  .site-foot nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .site-foot a { color: var(--muted); }
+</style>
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    document.documentElement.classList.add('js-anim');
+    setTimeout(function () { if (!window.__introStarted) document.documentElement.classList.remove('js-anim'); }, 2500);
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" integrity="sha384-SWJ0lLVRoipvHh59xj0pL7uC7Ih51F+5smaFtrG+2nr+TlDZU5SYJHmxfolbeNTr" crossorigin="anonymous" defer></script>
+<script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="Big Yikes home"><img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334"></a>
+    <button class="btn small ghost menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Site">
+      <a href="/valheim/">Valheim</a>
+      <a href="/valheim/hall/">Hall of Fame</a>
+      <a class="btn small" href="https://discord.gg/bigyikes">Join the Discord</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero webs" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div>
+        <h1 id="hero-title" data-intro>We wipe. We laugh. We pull again.</h1>
+        <p class="lede" data-intro>Big Yikes is a gaming community of about <span data-members>400</span> people. World of Warcraft first, plus our own Valheim server and whatever else the Discord talks us into.</p>
+        <div class="cta-row" data-intro>
+          <a class="btn" href="https://discord.gg/bigyikes">Join the Discord</a>
+          <a class="btn ghost" href="/valheim/">Play on Yikesheim</a>
+        </div>
+        <p class="live" data-intro><span class="dot" aria-hidden="true"></span><span data-online>Open to new members</span></p>
+      </div>
+      <figure class="mascots" data-intro>
+        <img src="/assets/brand/lockup.png" alt="Bing the bigfoot and Beti the yeti, the Big Yikes mascots, above the Big Yikes logo" width="274" height="278">
+        <figcaption>Bing and Beti. They look like this most raid nights.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="stage band" aria-labelledby="play-title">
+    <div class="wrap">
+      <h2 id="play-title" style="margin-top:0">What we play</h2>
+      <div class="play">
+        <div>
+          <h3>World of Warcraft</h3>
+          <p>Where Big Yikes started, on Grobbulus (US), and where most of us still are: raids, dungeons, too many alts, and the occasional fresh realm. Grab your class role when you join and you'll find your people fast.</p>
+          <ul class="classes" aria-label="Class roles in the Discord">
+            <li><i style="background:#c41e3a"></i>Death Knight</li><li><i style="background:#a330c9"></i>Demon Hunter</li><li><i style="background:#ff7d0a"></i>Druid</li>
+            <li><i style="background:#33937f"></i>Evoker</li><li><i style="background:#abd473"></i>Hunter</li><li><i style="background:#40c7eb"></i>Mage</li>
+            <li><i style="background:#00ff96"></i>Monk</li><li><i style="background:#f58cba"></i>Paladin</li><li><i style="background:#ffffff"></i>Priest</li>
+            <li><i style="background:#fff569"></i>Rogue</li><li><i style="background:#0070de"></i>Shaman</li><li><i style="background:#8787ed"></i>Warlock</li><li><i style="background:#c79c6e"></i>Warrior</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Valheim</h3>
+          <p>Yikesheim is our always-on Valheim Plus server: double drops, half the carry weight, and everyone starts with a fresh character, so nobody shows up in endgame gear.</p>
+          <div class="stat-line" id="vh-line"><span class="live"><span class="dot" aria-hidden="true"></span><span id="vh-state">Always on</span></span><span id="vh-day"></span><span id="vh-players"></span></div>
+          <ul class="trophies" id="vh-bosses" aria-label="Valheim bosses"><li data-boss="Eikthyr"><img src="/assets/valheim/eikthyr.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Eikthyr</span></li><li data-boss="The Elder"><img src="/assets/valheim/the-elder.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">The Elder</span></li><li data-boss="Bonemass"><img src="/assets/valheim/bonemass.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Bonemass</span></li><li data-boss="Moder"><img src="/assets/valheim/moder.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Moder</span></li><li data-boss="Yagluth"><img src="/assets/valheim/yagluth.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Yagluth</span></li><li data-boss="The Queen"><img src="/assets/valheim/the-queen.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">The Queen</span></li><li data-boss="Fader"><img src="/assets/valheim/fader.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Fader</span></li></ul>
+          <p class="trophy-note" id="vh-boss-note">Seven bosses stand between the clan and the end of the world.</p>
+          <div class="cta-row"><a class="btn small" href="/valheim/">How to join</a><a class="btn small ghost" href="/valheim/hall/">Hall of Fame</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage" aria-labelledby="wall-title">
+    <div class="wrap">
+      <div class="wall-copy">
+        <h2 id="wall-title">194 custom emoji. A few favorites.</h2>
+        <p>Bing and Beti have a reaction for every wipe, every loot drama and every "one more pull". Come use them.</p>
+      </div>
+      <div class="wall" id="wall" aria-label="Big Yikes custom emoji">
+        <img src="/assets/brand/stickers/bingoof.png" alt="Bing: OOF" style="left:3%;top:8%;--r:-9deg" width="128" height="128">
+        <img src="/assets/brand/stickers/bigyikes.png" alt="Big Yikes logo" style="left:17%;top:46%;--r:6deg" width="128" height="92">
+        <img src="/assets/brand/stickers/beti.png" alt="Beti" style="left:29%;top:4%;--r:4deg" width="128" height="128">
+        <img src="/assets/brand/stickers/lfg.png" alt="LFG" style="left:40%;top:52%;--r:-5deg" width="128" height="128">
+        <img src="/assets/brand/stickers/bingsurprised.png" alt="Bing, surprised" style="left:51%;top:10%;--r:-7deg" width="128" height="128">
+        <img src="/assets/brand/stickers/yikestm.png" alt="Yikes TM" style="left:62%;top:58%;--r:8deg" width="128" height="73">
+        <img src="/assets/brand/stickers/bingandbeti.png" alt="Bing and Beti" style="left:71%;top:6%;--r:5deg" width="128" height="128">
+        <img src="/assets/brand/stickers/rip_tombstone.png" alt="RIP" style="left:84%;top:40%;--r:-6deg" width="128" height="128">
+        <img src="/assets/brand/stickers/joinvc.png" alt="Join VC" style="left:8%;top:68%;--r:4deg" width="128" height="128">
+        <img src="/assets/brand/stickers/bingdead.png" alt="Bing: RIP" style="left:30%;top:66%;--r:-4deg" width="128" height="128">
+        <img src="/assets/brand/stickers/bingwink.png" alt="Bing, winking" style="left:52%;top:62%;--r:7deg" width="128" height="128">
+        <img src="/assets/brand/stickers/lfm.png" alt="LFM" style="left:88%;top:4%;--r:9deg" width="128" height="128">
+        <img src="/assets/brand/stickers/yikesleft.png" alt="Yikes" style="left:76%;top:66%;--r:-8deg" width="128" height="128">
+      </div>
+      <div class="cta-row"><a class="btn" href="https://discord.gg/bigyikes">Join the Discord</a></div>
+    </div>
+  </section>
+
+  <section class="stage band" aria-labelledby="tools-title">
+    <div class="wrap">
+      <h2 id="tools-title" style="margin-top:0">Guild tools</h2>
+      <ul class="tools">
+        <li><div><h3>Big Yikes Essentials</h3><p>The WeakAura pack our raiders run, kept up to date by Zevv.</p></div><a class="btn small ghost" href="https://wago.io/6cL-70vN-">Get it on Wago</a></li>
+        <li><div><h3>Yikesheim mod pack</h3><p>Everything you need for our Valheim server in one zip, or one PowerShell command.</p></div><a class="btn small ghost" href="/valheim/">Install guide</a></li>
+        <li><div><h3>Hall of Fame</h3><p>Who's online on Yikesheim, which bosses have fallen, and who's carrying the clan this week.</p></div><a class="btn small ghost" href="/valheim/hall/">Open</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334">
+    <nav aria-label="Footer"><a href="https://discord.gg/bigyikes">discord.gg/bigyikes</a><a href="/valheim/">Valheim</a><a href="/valheim/hall/">Hall of Fame</a></nav>
+    <span>Bing and Beti approve this website. Valheim icons &copy; Iron Gate AB, via the <a href="https://valheim.fandom.com/wiki/Valheim_Wiki">Valheim Wiki</a>.</span>
+  </div>
+</footer>
+<div id="live" class="sr-only" role="status" aria-live="polite"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Live numbers from Longhouse (Discord counts + Yikesheim status). The page reads fine without them.
+  fetch('https://hq.yikesgaming.com/public/stats.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+    if (d.discord && d.discord.members) {
+      document.querySelectorAll('[data-members]').forEach(function (el) { el.textContent = d.discord.members; });
+      if (d.discord.online) document.querySelector('[data-online]').textContent = d.discord.online + ' online in the Discord right now';
+    }
+    if (d.enabled) {
+      document.getElementById('vh-state').textContent = d.online ? 'Online' : 'Offline';
+      if (!d.online) document.querySelector('#vh-line .dot').classList.add('off');
+      if (d.day != null) document.getElementById('vh-day').innerHTML = 'Day <b>' + d.day + '</b>';
+      var count = d.playerCount != null ? d.playerCount : d.players.length;
+      document.getElementById('vh-players').innerHTML = '<b>' + count + '</b> on now';
+      if (d.updated) {   // Skald is tracking world progress
+        var down = 0;
+        document.querySelectorAll('#vh-bosses li').forEach(function (li) {
+          var name = li.getAttribute('data-boss'), dead = (d.bosses || []).indexOf(name) >= 0;
+          li.classList.toggle('down', dead); if (dead) down++;
+          li.querySelector('.sr-only').textContent = name + (dead ? ', defeated' : ', still standing');
+        });
+        document.getElementById('vh-boss-note').textContent = down + ' of 7 bosses down on Yikesheim.';
+      }
+    }
+  }).catch(function () {});
+
+  // Stickers slap onto the wall when it scrolls into view.
+  var wall = document.getElementById('wall');
+  var imgs = wall.querySelectorAll('img');
+  var motion = window.gsap && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  imgs.forEach(function (img) { img.style.transform = 'rotate(' + getComputedStyle(img).getPropertyValue('--r') + ')'; });
+  if (!motion || !('IntersectionObserver' in window)) return;
+  gsap.set(imgs, { autoAlpha: 0 });
+  var io = new IntersectionObserver(function (es) {
+    if (!es[0].isIntersecting) return;
+    io.disconnect();
+    gsap.fromTo(imgs, { autoAlpha: 0, scale: 1.6, rotation: function (i) { return (i % 2 ? 1 : -1) * 18; } },
+      { autoAlpha: 1, scale: 1, rotation: function (i) { return parseFloat(getComputedStyle(imgs[i]).getPropertyValue('--r')) || 0; },
+        duration: 0.32, ease: 'back.out(2.2)', stagger: { each: 0.06, from: 'random' } });
+  }, { threshold: 0.3 });
+  io.observe(wall);
+});
+</script>
+<script>
+(function toggleMenu() {
+  var b = document.querySelector('.menu-toggle'), n = document.getElementById('site-nav');
+  if (!b || !n) return;
+  b.addEventListener('click', function () { var open = n.classList.toggle('open'); b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Close' : 'Menu'; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && n.classList.contains('open')) { n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.textContent = 'Menu'; b.focus(); } });
+})();
+</script>
+</body>
+</html>

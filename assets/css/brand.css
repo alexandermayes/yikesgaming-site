@@ -155,7 +155,7 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 .dot.off { background: var(--danger); box-shadow: 0 0 0 4px rgb(240 82 82 / .18); }
 
 /* Server card (Valheim guide): interactive (copy buttons), so it is a container */
-.card { margin-top: var(--gap-4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card); box-shadow: var(--shadow); overflow: hidden; }
+.card { margin-top: var(--gap-4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
 .status { display: flex; flex-wrap: wrap; gap: var(--gap-1) var(--gap-3); padding: var(--gap-2) 18px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: var(--fs-sm); font-weight: 600; }
 .status span { display: inline-flex; align-items: center; gap: 6px; }
 .status .online { color: var(--ink); }
@@ -180,7 +180,7 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 
 /* In-game tooltip: the Valheim page's bold element */
 .tooltip { max-width: 440px; background: var(--tip-bg); color: var(--tip-title); border: 1px solid var(--tip-edge); border-radius: 6px;
-  box-shadow: inset 0 0 0 3px var(--tip-bg), inset 0 0 0 4px rgb(255 255 255 / .06), var(--shadow); padding: 16px 18px; line-height: 1.45; }
+  box-shadow: inset 0 0 0 3px var(--tip-bg), inset 0 0 0 4px rgb(255 255 255 / .06); padding: 16px 18px; line-height: 1.45; }
 .tooltip .t-title { font-weight: 700; font-size: var(--fs-lg); }
 .tooltip .t-sub { color: var(--tip-sub); font-size: var(--fs-sm); margin-bottom: 10px; }
 .tooltip ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
