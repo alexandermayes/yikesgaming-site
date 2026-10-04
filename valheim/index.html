@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
-<script src="/assets/js/season.js?v=4.5"></script>
-<link rel="stylesheet" href="/assets/css/brand.css?v=4.5">
+<script src="/assets/js/season.js?v=4.7"></script>
+<link rel="stylesheet" href="/assets/css/brand.css?v=4.7">
 <style>
   /* Install routes: three ways in, each a tile with its Valheim tool */
   .routes { display: grid; gap: 10px; margin-top: 14px; }
@@ -44,6 +44,47 @@
   .t-ico.warn { color: #FFB454; }
   .t-q { min-width: 0; }
   .gmsg { color: #FFC873; text-shadow: 0 1px 0 #000, 0 0 8px rgb(0 0 0 / .7); }
+  /* Quest log: the four steps as a checklist you tick off. A finished step folds to one line with a raised coin and a
+     check seal (the progress kit's "reached"); the step to do next wears the dashed "next up" ring. Saved per browser. */
+  .q-progress { margin-bottom: var(--gap-3); }
+  #q-count { font-weight: 800; color: var(--muted); font-size: var(--fs-sm); }
+  #q-count b { color: var(--ink); font-size: 1rem; }
+  .quests { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  details.quest, details.quest:first-of-type { border: 2px solid var(--line); border-bottom-width: calc(var(--lip) + 2px); border-radius: var(--radius-card); background: var(--surface); }
+  .quest > summary { padding: 14px 16px; gap: 14px; min-height: 78px; border-radius: 14px; }
+  .q-coin { position: relative; flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: 1.5rem/1 var(--display);
+    background: var(--ground); border: 2px solid var(--line-strong); color: var(--muted); }
+  .quest.current .q-coin { background: var(--surface); border: 3px dashed var(--yikes); color: var(--yikes); }
+  .quest.done .q-coin { background: var(--yikes); border: 0; color: var(--yikes-ink); box-shadow: 0 var(--lip) 0 var(--yikes-lip); }
+  .quest.done .q-coin::after { content: ""; position: absolute; right: -5px; bottom: -3px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--surface);
+    background: var(--good-fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12l5 5L20 7'/%3E%3C/svg%3E") center / 12px no-repeat; }
+  .q-title { display: grid; gap: 2px; min-width: 0; }
+  .q-title h3 { margin: 0; }
+  .q-state { color: var(--muted); font-size: var(--fs-sm); font-weight: 700; }
+  .quest.current .q-state { color: var(--yikes); }
+  .quest.done .q-state { color: var(--good-ink); font-weight: 800; }
+  details.quest > .q-body { padding: 0 18px 18px 80px; color: var(--ink); }
+  @media (max-width: 560px) { details.quest > .q-body { padding-left: 16px; padding-right: 14px; } .quest > summary { padding-inline: 14px; }
+    .route { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; padding: 12px; } .route > .vi { width: 30px; height: 30px; } }
+  .q-tips { margin-top: 20px; }
+  .q-tips-h { font-weight: 800; color: var(--muted); font-size: var(--fs-sm); margin-bottom: 2px; }
+  .quest[open] .q-tips details:not([open]) > summary .icon { transform: none; }
+  .q-actions { margin-top: 18px; }
+  .q-finish { display: flex; gap: 16px; align-items: center; margin-top: 14px; padding: 16px 18px; border-radius: var(--radius-card);
+    background: var(--yikes); color: var(--yikes-ink); border: 2px solid var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); outline: none; }
+  .q-finish a { color: var(--yikes-ink); text-decoration-color: var(--yikes-ink); font-weight: 800; }
+  .q-finish img { width: 72px; height: 72px; flex: none; filter: drop-shadow(0 4px 0 #000); }
+  .q-finish h3 { margin: 0 0 4px; font-family: var(--display); font-weight: 400; font-size: var(--fs-xl); }
+  .q-finish p { margin: 0; }
+  .linkish { appearance: none; background: none; border: 0; padding: 0 4px; min-height: 44px; color: var(--muted); font: 800 var(--fs-sm) var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .linkish:hover { color: var(--ink); }
+  .coinbit { position: fixed; z-index: 70; width: 14px; height: 14px; border-radius: 50%; background: var(--yikes); box-shadow: inset 0 -3px 0 var(--yikes-lip), 0 0 0 2px #000; pointer-events: none; }
+  .msg-index { list-style: none; padding: 0; margin: var(--gap-2) 0 0; display: grid; gap: 8px; }
+  .msg-index a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 8px 14px; border-radius: 12px;
+    background: var(--surface); border: 2px solid var(--line); text-decoration: none; font-weight: 800; transition: border-color var(--ease); }
+  .msg-index a:hover { border-color: var(--line-strong); }
+  .msg-index .muted { font-size: var(--fs-sm); white-space: nowrap; }
+  .still { margin-top: var(--gap-3); }
   .title-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gap-3); align-items: center; }
   .title-row .title-badge { width: 168px; height: auto; filter: drop-shadow(0 14px 24px rgb(0 0 0 / .6)); }
   @media (max-width: 560px) { .title-row { grid-template-columns: 1fr; } .title-row .title-badge { order: -1; width: 132px; } }
@@ -58,7 +99,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" integrity="sha384-SWJ0lLVRoipvHh59xj0pL7uC7Ih51F+5smaFtrG+2nr+TlDZU5SYJHmxfolbeNTr" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js" integrity="sha384-QQ7Drnaxr6AM+cySvZNVNIFsvXLGtDLoS5tlUIt2XvIwnqtBtuD7A2KwqlSAWMi1" crossorigin="anonymous" defer></script>
-<script src="/assets/js/site.js?v=4.5" defer></script>
+<script src="/assets/js/site.js?v=4.7" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -82,7 +123,7 @@
 
     <section class="card" aria-label="Server details" data-intro>
       <div class="status">
-        <span class="online"><span class="dot" aria-hidden="true"></span>Online around the clock</span>
+        <span class="online" id="vh-live"><span class="dot" aria-hidden="true"></span><span id="vh-live-t">Online around the clock</span></span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm4 15h10m-8-4v4m6-4v4"/></svg>Steam on PC</span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2m1-17.87a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg>Up to 20 players</span>
         <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0M16 19h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/></svg>New characters only</span>
@@ -111,10 +152,15 @@
       </div>
     </section>
 
-    <h2>Four steps</h2>
-    <ol class="steps">
-      <li><div>
-        <h3>Install the mods</h3>
+    <h2 id="steps-title">Four steps</h2>
+    <div class="q-progress" id="q-progress" hidden>
+      <div class="meter-top"><span id="q-count" aria-live="polite"><b>0</b> of 4 done</span><button class="linkish" type="button" id="q-reset" hidden>Start over</button></div>
+      <div class="bar" aria-hidden="true"><span id="q-bar"></span></div>
+    </div>
+    <ol class="quests" aria-labelledby="steps-title">
+      <li><details class="quest" id="step-1" data-step="1" open>
+        <summary><span class="q-coin" aria-hidden="true">1</span><span class="q-title"><h3>Install the mods</h3><span class="q-state" data-hint="Pick one of three ways, about two minutes">Pick one of three ways, about two minutes</span></span><svg class="icon q-chev" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+        <div class="q-body">
         <p class="muted">Close Valheim first, then pick whichever way you like. All three install the same three mods: BepInEx, Valheim Plus and Runic Character Vault.</p>
         <div class="routes">
           <div class="route">
@@ -143,22 +189,87 @@
             </div>
           </div>
         </div>
-      </div></li>
-      <li><div>
-        <h3>Open Valheim and create a new character</h3>
+        <div class="q-tips">
+          <p class="q-tips-h">If something goes wrong here</p>
+              <details id="tip-windows-blocked-writing-to-the-valheim-folder">
+            <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Windows blocked writing to the Valheim folder</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Some PCs protect the Steam folder. Press the Windows key, type powershell, right-click it, choose <strong>Run as administrator</strong>, and paste the install command again.</p></div>
+          </details>
+              <details id="tip-can-i-play-on-xbox-or-game-pass">
+            <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">Can I play on Xbox or Game Pass?</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>No. Mods only work on the Steam PC version, and this server needs Valheim Plus.</p></div>
+          </details>
+              <details id="tip-i-want-to-play-unmodded-or-on-other-servers">
+            <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">I want to play unmodded or on other servers</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Run <span class="mono">irm https://yikesgaming.com/uninstall | iex</span> in PowerShell. It switches the mods off without deleting anything. Run the install command again to come back.</p></div>
+          </details>
+        </div>
+          <div class="q-actions"><button class="btn ghost q-done" type="button" data-label="Done, on to step 2" hidden>Done, on to step 2</button></div>
+        </div>
+      </details></li>
+      <li><details class="quest" id="step-2" data-step="2" open>
+        <summary><span class="q-coin" aria-hidden="true">2</span><span class="q-title"><h3>Open Valheim and create a new character</h3><span class="q-state" data-hint="A fresh character, just for Yikesheim">A fresh character, just for Yikesheim</span></span><svg class="icon q-chev" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+        <div class="q-body">
         <div class="path"><span class="key">Start Game</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Start</span></div>
         <p class="muted">Launch it from Steam like normal. Yikesheim only accepts brand-new characters, so make one just for this server. Your other characters stay exactly as they are for your own worlds.</p>
-      </div></li>
-      <li><div>
-        <h3>Join by address</h3>
+        <div class="q-tips">
+          <p class="q-tips-h">If something goes wrong here</p>
+              <details id="tip-yikesheim-needs-a-brand-new-character">
+            <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Yikesheim needs a brand-new character</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>You picked a character that has already played somewhere else. Go back, create a new character, and join with that one. Existing characters can't be brought over. That's the point: everyone starts on equal footing. Your old character isn't changed.</p></div>
+          </details>
+              <details id="tip-you-already-have-a-character-on-yikesheim">
+            <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">You already have a character on Yikesheim</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Each Steam account gets one character on this server. Select the character named in the message and join with it.</p></div>
+          </details>
+        </div>
+          <div class="q-actions"><button class="btn ghost q-done" type="button" data-label="Done, on to step 3" hidden>Done, on to step 3</button></div>
+        </div>
+      </details></li>
+      <li><details class="quest" id="step-3" data-step="3" open>
+        <summary><span class="q-coin" aria-hidden="true">3</span><span class="q-title"><h3>Join by address</h3><span class="q-state" data-hint="Join Game, then Join IP">Join Game, then Join IP</span></span><svg class="icon q-chev" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+        <div class="q-body">
         <div class="path"><span class="key">Join Game</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Join IP</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Connect</span></div>
-        <p class="muted">Copy the address above, paste it into the box, and click Connect.</p>
-      </div></li>
-      <li><div>
-        <h3>Enter the password</h3>
+        <p class="muted">Paste this into the box and click Connect.</p>
+        <div class="codeline"><span class="mono">valheim.yikesgaming.com</span>
+          <button class="btn small ghost" type="button" data-copy="valheim.yikesgaming.com" data-copy-name="Address"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></g></svg> Copy<template><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/></svg> Copied</template></button></div>
+        <div class="q-tips">
+          <p class="q-tips-h">If something goes wrong here</p>
+              <details id="tip-it-can-t-find-the-server">
+            <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It can't find the server</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Check the spelling: <span class="mono">valheim.yikesgaming.com</span>. If the name still doesn't work, use the server's IP instead: <span class="mono">149.28.193.152:2456</span>. It's the same server.</p></div>
+          </details>
+              <details id="tip-it-disconnects-right-after-connecting">
+            <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It disconnects right after connecting</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Your Valheim Plus is missing or a different version from the server's. Close Valheim and run the install command again. It always installs the exact versions the server uses.</p></div>
+          </details>
+              <details id="tip-incompatible-version">
+            <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Incompatible version</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Steam hasn't finished updating your Valheim, or Valheim just got a patch. After a patch, Valheim Plus can take a few days to catch up. The host will post in Discord when the server and installer are updated.</p></div>
+          </details>
+        </div>
+          <div class="q-actions"><button class="btn ghost q-done" type="button" data-label="Done, on to step 4" hidden>Done, on to step 4</button></div>
+        </div>
+      </details></li>
+      <li><details class="quest" id="step-4" data-step="4" open>
+        <summary><span class="q-coin" aria-hidden="true">4</span><span class="q-title"><h3>Enter the password</h3><span class="q-state" data-hint="It's pinned in #valheim on Discord">It's pinned in #valheim on Discord</span></span><svg class="icon q-chev" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+        <div class="q-body">
         <p class="muted">It's pinned in #valheim on Discord. Next time, Yikesheim is waiting in the <strong>Recent</strong> tab, so it's one click plus the password. The server keeps your Yikesheim character safe: when you quit, wait for <strong>Saved</strong> under the minimap first.</p>
-      </div></li>
+        <div class="q-tips">
+          <p class="q-tips-h">If something goes wrong here</p>
+              <details id="tip-invalid-password">
+            <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Invalid password</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+            <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #valheim.</p></div>
+          </details>
+        </div>
+          <div class="q-actions"><button class="btn ghost q-done" type="button" data-label="I'm in" hidden>I'm in</button></div>
+        </div>
+      </details></li>
     </ol>
+    <div class="q-finish" id="q-finish" tabindex="-1" hidden>
+      <img src="/assets/brand/stickers/bingandbeti.png" alt="" width="72" height="72">
+      <div><h3>You're in.</h3><p>Say hi in #valheim, and check the <a href="/valheim/hall/">Hall of Fame</a> to see who's on and what the guild has done so far.</p></div>
+    </div>
 
     <h2>What's different</h2>
     <p>The server sends its Valheim Plus settings when you join, so there's nothing to configure.</p>
@@ -178,44 +289,16 @@
       <div class="t-flavor">Bosses, biomes and progression play like normal Valheim.</div>
     </div>
 
-    <h2>Something went wrong?</h2>
-    <p class="muted">Find the message you saw in game, or the problem you're having.</p>
-    <details>
-      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Yikesheim needs a brand-new character</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>You picked a character that has already played somewhere else. Go back, create a new character, and join with that one. Existing characters can't be brought over. That's the point: everyone starts on equal footing. Your old character isn't changed.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">You already have a character on Yikesheim</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Each Steam account gets one character on this server. Select the character named in the message and join with it.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Windows blocked writing to the Valheim folder</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Some PCs protect the Steam folder. Press the Windows key, type powershell, right-click it, choose <strong>Run as administrator</strong>, and paste the install command again.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It disconnects right after connecting</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Your Valheim Plus is missing or a different version from the server's. Close Valheim and run the install command again. It always installs the exact versions the server uses.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Incompatible version</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Steam hasn't finished updating your Valheim, or Valheim just got a patch. After a patch, Valheim Plus can take a few days to catch up. The host will post in Discord when the server and installer are updated.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It can't find the server</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Check the spelling: <span class="mono">valheim.yikesgaming.com</span>. If the name still doesn't work, use the server's IP instead: <span class="mono">149.28.193.152:2456</span>. It's the same server.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Invalid password</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #valheim.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">I want to play unmodded or on other servers</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>Run <span class="mono">irm https://yikesgaming.com/uninstall | iex</span> in PowerShell. It switches the mods off without deleting anything. Run the install command again to come back.</p></div>
-    </details>
-    <details>
-      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">Can I play on Xbox or Game Pass?</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
-      <div><p>No. Mods only work on the Steam PC version, and this server needs Valheim Plus.</p></div>
-    </details>
+    <h2>In-game messages</h2>
+    <p class="muted">Each step has fixes for the problems people hit there. Find the message you saw and jump straight to its fix.</p>
+    <ul class="msg-index">
+      <li><a href="#tip-windows-blocked-writing-to-the-valheim-folder"><span class="gmsg">Windows blocked writing to the Valheim folder</span><span class="muted">Step 1</span></a></li>
+      <li><a href="#tip-yikesheim-needs-a-brand-new-character"><span class="gmsg">Yikesheim needs a brand-new character</span><span class="muted">Step 2</span></a></li>
+      <li><a href="#tip-you-already-have-a-character-on-yikesheim"><span class="gmsg">You already have a character on Yikesheim</span><span class="muted">Step 2</span></a></li>
+      <li><a href="#tip-incompatible-version"><span class="gmsg">Incompatible version</span><span class="muted">Step 3</span></a></li>
+      <li><a href="#tip-invalid-password"><span class="gmsg">Invalid password</span><span class="muted">Step 4</span></a></li>
+    </ul>
+    <p class="muted still">Still stuck? Ask in #valheim on Discord and someone will sort you out.</p>
   </main>
 
   <footer class="footer">
@@ -224,6 +307,83 @@
   </footer>
 </div>
 <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+<script>
+(function questLog() {
+  var KEY = 'yikesheim-steps', steps = [].slice.call(document.querySelectorAll('.quest')), done = {};
+  var count = document.getElementById('q-count'), bar = document.getElementById('q-bar'), reset = document.getElementById('q-reset'), finish = document.getElementById('q-finish');
+  var CHECK = '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/></svg>';
+  var smooth = window.matchMedia('(prefers-reduced-motion: no-preference)').matches ? 'smooth' : 'auto';
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+  var moves = function () { return window.gsap && smooth === 'smooth'; };
+  // Marking a step done stamps its coin; finishing all four throws a handful of gold coins.
+  function stamp(coin) { if (moves()) gsap.fromTo(coin, { scale: 1.45, rotation: -12 }, { scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(3)' }); }
+  function burst(card) {
+    if (!moves()) return;
+    var box = card.getBoundingClientRect(), bits = [];
+    for (var i = 0; i < 16; i++) {
+      var b = document.createElement('span'); b.className = 'coinbit'; b.setAttribute('aria-hidden', 'true');
+      b.style.left = (box.left + 52) + 'px'; b.style.top = (box.top + box.height / 2) + 'px';
+      document.body.appendChild(b); bits.push(b);
+    }
+    gsap.to(bits, { x: function () { return gsap.utils.random(-60, 260); }, y: function () { return gsap.utils.random(-140, -40); }, rotation: function () { return gsap.utils.random(-180, 180); },
+      duration: 0.5, ease: 'power2.out', stagger: 0.015 });
+    gsap.to(bits, { y: '+=180', autoAlpha: 0, duration: 0.6, ease: 'power2.in', delay: 0.45, stagger: 0.015, onComplete: function () { bits.forEach(function (b) { b.remove(); }); } });
+    gsap.fromTo(card, { scale: 0.96 }, { scale: 1, duration: 0.5, ease: 'back.out(2.5)' });
+  }
+  function paint() {
+    var n = 0, next = null;
+    steps.forEach(function (d) {
+      var isDone = !!done[d.dataset.step], st = d.querySelector('.q-state'), b = d.querySelector('.q-done');
+      if (isDone) n++; else if (!next) next = d;
+      d.classList.toggle('done', isDone);
+      st.textContent = isDone ? 'Done' : st.dataset.hint;
+      b.hidden = false;
+      b.innerHTML = isDone ? 'Mark as not done' : CHECK + ' ' + b.dataset.label;
+    });
+    steps.forEach(function (d) { d.classList.toggle('current', d === next); });
+    count.innerHTML = '<b>' + n + '</b> of ' + steps.length + ' done';
+    bar.style.transform = 'scaleX(' + n / steps.length + ')';
+    reset.hidden = !n; finish.hidden = n < steps.length;
+    return next;
+  }
+  steps.forEach(function (d) {
+    if (done[d.dataset.step]) d.open = false;
+    d.querySelector('.q-done').addEventListener('click', function () {
+      var s = d.dataset.step; done[s] = !done[s]; if (!done[s]) delete done[s]; save();
+      if (!done[s]) { paint(); return; }
+      d.open = false;
+      var next = paint();
+      stamp(d.querySelector('.q-coin'));
+      if (next) { next.open = true; next.scrollIntoView({ block: 'start', behavior: smooth }); next.querySelector('summary').focus({ preventScroll: true }); }
+      else { finish.scrollIntoView({ block: 'center', behavior: smooth }); finish.focus({ preventScroll: true }); setTimeout(function () { burst(finish); }, smooth === 'smooth' ? 350 : 0); }
+    });
+  });
+  reset.addEventListener('click', function () { done = {}; save(); steps.forEach(function (d) { d.open = true; }); paint(); steps[0].querySelector('summary').focus(); });
+  document.getElementById('q-progress').hidden = false;
+  paint();
+
+  // In-game message links open the step and the fix they point to.
+  function openTo(id) {
+    var el = document.getElementById(id); if (!el) return;
+    for (var d = el; d; d = d.parentElement) if (d.tagName === 'DETAILS') d.open = true;
+    el.scrollIntoView({ block: 'center', behavior: smooth }); el.querySelector('summary').focus({ preventScroll: true });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#tip-"]'); if (!a) return;
+    e.preventDefault(); openTo(a.getAttribute('href').slice(1)); history.replaceState(null, '', a.getAttribute('href'));
+  });
+  if (location.hash.indexOf('#tip-') === 0) openTo(location.hash.slice(1));
+
+  // Live server status from Longhouse (the card reads fine without it).
+  fetch('https://hq.yikesgaming.com/public/stats.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (s) {
+    if (!s.enabled) return;
+    var n = s.playerCount != null ? s.playerCount : (s.players || []).length;
+    document.getElementById('vh-live-t').textContent = s.online ? 'Online now, ' + n + ' playing' + (s.day != null ? ', day ' + s.day : '') : 'Offline right now';
+    if (!s.online) document.querySelector('#vh-live .dot').classList.add('off');
+  }).catch(function () {});
+})();
+</script>
 <script>
 (function toggleMenu() {
   var b = document.querySelector('.menu-toggle'), n = document.getElementById('site-nav');
