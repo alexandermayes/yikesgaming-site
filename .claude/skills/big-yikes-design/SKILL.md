@@ -10,14 +10,14 @@ Before writing any HTML or CSS in this repo:
 1. Read `DESIGN.md` (rules, tokens, components) and `assets/css/brand.css` (the implementation). The Figma file
    linked at the top of DESIGN.md is the source of truth.
 2. Start new pages from `valheim/index.html` (reading page) or `index.html` (stage page): copy the `<head>`
-   (Source Sans 3, brand.css, favicon, og tags), the `site-head` header with its menu script, and the footer.
+   (Lilita One + Nunito, season.js, brand.css, favicon, og tags), the `site-head` header with its menu script, and the footer.
 3. Reuse brand.css components. Add new CSS to brand.css only when a component will be used on more than one
    page; otherwise add a small `<style>` block in the page.
 
 Hard rules:
 
 - Plain HTML/CSS/JS with no build step. GitHub Pages serves the repo as-is from `main`.
-- Single dark theme: canvas `#101110`, text `#F3F3ED` / `#AFB3AA`, borders `#50554D`, yellow `#FFCD00`.
+- Single dark theme: canvas `#101110`, text `#F3F3ED` / `#AFB3AA`, outlines `#383D35` (controls `#5A6056`), yellow `#FFCD00` on lip `#B38F00`.
 - Lilita One for headlines (never set a weight on it), Nunito for everything else; JetBrains Mono only for
   things people copy. Follow the v4 reference lock and decision ledger in DESIGN.md.
 - One yellow `btn` per task area; every other action is `btn ghost` (dark enamel). Buttons sit on a lip and
