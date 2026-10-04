@@ -30,3 +30,4 @@ smelter.png: Smelter
 workbench.png: Workbench
 chest.png: Chest (wood chest)
 campfire.png: Campfire
+hammer.png: Hammer

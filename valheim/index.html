@@ -23,12 +23,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
-<script src="/assets/js/season.js?v=4.1"></script>
-<link rel="stylesheet" href="/assets/css/brand.css?v=4.1">
+<script src="/assets/js/season.js?v=4.3"></script>
+<link rel="stylesheet" href="/assets/css/brand.css?v=4.3">
 <style>
+  /* Install routes: three ways in, each a tile with its Valheim tool */
+  .routes { display: grid; gap: 10px; margin-top: 14px; }
+  .route { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px 16px; background: var(--surface); border: 2px solid var(--line); border-bottom-width: calc(var(--lip) + 2px); border-radius: 16px; }
+  .route > .vi { width: 44px; height: 44px; filter: drop-shadow(0 2px 2px rgb(0 0 0 / .6)); }
+  .route-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .route h4 { margin: 0; font-size: 1.0625rem; font-weight: 800; }
+  .route p { color: var(--muted); margin-bottom: 10px; }
+  .route-link { font-weight: 800; }
+  .codeline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .codeline .mono { font-weight: 600; overflow-wrap: anywhere; color: var(--ink); }
+  .then { display: inline-flex; color: var(--muted); }
+  /* Troubleshooting: quoted in-game messages look like the game's warning text */
+  summary { justify-content: flex-start; }
+  summary > .icon { margin-left: auto; }
+  .t-ico { display: inline-grid; place-items: center; width: 28px; height: 28px; flex: none; color: var(--muted); }
+  .t-ico.warn { color: #FFB454; }
+  .t-q { min-width: 0; }
+  .gmsg { color: #FFC873; text-shadow: 0 1px 0 #000, 0 0 8px rgb(0 0 0 / .7); }
   .title-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gap-3); align-items: center; }
-  .title-row .badge { width: 168px; height: auto; filter: drop-shadow(0 14px 24px rgb(0 0 0 / .6)); }
-  @media (max-width: 560px) { .title-row { grid-template-columns: 1fr; } .title-row .badge { order: -1; width: 132px; } }
+  .title-row .title-badge { width: 168px; height: auto; filter: drop-shadow(0 14px 24px rgb(0 0 0 / .6)); }
+  @media (max-width: 560px) { .title-row { grid-template-columns: 1fr; } .title-row .title-badge { order: -1; width: 132px; } }
 </style>
 <script>
   // Hide intro elements only when motion is allowed; failsafe shows them if GSAP never starts.
@@ -40,7 +58,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" integrity="sha384-SWJ0lLVRoipvHh59xj0pL7uC7Ih51F+5smaFtrG+2nr+TlDZU5SYJHmxfolbeNTr" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js" integrity="sha384-QQ7Drnaxr6AM+cySvZNVNIFsvXLGtDLoS5tlUIt2XvIwnqtBtuD7A2KwqlSAWMi1" crossorigin="anonymous" defer></script>
-<script src="/assets/js/site.js?v=4.1" defer></script>
+<script src="/assets/js/site.js?v=4.3" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -48,7 +66,7 @@
   <div class="wrap">
     <a class="wordmark" href="/" aria-label="Big Yikes home"><img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334"></a>
     <button class="btn small ghost menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-    <nav class="site-nav" id="site-nav" aria-label="Site"><a href="/valheim/" aria-current="page">Valheim</a><a href="/valheim/hall/">Hall of Fame</a><a class="btn small" href="https://discord.gg/bigyikes">Join the Discord</a></nav>
+    <nav class="site-nav" id="site-nav" aria-label="Site"><a href="/valheim/" aria-current="page">Valheim</a><a href="/valheim/hall/">Hall of Fame</a><a class="btn small" href="https://discord.gg/bigyikes"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0-2 0m6 0a1 1 0 1 0 2 0a1 1 0 0 0-2 0"/><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833-1.667 3.5-3c.667-1.667.5-5.833-1.5-11.5c-1.457-1.015-3-1.34-4.5-1.5l-.972 1.923a11.9 11.9 0 0 0-4.053 0L9 4c-1.5.16-3.043.485-4.5 1.5c-2 5.667-2.167 9.833-1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2-2 2-3"/><path d="M7 16.5c3.5 1 6.5 1 10 0"/></g></svg>Join the Discord</a></nav>
   </div>
 </header>
 <div class="page">
@@ -59,7 +77,7 @@
         <h1 data-intro>Join Yikesheim</h1>
         <p class="lede" data-intro>Yikesheim is the guild's Valheim server, running Valheim Plus. One command installs it. Everyone starts fresh with a new character made just for this server.</p>
       </div>
-      <img class="badge" src="/assets/brand/yikesheim-sticker.png" alt="Yikesheim badge: Bing and Beti in Viking helmets with crossed axes" width="512" height="482" data-intro>
+      <img class="title-badge" src="/assets/brand/yikesheim-sticker.png" alt="Yikesheim badge: Bing and Beti in Viking helmets with crossed axes" width="512" height="482" data-intro>
     </div>
 
     <section class="card" aria-label="Server details" data-intro>
@@ -98,20 +116,42 @@
       <li><div>
         <h3>Install the mods</h3>
         <p class="muted">Close Valheim first, then pick whichever way you like. All three install the same three mods: BepInEx, Valheim Plus and Runic Character Vault.</p>
-        <ul class="ways">
-          <li><strong>Paste one command (fastest).</strong> Press the Windows key, type <span class="key">powershell</span>, press Enter, paste the install command from the card above and press Enter. <a href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer</a>.</li>
-          <li><strong>Use a mod manager.</strong> In r2modman or Thunderstore Mod Manager, pick Valheim, then <strong>Profiles</strong>, <strong>Import / Update</strong>, <strong>From code</strong>, and paste <span class="mono">01a10413-e3eb-f0f6-0785-ab4286387bf8</span>. Start the game with <strong>Start modded</strong> each time you play here.</li>
-          <li><strong>Drag and drop.</strong> Download <a href="/valheim/Yikesheim-mods.zip" download>Yikesheim-mods.zip</a>. In Steam, right-click Valheim, choose <strong>Manage</strong> then <strong>Browse local files</strong>, and extract the zip into that folder so <span class="mono">winhttp.dll</span> sits next to <span class="mono">valheim.exe</span>.</li>
-        </ul>
+        <div class="routes">
+          <div class="route">
+            <img class="vi" src="/assets/valheim/hammer.png" alt="" width="44" height="44">
+            <div>
+              <div class="route-head"><h4>Paste one command</h4><span class="badge hot">Fastest</span></div>
+              <p>Press the Windows key, type <span class="key">powershell</span>, press Enter, then paste the install command from the card above and press Enter.</p>
+              <a class="route-link" href="https://github.com/alexandermayes/yikesgaming-site/blob/main/valheim/install.ps1">Read the installer first</a>
+            </div>
+          </div>
+          <div class="route">
+            <img class="vi" src="/assets/valheim/workbench.png" alt="" width="44" height="44">
+            <div>
+              <div class="route-head"><h4>Use a mod manager</h4><span class="badge">No PowerShell</span></div>
+              <p>In r2modman or Thunderstore Mod Manager, pick Valheim, then <strong>Profiles</strong>, <strong>Import / Update</strong>, <strong>From code</strong>, and paste this code. Start the game with <strong>Start modded</strong> each time you play here.</p>
+              <div class="codeline"><span class="mono">01a10413-e3eb-f0f6-0785-ab4286387bf8</span>
+                <button class="btn small ghost" type="button" data-copy="01a10413-e3eb-f0f6-0785-ab4286387bf8" data-copy-name="Profile code"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></g></svg> Copy<template><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/></svg> Copied</template></button></div>
+            </div>
+          </div>
+          <div class="route">
+            <img class="vi" src="/assets/valheim/chest.png" alt="" width="44" height="44">
+            <div>
+              <div class="route-head"><h4>Drag and drop</h4><span class="badge">Manual</span></div>
+              <p>In Steam, right-click Valheim, choose <strong>Manage</strong> then <strong>Browse local files</strong>, and extract the zip there so <span class="mono">winhttp.dll</span> sits next to <span class="mono">valheim.exe</span>.</p>
+              <a class="btn small ghost" href="/valheim/Yikesheim-mods.zip" download><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5l5-5m-5-7v12"/></svg> Download the zip</a>
+            </div>
+          </div>
+        </div>
       </div></li>
       <li><div>
         <h3>Open Valheim and create a new character</h3>
-        <div class="path"><span class="key">Start Game</span><span class="then" aria-hidden="true">then</span><span class="key">Start</span></div>
+        <div class="path"><span class="key">Start Game</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Start</span></div>
         <p class="muted">Launch it from Steam like normal. Yikesheim only accepts brand-new characters, so make one just for this server. Your other characters stay exactly as they are for your own worlds.</p>
       </div></li>
       <li><div>
         <h3>Join by address</h3>
-        <div class="path"><span class="key">Join Game</span><span class="then" aria-hidden="true">then</span><span class="key">Join IP</span><span class="then" aria-hidden="true">then</span><span class="key">Connect</span></div>
+        <div class="path"><span class="key">Join Game</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Join IP</span><span class="then"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></svg><span class="sr-only">then</span></span><span class="key">Connect</span></div>
         <p class="muted">Copy the address above, paste it into the box, and click Connect.</p>
       </div></li>
       <li><div>
@@ -138,41 +178,42 @@
       <div class="t-flavor">Bosses, biomes and progression play like normal Valheim.</div>
     </div>
 
-    <h2>Trouble?</h2>
+    <h2>Something went wrong?</h2>
+    <p class="muted">Find the message you saw in game, or the problem you're having.</p>
     <details>
-      <summary>"Yikesheim needs a brand-new character"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Yikesheim needs a brand-new character</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>You picked a character that has already played somewhere else. Go back, create a new character, and join with that one. Existing characters can't be brought over. That's the point: everyone starts on equal footing. Your old character isn't changed.</p></div>
     </details>
     <details>
-      <summary>"You already have a character on Yikesheim"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">You already have a character on Yikesheim</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Each Steam account gets one character on this server. Select the character named in the message and join with it.</p></div>
     </details>
     <details>
-      <summary>"Windows blocked writing to the Valheim folder"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Windows blocked writing to the Valheim folder</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Some PCs protect the Steam folder. Press the Windows key, type powershell, right-click it, choose <strong>Run as administrator</strong>, and paste the install command again.</p></div>
     </details>
     <details>
-      <summary>It disconnects right after connecting<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It disconnects right after connecting</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Your Valheim Plus is missing or a different version from the server's. Close Valheim and run the install command again. It always installs the exact versions the server uses.</p></div>
     </details>
     <details>
-      <summary>"Incompatible version"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Incompatible version</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Steam hasn't finished updating your Valheim, or Valheim just got a patch. After a patch, Valheim Plus can take a few days to catch up. The host will post in Discord when the server and installer are updated.</p></div>
     </details>
     <details>
-      <summary>It can't find the server<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">It can't find the server</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Check the spelling: <span class="mono">valheim.yikesgaming.com</span>. If the name still doesn't work, use the server's IP instead: <span class="mono">149.28.193.152:2456</span>. It's the same server.</p></div>
     </details>
     <details>
-      <summary>"Invalid password"<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico warn"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m-1.637-9.409L2.257 17.125a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0M12 16h.01"/></svg></span><span class="t-q"><span class="gmsg">Invalid password</span><span class="sr-only"> (message in game)</span></span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Passwords are case-sensitive. Copy it straight from the pinned message in #valheim.</p></div>
     </details>
     <details>
-      <summary>I want to play unmodded or on other servers<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">I want to play unmodded or on other servers</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>Run <span class="mono">irm https://yikesgaming.com/uninstall | iex</span> in PowerShell. It switches the mods off without deleting anything. Run the install command again to come back.</p></div>
     </details>
     <details>
-      <summary>Can I play on Xbox or Game Pass?<svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
+      <summary><span class="t-ico"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0m9 4v.01"/><path d="M12 13a2 2 0 0 0 .914-3.782a1.98 1.98 0 0 0-2.414.483"/></g></svg></span><span class="t-q">Can I play on Xbox or Game Pass?</span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg></summary>
       <div><p>No. Mods only work on the Steam PC version, and this server needs Valheim Plus.</p></div>
     </details>
   </main>

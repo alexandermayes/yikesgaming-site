@@ -113,9 +113,12 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 .wordmark { display: inline-flex; align-items: center; flex: none; }
 .wordmark img { height: 40px; width: auto; }
 .site-nav { display: flex; gap: 4px; margin-left: auto; align-items: center; flex-wrap: wrap; }
-.site-nav a:not(.btn) { color: var(--muted); font-weight: 800; font-size: 1rem; text-decoration: none; padding: 8px 12px; min-height: 44px; display: inline-flex; align-items: center; transition: color var(--ease), box-shadow var(--ease); }
+.site-nav a:not(.btn) { color: var(--muted); font: 800 .8125rem/1 var(--body); letter-spacing: .07em; text-transform: uppercase; text-decoration: none; padding: 0 14px; min-height: 44px; display: inline-flex; align-items: center;
+  border: 2px solid transparent; border-radius: 12px; transition: color var(--ease), background-color var(--ease), border-color var(--ease); }
 .site-nav a:not(.btn):hover { color: var(--ink); }
-.site-nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--yikes); border-radius: 0; }
+.site-nav a:not(.btn):hover { background: var(--surface); }
+/* current page: tinted and outlined, the same selected state as Longhouse's rail */
+.site-nav a[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--yikes) 10%, var(--surface)); border-color: var(--yikes-lip); }
 .site-nav .btn { margin-left: 8px; }
 .site-head .menu-toggle { display: none; margin-left: auto; }
 @media (max-width: 960px) {
@@ -124,7 +127,7 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
     background: var(--ground); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 20px; margin: 0; }
   .site-nav.open { display: flex; }
   .site-nav a:not(.btn) { min-height: 48px; border-bottom: 1px solid var(--line); }
-  .site-nav a[aria-current="page"] { box-shadow: inset 3px 0 0 var(--yikes); padding-left: 14px; }
+  .site-nav a[aria-current="page"] { background: color-mix(in srgb, var(--yikes) 10%, var(--surface)); border: 2px solid var(--yikes-lip); border-radius: 12px; padding-left: 14px; box-shadow: none; }
   .site-nav .btn { margin: 16px 0 0; width: 100%; }
   .wordmark img { height: 34px; }
 }
@@ -157,6 +160,13 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 .btn.ghost:hover, .btn.secondary:hover { background: var(--surface-2); }
 .btn.ghost:active, .btn.secondary:active { box-shadow: 0 0 0 var(--line-strong); }
 .btn.is-done { background: var(--ink); color: var(--yikes-ink); border-color: var(--ink); box-shadow: 0 var(--lip) 0 #9EA097; }
+
+/* Badge: a small squared label token (never a pill). Uppercase + tracked like the buttons. */
+.badge { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 7px; border: 2px solid var(--line-strong); background: var(--ground);
+  color: var(--muted); font: 800 .6875rem/1 var(--body); letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; }
+.badge.hot { border-color: var(--yikes-lip); color: var(--yikes); background: color-mix(in srgb, var(--yikes) 10%, var(--ground)); }
+.badge.good { border-color: #1D6B3C; color: #5BE38F; background: color-mix(in srgb, #2E9E5B 12%, var(--ground)); }
+.badge.bad { border-color: #8E2626; color: #F59A9A; background: color-mix(in srgb, #D64545 12%, var(--ground)); }
 
 /* ---------------------------------------------------------------- shared page parts */
 .lede { color: var(--muted); font-size: var(--fs-lg); line-height: 30px; margin-top: var(--gap-2); }
@@ -211,6 +221,59 @@ details[open] summary .icon { transform: rotate(180deg); }
 details > div { padding-bottom: 14px; color: var(--muted); }
 
 .footer { margin-top: var(--gap-5); padding-top: var(--gap-3); border-top: 2px solid var(--line); color: var(--muted); font-size: var(--fs-sm); }
+
+/* ---------------------------------------------------------------- progress kit (world progress, achievements)
+   One vocabulary everywhere progress shows (Longhouse, Hall of Fame, home). After game achievement screens and the
+   reference's learning path: EARNED looks collected (full-colour art on a raised gold coin/tile + a check),
+   NEXT is a dashed yellow ring, LOCKED looks absent (grey silhouette in a sunken socket + a lock). Every state also
+   says its word, so colour is never the only signal. Markup: .meters > .meter, ol.journey > li.node, .trophies > .trophy */
+.meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 24px; margin-bottom: 18px; }
+.meter-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; font-weight: 800; }
+.meter-top span { color: var(--muted); font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+.meter-top span b { color: var(--ink); font-size: 1rem; }
+.bar { position: relative; height: 16px; border-radius: 999px; background: var(--ground); border: 2px solid var(--line); overflow: hidden; }
+.bar > span { position: absolute; inset: 0; border-radius: 999px; background: var(--yikes); box-shadow: inset 0 -4px 0 rgb(0 0 0 / .18);
+  transform-origin: left; transform: scaleX(0); transition: transform 600ms ease; }
+
+.journey { list-style: none; margin: 0 0 18px; padding: 2px 2px 10px; display: flex; overflow-x: auto; scrollbar-width: thin; }
+.node { position: relative; flex: 1 0 72px; display: grid; justify-items: center; align-content: start; gap: 6px; text-align: center; }
+.node::before { content: ""; position: absolute; top: 25px; left: -50%; right: 50%; height: 6px; border-radius: 3px; background: var(--line); }
+.node:first-child::before { display: none; }
+.node.reached::before { background: var(--yikes); }
+.coin { position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; }
+.coin .vi { width: 34px; height: 34px; }
+.node b { font-size: .8125rem; font-weight: 800; line-height: 1.15; }
+.node small, .trophy small { display: inline-flex; align-items: center; gap: 4px; font-size: .75rem; font-weight: 800; line-height: 1.2; color: var(--muted); }
+
+.trophies { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.trophy { position: relative; display: grid; justify-items: center; align-content: start; gap: 4px; padding: 14px 10px 12px; border-radius: 16px; text-align: center; }
+.trophy .vi { width: 52px; height: 52px; margin-bottom: 2px; }
+.trophy b { font-size: .875rem; font-weight: 800; line-height: 1.15; }
+
+/* earned / reached: raised gold, check seal */
+.node.reached .coin { background: var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); }
+.trophy.earned { background: color-mix(in srgb, var(--yikes) 16%, var(--surface)); border: 2px solid var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); }
+.node.reached small, .trophy.earned small { color: var(--ink); }
+.node.reached .coin::after, .trophy.earned::after { content: ""; position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ground);
+  background: var(--on, #2E9E5B) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12l5 5L20 7'/%3E%3C/svg%3E") center / 12px no-repeat; }
+.node.reached .coin::after { right: -5px; bottom: -3px; }
+.trophy.earned::after { right: 8px; top: 8px; }
+
+/* next up: dashed ring, art in plain grey */
+.node.next .coin { background: var(--surface); border: 3px dashed var(--yikes); }
+.node.next .coin .vi { filter: grayscale(1); opacity: .9; }
+.node.next small { color: var(--yikes); }
+
+/* locked / not yet: sunken socket, silhouette, lock seal */
+.node.locked .coin, .trophy.locked { background: var(--ground); border: 2px solid var(--line); box-shadow: inset 0 3px 0 rgb(0 0 0 / .4); }
+.node.locked .coin .vi, .trophy.locked .vi { filter: brightness(0) invert(.36); opacity: .75; }
+.node.locked .coin::after, .trophy.locked::after { content: ""; position: absolute; width: 18px; height: 18px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23AFB3AA' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm6 3a1 1 0 1 0 2 0a1 1 0 0 0-2 0m-3-5V7a4 4 0 1 1 8 0v4'/%3E%3C/svg%3E") center / 16px no-repeat; }
+.node.locked .coin::after { right: -6px; bottom: -4px; background-color: var(--ground); border-radius: 50%; width: 22px; height: 22px; }
+.trophy.locked::after { right: 8px; top: 8px; }
+/* before the server reports progress: neutral, no lock (nothing is known yet) */
+.trophy.unknown, .node.unknown .coin { background: var(--ground); border: 2px solid var(--line); }
+.trophy.unknown .vi, .node.unknown .coin .vi { filter: grayscale(1); opacity: .55; }
 
 /* Seasonal decorations. Big Yikes themes for holidays: assets/js/season.js sets <html data-season>, and each season's
    decoration only draws inside it. .season-deco marks a section that can carry one. */
