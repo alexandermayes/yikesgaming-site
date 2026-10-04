@@ -1,2 +1,8 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /preview/
+Disallow: /tools/
+Disallow: /install
+Disallow: /uninstall
+
+Sitemap: https://yikesgaming.com/sitemap.xml
