@@ -31,6 +31,7 @@ guildmate in Discord voice chat: dry, self-aware about wiping, practical when so
    "Get started", "Learn more".
 7. Numbers are real and specific ("about 400 of us", "+100% drops", "40 min → 20 min"), never "tons" or "lots".
 8. Sentence case. No all-caps labels, no exclamation marks except inside quoted game text.
+9. Big Yikes is a guild. Say "guild" and "guildies", never "clan", in game copy, Discord posts and the site.
 
 ## Banned words and moves
 
