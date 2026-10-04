@@ -43,6 +43,8 @@ Linear and Kraken (settings), plus 404 and leaderboard patterns.
 at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready. Words follow the
 `big-yikes-voice` skill.
 
+**Cache busting:** pages link `brand.css`, `site.js` and `season.js` with `?v=…`. GitHub Pages lets browsers cache them for 10 minutes, so bump the version on every page whenever one of those files changes.
+
 **Checks before shipping:** `npx impeccable detect <url>` (desktop and `--viewport 390x844`) and an axe-core run
 (WCAG 2.1 AA) should both come back clean; they did on 2026-10-04 for every page and every Longhouse tab.
 
