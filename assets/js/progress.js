@@ -28,6 +28,8 @@
       var word = { unknown: 'Not tracked', earned: 'Defeated', locked: 'Standing' }[st];
       return '<div class="trophy ' + st + '" role="listitem">' + icon(base, b, 52) + '<b>' + b + '</b><small>' + word + '</small></div>';
     }).join('') + '</div>';
+    if (o.only === 'journey') { el.innerHTML = journey; return; }
+    if (o.only === 'trophies') { el.innerHTML = trophies; return; }
     el.innerHTML = meters + (o.order === 'bosses-first' ? trophies + journey : journey + trophies);
   }
   root.BYProgress = { render: render, BOSSES: BOSSES, BIOMES: BIOMES };

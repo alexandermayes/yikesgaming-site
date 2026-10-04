@@ -9,21 +9,21 @@
   color-scheme: dark;
 
   /* Canvas: the charcoal of the guild icon */
-  --ground: #101110;       /* by-tactile-bg-canvas */
-  --ground-2: #151714;     /* alternate band */
-  --surface: #1B1E1A;      /* dark enamel: secondary actions, interactive containers */
-  --surface-2: #242822;    /* hover / raised enamel */
-  --ink: #F3F3ED;          /* by-tactile-text-primary */
-  --muted: #AFB3AA;        /* by-tactile-text-secondary */
-  --line: #383D35;         /* 2px outlines and dividers */
-  --line-strong: #5A6056;  /* control outlines + their lip (3:1 against the canvas) */
+  --ground: #090908;       /* by-tactile-bg-canvas: near-black, so yellow and white read at full strength */
+  --ground-2: #10100E;     /* alternate band */
+  --surface: #171715;      /* dark enamel: secondary actions, interactive containers */
+  --surface-2: #222220;    /* hover / raised enamel */
+  --ink: #FBFBF6;          /* by-tactile-text-primary */
+  --muted: #B4B4AB;        /* by-tactile-text-secondary */
+  --line: #2E2E2A;         /* 2px outlines and dividers */
+  --line-strong: #66665E;  /* control outlines + their lip (3:1 against canvas and enamel) */
 
   /* Big Yikes yellow (logo + bot role). Role: logo, the one primary action per area, focus ring, selected marker. Nothing else. */
   --yikes: #FFCD00;        /* brand yellow (Figma) */
   --yikes-hover: #FFD633;
   --yikes-lip: #B38F00;    /* the darker edge a yellow button sits on */
-  --yikes-ink: #101110;
-  --outline: #0A0A0A;       /* the logo's black keyline */
+  --yikes-ink: #090908;
+  --outline: #000;          /* the logo's black keyline */
 
   /* Kept for components shared with older pages: they now mean the brand action color. */
   --brand: var(--yikes);
@@ -154,7 +154,7 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 }
 .btn:hover { background: var(--yikes-hover); }
 .btn:active { transform: translateY(var(--lip)); box-shadow: 0 0 0 var(--yikes-lip); }
-.btn[disabled], .btn[aria-disabled="true"] { background: #2A2D29; color: #858A80; box-shadow: 0 var(--lip) 0 #1F221E; cursor: not-allowed; transform: none; }
+.btn[disabled], .btn[aria-disabled="true"] { background: #262624; color: #8A8A82; box-shadow: 0 var(--lip) 0 #1A1A18; cursor: not-allowed; transform: none; }
 .btn.small { min-height: 44px; padding: 0 16px; font-size: .8125rem; }
 .btn.ghost, .btn.secondary { background: var(--surface); color: var(--ink); border: 2px solid var(--line-strong); box-shadow: 0 var(--lip) 0 var(--line-strong); }
 .btn.ghost:hover, .btn.secondary:hover { background: var(--surface-2); }
@@ -245,7 +245,7 @@ details > div { padding-bottom: 14px; color: var(--muted); }
 .node b { font-size: .8125rem; font-weight: 800; line-height: 1.15; }
 .node small, .trophy small { display: inline-flex; align-items: center; gap: 4px; font-size: .75rem; font-weight: 800; line-height: 1.2; color: var(--muted); }
 
-.trophies { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.trophies { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 10px; }
 .trophy { position: relative; display: grid; justify-items: center; align-content: start; gap: 4px; padding: 14px 10px 12px; border-radius: 16px; text-align: center; }
 .trophy .vi { width: 52px; height: 52px; margin-bottom: 2px; }
 .trophy b { font-size: .875rem; font-weight: 800; line-height: 1.15; }

@@ -17,7 +17,7 @@ Before writing any HTML or CSS in this repo:
 Hard rules:
 
 - Plain HTML/CSS/JS with no build step. GitHub Pages serves the repo as-is from `main`.
-- Single dark theme: canvas `#101110`, text `#F3F3ED` / `#AFB3AA`, outlines `#383D35` (controls `#5A6056`), yellow `#FFCD00` on lip `#B38F00`.
+- Single dark theme: canvas `#090908`, text `#FBFBF6` / `#B4B4AB`, outlines `#2E2E2A` (controls `#66665E`), yellow `#FFCD00` on lip `#B38F00`.
 - Lilita One for headlines (never set a weight on it), Nunito for everything else; JetBrains Mono only for
   things people copy. Follow the v4 reference lock and decision ledger in DESIGN.md.
 - One yellow `btn` per task area; every other action is `btn ghost` (dark enamel). Buttons sit on a lip and

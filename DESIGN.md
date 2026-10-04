@@ -65,14 +65,18 @@ at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready
 
 | Token | Value | Figma | Use |
 |---|---|---|---|
-| `--ground` | `#101110` | by-tactile-bg-canvas | page background |
-| `--ground-2` | `#171916` | | alternate full-width band |
-| `--surface` / `--surface-2` | `#1B1E1A` / `#242822` | | dark enamel: secondary buttons, interactive containers; hover |
-| `--ink` | `#F3F3ED` | by-tactile-text-primary | text |
-| `--muted` | `#AFB3AA` | by-tactile-text-secondary | secondary text, labels |
-| `--line` | `#383D35` | | 2px outlines and dividers |
-| `--line-strong` | `#5A6056` | | control outlines and their lip |
+| `--ground` | `#090908` | by-tactile-bg-canvas | page background |
+| `--ground-2` | `#10100E` | | alternate full-width band |
+| `--surface` / `--surface-2` | `#171715` / `#222220` | | dark enamel: secondary buttons, interactive containers; hover |
+| `--ink` | `#FBFBF6` | by-tactile-text-primary | text |
+| `--muted` | `#B4B4AB` | by-tactile-text-secondary | secondary text, labels |
+| `--line` | `#2E2E2A` | | 2px outlines and dividers |
+| `--line-strong` | `#66665E` | | control outlines and their lip |
 | `--yikes` / `--yikes-lip` | `#FFCD00` / `#B38F00` | brand yellow | primary action, active nav, progress, reached states, focus; the lip under yellow |
+
+v4.5 (2026-10-03): the canvas went from the guild icon's `#101110` charcoal to near-black, and the enamel lost
+its olive cast, because the old greys read washed out next to the yellow ("the blacks are very grey"). Neutrals
+stay a hair warm so they sit with the yellow; sticker and logo edges use pure `#000` so they still show on the canvas.
 
 Yellow is a signal, not a decoration: never a background band, never body text. Green (`--online`) and red
 (`--danger`) are status colors and always sit next to a written label. The **in-game tooltip** (`--tip-*`)
