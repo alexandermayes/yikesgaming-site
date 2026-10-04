@@ -12,6 +12,7 @@ Website for the Big Yikes guild, served by GitHub Pages.
 | `assets/img/` | Favicon, home-screen icon, link-preview images. |
 | `tools/` | Sources for the preview images. Re-render with `pwsh tools/render.ps1`. |
 | `.claude/skills/big-yikes-design/` | Claude Code skill that keeps new pages in the design system. |
+| `install`, `uninstall` | Short-URL copies of `valheim/install.ps1` and `valheim/uninstall.ps1` (so the command is `irm https://yikesgaming.com/install \| iex`). Copy them again whenever you edit the .ps1 files. |
 | `CNAME` | Tells GitHub Pages to serve this site at `yikesgaming.com`. |
 | `robots.txt` | Asks search engines not to list the site (it's for guild members). |
 | `.nojekyll` | Serves files as-is, without GitHub's Jekyll processing. |
