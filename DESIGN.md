@@ -159,3 +159,6 @@ from the `<head>` of `valheim/index.html`). Behaviour is in `assets/js/site.js`.
   Keep `assets/img/og-yikesheim-v4.png`: the pinned Discord post uses it.
 - Copy: plain words, short sentences, name things the way the game names them ("Join IP", "Connect").
 - Never put passwords or keys in this repo. It's public.
+
+## Ship checks
+- `python tools/voice-check.py` (changed pages, or pass files): flags copy that drifts from the voice guide. Rules catch banned words, "clan", exclamation marks and generic buttons; Jev flags hype and vague claims (needs TYPESAFE_API_KEY). Exit 1 means something was flagged.
