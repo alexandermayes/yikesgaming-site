@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" data-game="valheim">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Yikesheim Hall of Fame</title>
+<meta name="description" content="Who's on Yikesheim, which bosses have fallen, and the Big Yikes Hall of Fame.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Big Yikes">
+<meta property="og:title" content="Yikesheim Hall of Fame">
+<meta property="og:description" content="Who's online, which bosses have fallen, and who's carrying the clan this week.">
+<meta property="og:url" content="https://yikesgaming.com/valheim/hall/">
+<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v4.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=tanker@400&amp;display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/brand.css">
+<style>
+  .board { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .board th, .board td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .board th { color: var(--muted); font-size: var(--fs-sm); font-weight: 600; }
+  .board td.num { text-align: right; white-space: nowrap; }
+  .board th.num { text-align: right; }
+  .board .rank { font-family: var(--display); color: var(--accent-text); width: 2.2em; }
+  .board .who { font-weight: 600; }
+  .board .tags { color: var(--muted); font-size: var(--fs-sm); }
+  .tablewrap { overflow-x: auto; }
+  .bosses { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; margin-top: 8px; }
+  .boss { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: grid; gap: 2px; background: var(--surface); }
+  .boss b { font-size: .95rem; }
+  .boss span { color: var(--muted); font-size: var(--fs-sm); }
+  .boss.down { border-color: color-mix(in srgb, #E0B040 60%, var(--line)); background: color-mix(in srgb, #E0B040 10%, var(--surface)); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { font-size: .82rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); }
+  .chip.off { background: color-mix(in srgb, var(--muted) 16%, transparent); color: var(--muted); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+  .seg button { appearance: none; border: 0; background: var(--surface); color: var(--muted); font: 600 var(--fs-sm) var(--body); padding: 8px 14px; min-height: 40px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .warm { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="nameplate">
+    <a class="mark" href="/" aria-label="Big Yikes home"><span class="br">&lt;</span><span class="nm">Big Yikes</span><span class="br">&gt;</span></a>
+    <nav class="subnav" aria-label="Yikesheim"><a href="/valheim/">Join</a><a href="/valheim/hall/" aria-current="page">Hall of Fame</a></nav>
+  </header>
+
+  <main>
+    <h1>Yikesheim Hall of Fame</h1>
+    <p class="lede" id="lede">Who's on, which bosses have fallen, and who's carrying the clan.</p>
+
+    <section class="card" aria-label="Server right now" id="now">
+      <div class="status"><span class="online"><span class="dot" aria-hidden="true"></span><span id="now-state">Checking the server…</span></span><span id="now-day"></span><span id="now-ever"></span></div>
+      <div class="field"><div class="label">Online right now</div><div class="value plain" id="now-players">…</div></div>
+    </section>
+
+    <h2>World progress</h2>
+    <div class="bosses" id="bosses"></div>
+    <div class="chips" id="biomes" aria-label="Biomes reached"></div>
+
+    <h2>Hall of Fame</h2>
+    <div class="seg" role="group" aria-label="Time range"><button type="button" data-range="week" aria-pressed="true">This week</button><button type="button" data-range="allTime" aria-pressed="false">All time</button></div>
+    <div class="tablewrap"><table class="board"><thead><tr><th scope="col" class="rank">#</th><th scope="col">Viking</th><th scope="col" class="num">Played</th><th scope="col" class="num">Valhalla trips</th></tr></thead><tbody id="board"></tbody></table></div>
+    <p class="warm" id="warm" hidden></p>
+  </main>
+
+  <footer class="footer">
+    <p>Updated live from the server by Skald. Join at <a href="/valheim/">yikesgaming.com/valheim</a>.</p>
+  </footer>
+</div>
+<script>
+(function () {
+  var BOSSES = ['Eikthyr', 'The Elder', 'Bonemass', 'Moder', 'Yagluth', 'The Queen', 'Fader'];
+  var BIOMES = ['Meadows', 'Black Forest', 'Swamp', 'Mountains', 'Plains', 'Ocean', 'Mistlands', 'Ashlands', 'Deep North'];
+  var data = null, range = 'week';
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function hm(m) { return m >= 60 ? Math.floor(m / 60) + 'h ' + ('0' + (m % 60)).slice(-2) + 'm' : m + ' min'; }
+  function list(xs) { return xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]; }
+
+  function renderBoard() {
+    var rows = (data && data[range]) || [];
+    var body = document.getElementById('board');
+    if (!rows.length) { body.innerHTML = '<tr><td colspan="4" class="tags">No sessions recorded ' + (range === 'week' ? 'this week' : 'yet') + '. Go make some history.</td></tr>'; return; }
+    body.innerHTML = rows.map(function (r, i) {
+      var tags = [].concat(r.bosses.length ? ['slew ' + list(r.bosses)] : [], r.firsts);
+      return '<tr><td class="rank">' + (i + 1) + '</td><td><div class="who">' + esc(r.player) + '</div>' + (tags.length ? '<div class="tags">' + esc(tags.join(' · ')) + '</div>' : '') + '</td><td class="num">' + hm(r.minutes) + '</td><td class="num">' + r.deaths + '</td></tr>';
+    }).join('');
+  }
+
+  function render() {
+    var d = data;
+    document.getElementById('now-state').textContent = d.online ? 'Online' : 'Offline';
+    document.querySelector('#now .dot').style.background = d.online ? '' : '#B33A3A';
+    document.getElementById('now-day').textContent = d.day != null ? 'Day ' + d.day : '';
+    document.getElementById('now-ever').textContent = d.playersEver ? d.playersEver + ' vikings have joined' : '';
+    document.getElementById('now-players').textContent = d.players.length ? list(d.players) : 'Nobody right now';
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { var down = d.bosses.indexOf(b) >= 0; return '<div class="boss' + (down ? ' down' : '') + '"><b>' + b + '</b><span>' + (down ? 'Defeated' : 'Still standing') + '</span></div>'; }).join('');
+    document.getElementById('biomes').innerHTML = BIOMES.map(function (b) { return '<span class="chip' + (d.biomes.indexOf(b) >= 0 ? '' : ' off') + '">' + b + '</span>'; }).join('');
+    renderBoard();
+  }
+
+  function warm(msg) {
+    var w = document.getElementById('warm'); w.hidden = false; w.textContent = msg;
+    document.getElementById('now-state').textContent = 'Stats are warming up';
+    document.getElementById('now-players').textContent = 'Check back soon';
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { return '<div class="boss"><b>' + b + '</b><span>Unknown</span></div>'; }).join('');
+    document.getElementById('board').innerHTML = '';
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-range]'), function (b) {
+    b.addEventListener('click', function () {
+      range = b.getAttribute('data-range');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-range]'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      renderBoard();
+    });
+  });
+
+  function load() {
+    fetch('https://hq.yikesgaming.com/public/stats.json', { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { if (!d.enabled) { warm('The guild has the Hall of Fame switched off for now.'); return; } data = d; document.getElementById('warm').hidden = true; render(); })
+      .catch(function () { warm("Stats aren't available right now. The Hall of Fame fills in live once the server's stats service is online."); });
+  }
+  load();
+  setInterval(load, 60000);
+})();
+</script>
+</body>
+</html>

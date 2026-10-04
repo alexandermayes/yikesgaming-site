@@ -146,6 +146,10 @@ code { background: var(--accent-soft); color: var(--accent-text); padding: .1em 
   white-space: nowrap;
 }
 .nameplate .where { color: var(--muted); font-size: var(--fs-sm); font-weight: 500; }
+.subnav { display: flex; gap: 4px; }
+.subnav a { color: var(--muted); font-size: var(--fs-sm); font-weight: 600; text-decoration: none; padding: 6px 10px; border-radius: 8px; min-height: 36px; display: inline-flex; align-items: center; }
+.subnav a:hover { color: var(--ink); }
+.subnav a[aria-current="page"] { color: var(--ink); background: var(--surface); box-shadow: inset 0 -2px 0 var(--accent); }
 .mark .br, .mark .nm { display: inline-block; }
 
 /* Motion (GSAP, see DESIGN.md). The head script adds .js-anim only when motion is allowed;
