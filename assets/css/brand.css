@@ -184,7 +184,8 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 .tooltip .t-title { font-weight: 700; font-size: var(--fs-lg); }
 .tooltip .t-sub { color: var(--tip-sub); font-size: var(--fs-sm); margin-bottom: 10px; }
 .tooltip ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-.tooltip li { color: var(--tip-stat); }
+.tooltip li { color: var(--tip-stat); display: flex; align-items: center; gap: 10px; min-height: 28px; }
+.tooltip li .vi { width: 24px; height: 24px; flex: none; filter: drop-shadow(0 1px 1px rgb(0 0 0 / .7)); }  /* Valheim item icons */
 .tooltip .t-flavor { color: var(--tip-flavor); font-style: italic; margin-top: 10px; font-size: var(--fs-sm); }
 
 .note { background: var(--note-bg); color: var(--note-ink); border-radius: var(--radius-control); padding: 14px 16px; margin-top: var(--gap-4); }

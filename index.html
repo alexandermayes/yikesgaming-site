@@ -50,6 +50,13 @@
   .play .cta-row { margin-top: var(--gap-3); }
   .stat-line { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: var(--fs-sm); font-weight: 600; margin-top: var(--gap-2); }
   .stat-line b { color: var(--ink); }
+  /* Boss trophies (Valheim inventory art, assets/valheim): grey until the clan kills that boss. */
+  .trophies { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: var(--gap-3) 0 0; padding: 0; }
+  .trophies li { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; }
+  .trophies img { width: 40px; height: 40px; filter: grayscale(1) brightness(.7) drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: .55; }
+  .trophies li.down { border-color: rgb(255 205 0 / .55); background: rgb(255 205 0 / .07); }
+  .trophies li.down img { filter: drop-shadow(0 2px 2px rgb(0 0 0 / .6)); opacity: 1; }
+  .trophy-note { color: var(--muted); font-size: var(--fs-sm); line-height: 20px; margin-top: 8px; }
 
   .wall { position: relative; min-height: 440px; margin-top: var(--gap-4); }
   .wall img { position: absolute; width: clamp(72px, 9vw, 118px); height: auto; filter: drop-shadow(0 6px 0 #0A0A0A) drop-shadow(0 14px 18px rgb(0 0 0 / .5)); }
@@ -135,6 +142,8 @@
           <h3>Valheim</h3>
           <p>Yikesheim is our always-on Valheim Plus server: double drops, half the carry weight, and everyone starts with a fresh character, so nobody shows up in endgame gear.</p>
           <div class="stat-line" id="vh-line"><span class="live"><span class="dot" aria-hidden="true"></span><span id="vh-state">Always on</span></span><span id="vh-day"></span><span id="vh-players"></span></div>
+          <ul class="trophies" id="vh-bosses" aria-label="Valheim bosses"><li data-boss="Eikthyr"><img src="/assets/valheim/eikthyr.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Eikthyr</span></li><li data-boss="The Elder"><img src="/assets/valheim/the-elder.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">The Elder</span></li><li data-boss="Bonemass"><img src="/assets/valheim/bonemass.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Bonemass</span></li><li data-boss="Moder"><img src="/assets/valheim/moder.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Moder</span></li><li data-boss="Yagluth"><img src="/assets/valheim/yagluth.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Yagluth</span></li><li data-boss="The Queen"><img src="/assets/valheim/the-queen.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">The Queen</span></li><li data-boss="Fader"><img src="/assets/valheim/fader.png" alt="" width="64" height="64" loading="lazy"><span class="sr-only">Fader</span></li></ul>
+          <p class="trophy-note" id="vh-boss-note">Seven bosses stand between the clan and the end of the world.</p>
           <div class="cta-row"><a class="btn small" href="/valheim/">How to join</a><a class="btn small ghost" href="/valheim/hall/">Hall of Fame</a></div>
         </div>
       </div>
@@ -182,7 +191,7 @@
   <div class="wrap">
     <img src="/assets/brand/logo-wordmark.png" alt="Big Yikes" width="480" height="334">
     <nav aria-label="Footer"><a href="https://discord.gg/bigyikes">discord.gg/bigyikes</a><a href="/valheim/">Valheim</a><a href="/valheim/hall/">Hall of Fame</a></nav>
-    <span>Bing and Beti approve this website.</span>
+    <span>Bing and Beti approve this website. Valheim icons &copy; Iron Gate AB, via the <a href="https://valheim.fandom.com/wiki/Valheim_Wiki">Valheim Wiki</a>.</span>
   </div>
 </footer>
 <div id="live" class="sr-only" role="status" aria-live="polite"></div>
@@ -198,7 +207,17 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('vh-state').textContent = d.online ? 'Online' : 'Offline';
       if (!d.online) document.querySelector('#vh-line .dot').classList.add('off');
       if (d.day != null) document.getElementById('vh-day').innerHTML = 'Day <b>' + d.day + '</b>';
-      document.getElementById('vh-players').innerHTML = '<b>' + d.players.length + '</b> on now';
+      var count = d.playerCount != null ? d.playerCount : d.players.length;
+      document.getElementById('vh-players').innerHTML = '<b>' + count + '</b> on now';
+      if (d.updated) {   // Skald is tracking world progress
+        var down = 0;
+        document.querySelectorAll('#vh-bosses li').forEach(function (li) {
+          var name = li.getAttribute('data-boss'), dead = (d.bosses || []).indexOf(name) >= 0;
+          li.classList.toggle('down', dead); if (dead) down++;
+          li.querySelector('.sr-only').textContent = name + (dead ? ', defeated' : ', still standing');
+        });
+        document.getElementById('vh-boss-note').textContent = down + ' of 7 bosses down on Yikesheim.';
+      }
     }
   }).catch(function () {});
 

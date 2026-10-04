@@ -13,7 +13,7 @@
 <meta property="og:title" content="Yikesheim Hall of Fame">
 <meta property="og:description" content="Who's online, which bosses have fallen, and who's carrying the clan this week.">
 <meta property="og:url" content="https://yikesgaming.com/valheim/hall/">
-<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v4.png">
+<meta property="og:image" content="https://yikesgaming.com/assets/img/og-yikesheim-v5.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/brand/favicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -31,14 +31,22 @@
   .board .who { font-weight: 600; }
   .board .tags { color: var(--muted); font-size: var(--fs-sm); }
   .tablewrap { overflow-x: auto; }
-  .bosses { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; margin-top: 8px; }
-  .boss { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: grid; gap: 2px; background: var(--surface); }
-  .boss b { font-size: .95rem; }
-  .boss span { color: var(--muted); font-size: var(--fs-sm); }
-  .boss.down { border-color: color-mix(in srgb, #E0B040 60%, var(--line)); background: color-mix(in srgb, #E0B040 10%, var(--surface)); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .chip { font-size: .82rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); }
-  .chip.off { background: color-mix(in srgb, var(--muted) 16%, transparent); color: var(--muted); }
+  /* Boss trophies and biome drops are Valheim's own inventory icons (assets/valheim, see CREDITS.txt). */
+  .vi { filter: drop-shadow(0 2px 2px rgb(0 0 0 / .6)); }
+  .bosses { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 8px; }
+  .boss { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 10px; align-items: center; }
+  .boss .vi { grid-row: span 2; width: 48px; height: 48px; }
+  .boss:not(.down) .vi { filter: grayscale(1) brightness(.7); opacity: .55; }
+  .boss b { font-size: 1rem; line-height: 1.2; }
+  .boss span { color: var(--muted); font-size: var(--fs-sm); line-height: 20px; }
+  .boss.down { border-color: rgb(255 205 0 / .55); background: rgb(255 205 0 / .07); }
+  .boss.down span { color: var(--yikes); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); font-weight: 600; padding: 3px 12px 3px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+  .chip .vi { width: 22px; height: 22px; }
+  .chip.off { background: rgb(175 179 170 / .1); color: var(--muted); }
+  .chip.off .vi { filter: grayscale(1); opacity: .5; }
+  .board th .vi { width: 20px; height: 20px; display: inline-block; vertical-align: -5px; margin-right: 4px; }
   .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
   .seg button { appearance: none; border: 0; background: var(--surface); color: var(--muted); font: 600 var(--fs-sm) var(--body); padding: 8px 14px; min-height: 40px; cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
@@ -70,12 +78,13 @@
 
     <h2>Hall of Fame</h2>
     <div class="seg" role="group" aria-label="Time range"><button type="button" data-range="week" aria-pressed="true">This week</button><button type="button" data-range="allTime" aria-pressed="false">All time</button></div>
-    <div class="tablewrap"><table class="board"><thead><tr><th scope="col" class="rank">#</th><th scope="col">Viking</th><th scope="col" class="num">Played</th><th scope="col" class="num">Valhalla trips</th></tr></thead><tbody id="board"></tbody></table></div>
+    <div class="tablewrap"><table class="board"><thead><tr><th scope="col" class="rank">#</th><th scope="col">Viking</th><th scope="col" class="num">Played</th><th scope="col" class="num"><img class="vi" src="/assets/valheim/death.png" alt="" width="20" height="20">Valhalla trips</th></tr></thead><tbody id="board"></tbody></table></div>
     <p class="warm" id="warm" hidden></p>
   </main>
 
   <footer class="footer">
     <p>Updated live from the server by Skald. Join at <a href="/valheim/">yikesgaming.com/valheim</a>.</p>
+    <p>Valheim icons &copy; Iron Gate AB, from the <a href="https://valheim.fandom.com/wiki/Valheim_Wiki">Valheim Wiki</a>. Fan site, not affiliated with Iron Gate.</p>
   </footer>
 </div>
 <script>
@@ -86,6 +95,9 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function hm(m) { return m >= 60 ? Math.floor(m / 60) + 'h ' + ('0' + (m % 60)).slice(-2) + 'm' : m + ' min'; }
   function list(xs) { return xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]; }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function icon(name, size) { return '<img class="vi" src="/assets/valheim/' + name + '.png" alt="" width="' + size + '" height="' + size + '" loading="lazy">'; }
+  function bossTile(b, label, down) { return '<div class="boss' + (down ? ' down' : '') + '">' + icon(slug(b), 48) + '<b>' + b + '</b><span>' + label + '</span></div>'; }
 
   function renderBoard() {
     var rows = (data && data[range]) || [];
@@ -103,9 +115,13 @@
     document.querySelector('#now .dot').style.background = d.online ? '' : '#B33A3A';
     document.getElementById('now-day').textContent = d.day != null ? 'Day ' + d.day : '';
     document.getElementById('now-ever').textContent = d.playersEver ? d.playersEver + ' vikings have joined' : '';
-    document.getElementById('now-players').textContent = d.players.length ? list(d.players) : 'Nobody right now';
-    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { var down = d.bosses.indexOf(b) >= 0; return '<div class="boss' + (down ? ' down' : '') + '"><b>' + b + '</b><span>' + (down ? 'Defeated' : 'Still standing') + '</span></div>'; }).join('');
-    document.getElementById('biomes').innerHTML = BIOMES.map(function (b) { return '<span class="chip' + (d.biomes.indexOf(b) >= 0 ? '' : ' off') + '">' + b + '</span>'; }).join('');
+    var count = d.playerCount != null ? d.playerCount : d.players.length, extra = Math.max(0, count - d.players.length);
+    var names = d.players.slice(); if (extra) names.push(extra + ' more');
+    document.getElementById('now-players').textContent = count ? list(names) : 'Nobody right now';
+    // Before Skald reports (no "updated" time), boss and biome progress isn't tracked yet: say so rather than guess.
+    var tracked = !!d.updated;
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { var down = d.bosses.indexOf(b) >= 0; return bossTile(b, !tracked ? 'Not tracked yet' : down ? 'Defeated' : 'Still standing', down); }).join('');
+    document.getElementById('biomes').innerHTML = BIOMES.map(function (b) { var got = d.biomes.indexOf(b) >= 0; return '<span class="chip' + (got ? '' : ' off') + '">' + icon(slug(b), 22) + b + '<span class="sr-only">' + (got ? ', reached' : ', not reached yet') + '</span></span>'; }).join('');
     renderBoard();
   }
 
@@ -113,7 +129,7 @@
     var w = document.getElementById('warm'); w.hidden = false; w.textContent = msg;
     document.getElementById('now-state').textContent = 'Stats are warming up';
     document.getElementById('now-players').textContent = 'Check back soon';
-    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { return '<div class="boss"><b>' + b + '</b><span>Unknown</span></div>'; }).join('');
+    document.getElementById('bosses').innerHTML = BOSSES.map(function (b) { return bossTile(b, 'Unknown', false); }).join('');
     document.getElementById('board').innerHTML = '';
   }
 

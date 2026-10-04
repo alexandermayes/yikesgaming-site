@@ -1,0 +1,31 @@
+Valheim item and trophy icons are (c) Iron Gate AB, from the Valheim Wiki (https://valheim.fandom.com/).
+Used on this fan site for the Big Yikes community server; not affiliated with Iron Gate or Coffee Stain.
+eikthyr.png: Eikthyr Trophy
+the-elder.png: The Elder Trophy
+bonemass.png: Bonemass Trophy
+moder.png: Moder Trophy
+yagluth.png: Yagluth Trophy
+the-queen.png: Queen Trophy
+fader.png: Fader Trophy
+death.png: Bone fragments
+trader.png: Coins
+discovery.png: Wishbone
+raid.png: Banded shield
+meadows.png: Raspberries
+black-forest.png: Greydwarf eye
+swamp.png: Guck
+mountains.png: Silver ore
+plains.png: Barley
+ocean.png: Serpent scale
+mistlands.png: Black core
+ashlands.png: Flametal ore
+deep-north.png: Freeze gland
+wood.png: Wood
+berries.png: Raspberries
+loot.png: Leather scraps
+stack.png: Coins
+weight.png: Megingjord
+map.png: Cartography table
+smelter.png: Smelter
+workbench.png: Workbench
+chest.png: Chest (wood chest)
