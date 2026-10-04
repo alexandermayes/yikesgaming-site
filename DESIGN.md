@@ -78,6 +78,12 @@ v4.5 (2026-10-03): the canvas went from the guild icon's `#101110` charcoal to n
 its olive cast, because the old greys read washed out next to the yellow ("the blacks are very grey"). Neutrals
 stay a hair warm so they sit with the yellow; sticker and logo edges use pure `#000` so they still show on the canvas.
 
+v4.7 (2026-10-04): **no tinted fills.** No `color-mix` washes, translucent colour backgrounds or glow halos
+("I really dislike the tinted colors across the board"). A colour appears solid at full strength (yellow for
+earned, done and the primary action; green and red for status, always with dark text and a word) or not at all
+(neutral enamel). Completed things are solid yellow keys; badges are solid; notes are neutral enamel with a yellow
+coin icon.
+
 Yellow is a signal, not a decoration: never a background band, never body text. Green (`--online`) and red
 (`--danger`) are status colors and always sit next to a written label. The **in-game tooltip** (`--tip-*`)
 keeps Valheim's own colors because it imitates the game UI. WoW class colors appear only as role swatches.
