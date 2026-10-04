@@ -30,7 +30,7 @@
   --accent: var(--yikes);
   --accent-ink: var(--yikes-ink);
   --accent-text: var(--yikes);
-  --accent-soft: rgb(255 205 0 / .12);
+  --accent-soft: var(--surface-2);   /* kept for old pages: no tinted washes */
 
   /* Semantic */
   --online: #3DDC84;
@@ -42,7 +42,7 @@
   --lit-sub: #55554E;    /* secondary text on a lit key */
   --line-hover: #7A7A72; /* outline of a hovered control */
   --ink-2: #D9D9D2;      /* bright secondary text */
-  --note-bg: #2A2410;
+  --note-bg: var(--surface-2);
   --note-ink: #F5DE8A;
 
   /* In-game tooltip (game world UI, used on the Valheim page) */
@@ -100,7 +100,7 @@ h2 { font-family: var(--display); font-weight: 400; font-size: var(--fs-xl); lin
 h3 { font-size: var(--fs-lg); font-weight: 800; line-height: 1.3; }
 p { margin: 0 0 var(--gap-2); max-width: 62ch; text-wrap: pretty; }
 p:last-child { margin-bottom: 0; }
-a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: rgb(255 205 0 / .7); }
+a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: var(--yikes-lip); }
 a:hover { text-decoration-color: var(--yikes); }
 strong { font-weight: 800; }
 code, .mono { font-family: var(--mono); font-size: .9em; }
@@ -171,15 +171,15 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 /* Badge: a small squared label token (never a pill). Uppercase + tracked like the buttons. */
 .badge { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 7px; border: 2px solid var(--line-strong); background: var(--ground);
   color: var(--muted); font: 800 .6875rem/1 var(--body); letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; }
-.badge.hot { border-color: var(--yikes-lip); color: var(--yikes); background: color-mix(in srgb, var(--yikes) 10%, var(--ground)); }
-.badge.good { border-color: var(--good-lip); color: var(--good-ink); background: color-mix(in srgb, var(--good-fill) 12%, var(--ground)); }
-.badge.bad { border-color: var(--danger-lip); color: var(--danger-ink); background: color-mix(in srgb, var(--danger-fill) 12%, var(--ground)); }
+.badge.hot { border-color: var(--yikes); color: var(--yikes-ink); background: var(--yikes); }
+.badge.good { border-color: var(--online); color: #04220F; background: var(--online); }
+.badge.bad { border-color: var(--danger); color: #2A0606; background: var(--danger); }
 
 /* ---------------------------------------------------------------- shared page parts */
 .lede { color: var(--muted); font-size: var(--fs-lg); line-height: 30px; margin-top: var(--gap-2); }
 .live { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: var(--fs-sm); color: var(--ink); }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--online); box-shadow: 0 0 0 4px rgb(61 220 132 / .18); flex: none; }
-.dot.off { background: var(--danger); box-shadow: 0 0 0 4px rgb(240 82 82 / .18); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--online); flex: none; }
+.dot.off { background: var(--danger); }
 
 /* Server card (Valheim guide): interactive (copy buttons), so it is a container */
 .card { margin-top: var(--gap-4); background: var(--surface); border: 2px solid var(--line); border-bottom-width: calc(var(--lip) + 2px); border-radius: var(--radius-card); overflow: hidden; }
@@ -217,7 +217,7 @@ code { background: var(--surface); color: var(--ink); padding: .12em .42em; bord
 .tooltip li .vi { width: 24px; height: 24px; flex: none; filter: drop-shadow(0 1px 1px rgb(0 0 0 / .7)); }  /* Valheim item icons */
 .tooltip .t-flavor { color: var(--tip-flavor); font-style: italic; margin-top: 10px; font-size: var(--fs-sm); }
 
-.note { background: var(--note-bg); color: var(--note-ink); border-radius: var(--radius-control); padding: 14px 16px; margin-top: var(--gap-4); }
+.note { background: var(--note-bg); color: var(--ink); border-radius: var(--radius-control); padding: 14px 16px; margin-top: var(--gap-4); }
 
 details { border-bottom: 2px solid var(--line); }
 details:first-of-type { border-top: 2px solid var(--line); }
@@ -259,8 +259,9 @@ details > div { padding-bottom: 14px; color: var(--muted); }
 
 /* earned / reached: raised gold, check seal */
 .node.reached .coin { background: var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); }
-.trophy.earned { background: color-mix(in srgb, var(--yikes) 16%, var(--surface)); border: 2px solid var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); }
-.node.reached small, .trophy.earned small { color: var(--ink); }
+.trophy.earned { background: var(--yikes); border: 2px solid var(--yikes); box-shadow: 0 var(--lip) 0 var(--yikes-lip); color: var(--yikes-ink); }
+.trophy.earned b, .trophy.earned small { color: var(--yikes-ink); }
+.node.reached small { color: var(--ink); }
 .node.reached .coin::after, .trophy.earned::after { content: ""; position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ground);
   background: var(--on, var(--good-fill)) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12l5 5L20 7'/%3E%3C/svg%3E") center / 12px no-repeat; }
 .node.reached .coin::after { right: -5px; bottom: -3px; }
