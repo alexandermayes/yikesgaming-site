@@ -55,7 +55,7 @@
   .row:nth-child(-n+3) { background: var(--surface); }
   .rank { display: grid; place-items: center; width: 36px; height: 36px; font: 1.15rem/1 var(--display); color: var(--muted); }
   .medal { border-radius: 50%; color: var(--yikes-ink); }
-  .medal.m1 { background: #FFCD00; box-shadow: 0 3px 0 #B38F00; }
+  .medal.m1 { background: #FDCD00; box-shadow: 0 3px 0 #B38F00; }
   .medal.m2 { background: #C9CEC4; box-shadow: 0 3px 0 #8C9187; }
   .medal.m3 { background: #D9894A; box-shadow: 0 3px 0 #9A5B2A; }
   .row .who b { display: block; font-weight: 800; }
@@ -110,7 +110,7 @@
 <script>
 (function () {
   // Avatar tints, picked by name so a viking keeps their colour.
-  var TINTS = ['#FFCD00', '#3DDC84', '#5AB8FF', '#FF8A4C', '#E879C8', '#A3E635'];
+  var TINTS = ['#FDCD00', '#3DDC84', '#5AB8FF', '#FF8A4C', '#E879C8', '#A3E635'];
   var data = null, range = 'week';
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function hm(m) { return m >= 60 ? Math.floor(m / 60) + 'h ' + ('0' + (m % 60)).slice(-2) + 'm' : m + ' min'; }

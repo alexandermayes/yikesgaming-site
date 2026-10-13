@@ -19,7 +19,7 @@
   --line-strong: #66665E;  /* control outlines + their lip (3:1 against canvas and enamel) */
 
   /* Big Yikes yellow (logo + bot role). Role: logo, the one primary action per area, focus ring, selected marker. Nothing else. */
-  --yikes: #FFCD00;        /* brand yellow (Figma) */
+  --yikes: #FDCD00;        /* brand yellow (Figma) */
   --yikes-hover: #FFD633;
   --yikes-lip: #B38F00;    /* the darker edge a yellow button sits on */
   --yikes-ink: #090908;

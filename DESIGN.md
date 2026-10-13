@@ -74,7 +74,7 @@ at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready
 | `--muted` | `#B4B4AB` | by-tactile-text-secondary | secondary text, labels |
 | `--line` | `#2E2E2A` | | 2px outlines and dividers |
 | `--line-strong` | `#66665E` | | control outlines and their lip |
-| `--yikes` / `--yikes-lip` | `#FFCD00` / `#B38F00` | brand yellow | primary action, active nav, progress, reached states, focus; the lip under yellow |
+| `--yikes` / `--yikes-lip` | `#FDCD00` / `#B38F00` | brand yellow | primary action, active nav, progress, reached states, focus; the lip under yellow |
 
 v4.5 (2026-10-03): the canvas went from the guild icon's `#101110` charcoal to near-black, and the enamel lost
 its olive cast, because the old greys read washed out next to the yellow ("the blacks are very grey"). Neutrals
@@ -85,6 +85,11 @@ v4.7 (2026-10-04): **no tinted fills.** No `color-mix` washes, translucent colou
 earned, done and the primary action; green and red for status, always with dark text and a word) or not at all
 (neutral enamel). Completed things are solid yellow keys; badges are solid; notes are neutral enamel with a yellow
 coin icon.
+
+Yellow correction (2026-10-13): **`--yikes` is `#FDCD00`.** The design lock approved 2026-10-12 fixes the brand
+yellow at `#FDCD00`; the token table above, `brand.css`, `.21st/design.json`, the og pages and the hall page said
+`#FFCD00` until 2026-10-13, when they were corrected. `--yikes-lip` (`#B38F00`) and `--yikes-hover` (`#FFD633`)
+were not part of this correction.
 
 Yellow is a signal, not a decoration: never a background band, never body text. Green (`--online`) and red
 (`--danger`) are status colors and always sit next to a written label. The **in-game tooltip** (`--tip-*`)

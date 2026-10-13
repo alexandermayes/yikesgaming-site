@@ -22,7 +22,7 @@
       "muted": "#B4B4AB",
       "line": "#2E2E2A",
       "line-strong": "#66665E",
-      "yikes (brand yellow: primary action, focus, selected, reached/earned only)": "#FFCD00",
+      "yikes (brand yellow: primary action, focus, selected, reached/earned only)": "#FDCD00",
       "yikes-hover": "#FFD633",
       "yikes-lip (edge under yellow buttons)": "#B38F00",
       "yikes-ink (text on yellow)": "#090908",
@@ -63,7 +63,7 @@
   },
   "constraints": {
     "must": [
-      "keep Big Yikes yellow #FFCD00 and the charcoal/near-black canvas; keep the logos, Bing and Beti mascots and stickers",
+      "keep Big Yikes yellow #FDCD00 and the charcoal/near-black canvas; keep the logos, Bing and Beti mascots and stickers",
       "one yellow primary action per task area",
       "status always in words, never colour alone",
       "touch targets >= 44px; visible yellow focus ring",
