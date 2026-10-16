@@ -9,8 +9,8 @@ New-Item -ItemType Directory -Force $stage | Out-Null
 
 $mods = @(
   @{ Key = 'bep';  Url = 'https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/5.4.2351/'; Sha256 = 'BCE631497976A93977CEB08E166712E6C31D15244956F89F17DF092A9B62E29F' },
-  @{ Key = 'vp';   Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.2.0/'; Sha256 = '1D53F0636538D2F21273CA8CB0CA75B2A00F0B373BC54B02F5369E1CFBED1539' },
-  @{ Key = 'rcv';  Url = 'https://thunderstore.io/package/download/Chazman/RunicCharacterVault/1.0.3/'; Sha256 = 'D1B63EA6BC648C92DB78DA7DB51F550F8539E4786A0979EBAD5EE6F2A3E216B7' }
+  @{ Key = 'vp';   Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.3.0/'; Sha256 = '7CE38596FF8A7DF13835E0430DD0B663B600C1F038DAE77D6111D1FA4C20E0E0' },
+  @{ Key = 'rcv';  Url = 'https://thunderstore.io/package/download/Chazman/RunicCharacterVault/1.0.4/'; Sha256 = '87E22C85238CA91308AE4418F4296EE7D83A07B35429754A486AE9BB7A7C432C' }
 )
 foreach ($m in $mods) {
   $zip = Join-Path $work "$($m.Key).zip"
@@ -52,9 +52,9 @@ Unmodified releases of the following, repackaged for one-step install:
 
 - BepInExPack for Valheim 5.4.2351 (denikson). BepInEx is licensed under LGPL-2.1.
   Source: https://github.com/BepInEx/BepInEx  Package: https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/
-- Valheim Plus 10.2.0 (Grantapher fork). Licensed under AGPL-3.0.
+- Valheim Plus 10.3.0 (Grantapher fork). Licensed under AGPL-3.0.
   Source: https://github.com/Grantapher/ValheimPlus  Package: https://thunderstore.io/c/valheim/p/Grantapher/ValheimPlus_Grantapher_Temporary/
-- Runic Character Vault 1.0.3 (Chazman). MIT License, see RunicCharacterVault-LICENSE.txt and -NOTICE.md.
+- Runic Character Vault 1.0.4 (Chazman). MIT License, see RunicCharacterVault-LICENSE.txt and -NOTICE.md.
   Source: https://github.com/ChazmanMods/ValheimMods  Package: https://thunderstore.io/c/valheim/p/Chazman/RunicCharacterVault/
   The only change: three join messages in Translations/RunicCharacterVault/English.json are reworded for Yikesheim.
 
@@ -70,7 +70,7 @@ valheim.yikesgaming.com
 
 WHAT'S IN HERE
   BepInEx 5.4.2351        the mod loader everything else runs on
-  Valheim Plus 10.2.0     2x drops, half weight, bigger stacks
+  Valheim Plus 10.3.0     2x drops, half weight, bigger stacks
                           (the server sends its own settings when you join)
   Runic Character Vault   keeps your Yikesheim character safe on the server
 
