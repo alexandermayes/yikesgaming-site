@@ -1,0 +1,34 @@
+# Keeps Yikesheim's mod pins current: every hour, tools/bump-mods.ps1 checks Thunderstore for a newer BepInEx,
+# Valheim Plus or Runic Character Vault, rewrites the installer/zip/page, and commits. The server picks the new pins
+# up within 10 minutes (big-yikes-bot/valheim/deploy/auto-update.sh) and posts the "re-run the install command" notice
+# in Discord. Run it by hand from the Actions tab if a release just dropped.
+name: Mod pins
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: mods
+jobs:
+  bump:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Thunderstore and rebuild if newer
+        id: bump
+        shell: pwsh
+        run: |
+          $out = pwsh -NoProfile -File tools/bump-mods.ps1
+          $out | Write-Host
+          $line = $out | Where-Object { $_ -like 'changed:*' } | Select-Object -Last 1
+          if ($line) { "changed=$($line.Substring(9).Trim())" >> $env:GITHUB_OUTPUT }
+      - name: Commit
+        if: steps.bump.outputs.changed != ''
+        shell: pwsh
+        run: |
+          git config user.name 'yikesheim-bot'
+          git config user.email 'yikesheim-bot@users.noreply.github.com'
+          git add valheim/install.ps1 valheim/index.html valheim/Yikesheim-mods.zip tools/build-modpack.ps1
+          git commit -m "Yikesheim mods: ${{ steps.bump.outputs.changed }}"
+          git push
