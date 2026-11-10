@@ -1,5 +1,5 @@
 # Big Yikes Valheim mods installer (Yikesheim)
-# Installs BepInEx 5.4.2351 + Valheim Plus 10.3.0 (Grantapher) + Runic Character Vault 1.0.4 into your Steam copy of Valheim.
+# Installs BepInEx 5.4.2360 + Valheim Plus 10.4.0 (Grantapher) + Runic Character Vault 1.0.4 into your Steam copy of Valheim.
 # Runic Character Vault keeps your Yikesheim character on the server; the server only accepts brand-new characters.
 # Run it from PowerShell:   irm https://yikesgaming.com/install | iex
 # Turn the mods off again:  irm https://yikesgaming.com/uninstall | iex
@@ -13,8 +13,8 @@
   [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
   $mods = @(
-    @{ Name = 'BepInEx 5.4.2351'; Url = 'https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/5.4.2351/'; Sha256 = 'BCE631497976A93977CEB08E166712E6C31D15244956F89F17DF092A9B62E29F' },
-    @{ Name = 'Valheim Plus 10.3.0'; Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.3.0/'; Sha256 = '7CE38596FF8A7DF13835E0430DD0B663B600C1F038DAE77D6111D1FA4C20E0E0' },
+    @{ Name = 'BepInEx 5.4.2360'; Url = 'https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/5.4.2360/'; Sha256 = '6BCA77B1016ACFE0FFAEBB6534C84B12AE8D12E5A96ABBF59EC6E4526204FC6F' },
+    @{ Name = 'Valheim Plus 10.4.0'; Url = 'https://thunderstore.io/package/download/Grantapher/ValheimPlus_Grantapher_Temporary/10.4.0/'; Sha256 = 'F76356BAD4358A6FFACE7479912FF82F4EFD131870042B4E7B334672F588D7EA' },
     @{ Name = 'Runic Character Vault 1.0.4'; Url = 'https://thunderstore.io/package/download/Chazman/RunicCharacterVault/1.0.4/'; Sha256 = '87E22C85238CA91308AE4418F4296EE7D83A07B35429754A486AE9BB7A7C432C' }
   )
 
@@ -37,8 +37,8 @@
     Write-Host '  +------------------------------------------------------------+' -ForegroundColor DarkMagenta
     Write-Host ''
     Say "  What you're getting:" 'White'
-    Say '    BepInEx 5.4.2351         the mod loader everything else runs on'
-    Say '    Valheim Plus 10.3.0      2x drops, half weight, bigger stacks (the server sends its settings)'
+    Say '    BepInEx 5.4.2360         the mod loader everything else runs on'
+    Say '    Valheim Plus 10.4.0      2x drops, half weight, bigger stacks (the server sends its settings)'
     Say '    Runic Character Vault    keeps your Yikesheim character safe on the server'
     Say '  Nothing else on your PC changes. Your other characters and worlds are untouched.'
     Say ''
