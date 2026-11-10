@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write
 concurrency: mods
 jobs:
   bump:
@@ -39,3 +40,12 @@ jobs:
           git commit -m "Yikesheim mods: ${{ steps.bump.outputs.changed }}"
           git pull --rebase origin main
           git push
+      # GitHub switches off a public repo's scheduled workflows after 60 days without activity. The bot only commits
+      # when a mod pin changes, so a quiet stretch would silently stop these checks; re-enabling the workflow each run
+      # keeps the schedule alive (it is a no-op while already enabled).
+      - name: Keep the schedule alive
+        if: always()
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/mods.yml/enable"
