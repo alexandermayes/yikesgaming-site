@@ -3,7 +3,8 @@
 # Asks Thunderstore for the newest BepInExPack, Valheim Plus (Grantapher) and Runic Character Vault. For any that is
 # newer than what valheim/install.ps1 pins, it downloads the package, takes its SHA-256, and rewrites the version, URL
 # and checksum in valheim/install.ps1 and tools/build-modpack.ps1, the version names in those scripts' player-facing
-# text and valheim/index.html, then rebuilds valheim/Yikesheim-mods.zip. It also refreshes "for Valheim x.y.z" on the
+# text and src/pages/valheim/index.html (then node tools/build.mjs regenerates valheim/index.html), and rebuilds
+# valheim/Yikesheim-mods.zip. It also refreshes "for Valheim x.y.z" on the
 # page from the newest "Patch x.y.z" post in Valheim's Steam news. Finally it re-copies the two short-URL scripts
 # (install, uninstall at the repo root) from their valheim/ originals, so `irm yikesgaming.com/install` never lags.
 #
@@ -13,7 +14,7 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $installer = Join-Path $root 'valheim\install.ps1'
 $builder = Join-Path $root 'tools\build-modpack.ps1'
-$page = Join-Path $root 'valheim\index.html'
+$page = Join-Path $root 'src\pages\valheim\index.html'   # the page's source; node tools/build.mjs writes valheim/index.html
 
 $packages = @(
   @{ Name = 'BepInEx';               Owner = 'denikson';   Pkg = 'BepInExPack_Valheim' },
@@ -67,6 +68,9 @@ if ($changed.Count -eq 0) { Write-Host 'nothing to do'; exit 0 }
 $utf8 = New-Object Text.UTF8Encoding $false
 foreach ($f in $files.Keys) { [IO.File]::WriteAllText($f, $files[$f], $utf8) }
 & $builder
+# Pages are generated from src/: rebuild so valheim/index.html carries the new versions.
+node (Join-Path $root 'tools\build.mjs')
+if ($LASTEXITCODE -ne 0) { throw 'tools/build.mjs failed' }
 # The short URLs serve copies: players run `irm https://yikesgaming.com/install | iex`, so the copies must match the originals.
 Copy-Item (Join-Path $root 'valheim\install.ps1') (Join-Path $root 'install') -Force
 Copy-Item (Join-Path $root 'valheim\uninstall.ps1') (Join-Path $root 'uninstall') -Force

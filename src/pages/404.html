@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Page not found · Big Yikes</title>
+<meta name="theme-color" content="#090908">
+<!--@include head-shared-->
+<style>
+  body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+  .lost { display: grid; place-items: center; text-align: center; padding-block: 48px 72px; }
+  .lost .wrap { display: grid; justify-items: center; }
+  .lost img.bing { width: 168px; height: auto; filter: drop-shadow(0 16px 24px rgb(0 0 0 / .6)); }
+  .lost h1 { margin-top: var(--gap-3); }
+  .lost .lede { margin-inline: auto; max-width: 40ch; }
+  .lost code { font-size: .85em; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px 16px; justify-content: center; margin-top: var(--gap-4); }
+  @media (max-width: 600px) { .cta-row .btn { flex: 1 1 100%; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!--@include header-->
+<main class="lost season-deco" id="main">
+  <div class="wrap">
+    <img class="bing" src="/assets/brand/stickers/bingoof.png" alt="Bing the bigfoot saying OOF" width="128" height="128">
+    <h1>This page wiped.</h1>
+    <p class="lede">There's nothing at <code id="path"></code>. It happens to the best raid groups. Run it back from one of these:</p>
+    <div class="cta-row">
+      <a class="btn" href="/">Back to Big Yikes</a>
+      <a class="btn ghost" href="/valheim/">Join Yikesheim</a>
+    </div>
+  </div>
+</main>
+<script>document.getElementById('path').textContent = location.pathname;</script>
+<script src="/assets/js/site.js?v={{site.assetVersion}}" defer></script>
+</body>
+</html>

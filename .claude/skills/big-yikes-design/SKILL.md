@@ -9,14 +9,16 @@ Before writing any HTML or CSS in this repo:
 
 1. Read `DESIGN.md` (rules, tokens, components) and `assets/css/brand.css` (the implementation). The Figma file
    linked at the top of DESIGN.md is the source of truth.
-2. Start new pages from `valheim/index.html` (reading page) or `index.html` (stage page): copy the `<head>`
-   (Lilita One + Nunito, season.js, brand.css, favicon, og tags), the `site-head` header with its menu script, and the footer.
+2. Start new pages from `src/pages/valheim/index.html` (reading page) or `src/pages/index.html` (stage page): keep the
+   `<!--@include head-shared-->`, `<!--@include header-->` and footer includes, write the page's own og tags, and run
+   `node tools/build.mjs`. Facts such as the Discord invite come from `content/guild.json` as `{{guild.key}}`.
 3. Reuse brand.css components. Add new CSS to brand.css only when a component will be used on more than one
    page; otherwise add a small `<style>` block in the page.
 
 Hard rules:
 
-- Plain HTML/CSS/JS with no build step. GitHub Pages serves the repo as-is from `main`.
+- Plain HTML/CSS/JS served as-is by GitHub Pages from `main`. The root pages are generated from `src/pages/` by
+  `node tools/build.mjs` (no dependencies, Node only); edit the sources, never the generated pages, and commit both.
 - Single dark theme: canvas `#090908`, text `#FBFBF6` / `#B4B4AB`, outlines `#2E2E2A` (controls `#66665E`), yellow `#FDCD00` on lip `#B38F00`.
 - Lilita One for headlines (never set a weight on it), Nunito for everything else; JetBrains Mono only for
   things people copy. Follow the v4 reference lock and decision ledger in DESIGN.md.

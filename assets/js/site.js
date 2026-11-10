@@ -112,3 +112,11 @@
     });
   });
 })();
+
+// Header menu on phones: the Menu button opens the nav; Escape closes it. Was copied into every page before.
+(function toggleMenu() {
+  var b = document.querySelector('.menu-toggle'), n = document.getElementById('site-nav');
+  if (!b || !n) return;
+  b.addEventListener('click', function () { var open = n.classList.toggle('open'); b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Close' : 'Menu'; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && n.classList.contains('open')) { n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.textContent = 'Menu'; b.focus(); } });
+})();

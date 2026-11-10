@@ -21,8 +21,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Nunito:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@600&amp;display=swap">
 <script src="/assets/js/season.js?v=4.8"></script>
-<script src="/assets/js/progress.js?v=4.8" defer></script>
 <link rel="stylesheet" href="/assets/css/brand.css?v=4.8">
+<script src="/assets/js/progress.js?v=4.8" defer></script>
+<script src="/assets/js/site.js?v=4.8" defer></script>
 <style>
   /* Hall of Fame, after the reference's leaderboard: badge row for world progress, a thick progress bar, medal ranks,
      initials avatars. Boss trophies and biome drops are Valheim's own inventory icons (assets/valheim, CREDITS.txt). */
@@ -176,14 +177,6 @@
   }
   document.addEventListener('DOMContentLoaded', load);
   setInterval(function () { if (!document.hidden) load(); }, 60000);
-})();
-</script>
-<script>
-(function toggleMenu() {
-  var b = document.querySelector('.menu-toggle'), n = document.getElementById('site-nav');
-  if (!b || !n) return;
-  b.addEventListener('click', function () { var open = n.classList.toggle('open'); b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Close' : 'Menu'; });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && n.classList.contains('open')) { n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.textContent = 'Menu'; b.focus(); } });
 })();
 </script>
 </body>

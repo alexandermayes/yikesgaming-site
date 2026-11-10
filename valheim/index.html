@@ -90,7 +90,6 @@
   @media (max-width: 560px) { .title-row { grid-template-columns: 1fr; } .title-row .title-badge { order: -1; width: 132px; } }
 </style>
 <script>
-  // Hide intro elements only when motion is allowed; failsafe shows them if GSAP never starts.
   if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     document.documentElement.classList.add('js-anim');
     setTimeout(function () { if (!window.__introStarted) document.documentElement.classList.remove('js-anim'); }, 2500);
@@ -382,14 +381,6 @@
     document.getElementById('vh-live-t').textContent = s.online ? 'Online now, ' + n + ' playing' + (s.day != null ? ', day ' + s.day : '') : 'Offline right now';
     if (!s.online) document.querySelector('#vh-live .dot').classList.add('off');
   }).catch(function () {});
-})();
-</script>
-<script>
-(function toggleMenu() {
-  var b = document.querySelector('.menu-toggle'), n = document.getElementById('site-nav');
-  if (!b || !n) return;
-  b.addEventListener('click', function () { var open = n.classList.toggle('open'); b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Close' : 'Menu'; });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && n.classList.contains('open')) { n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.textContent = 'Menu'; b.focus(); } });
 })();
 </script>
 </body>

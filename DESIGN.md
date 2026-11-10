@@ -39,11 +39,14 @@ Linear and Kraken (settings), plus 404 and leaderboard patterns.
 
 
 
-**Status:** the home page (`index.html`) is an under-construction placeholder. The full home page in progress lives
-at `/preview/` (unlinked, noindex); move it back to `index.html` when it's ready. Words follow the
+**Status:** the home page shipped on 2026-10-04 (`daf068c`); `/preview/` is now a redirect stub kept for old links. Pages are
+generated from `src/pages/` by `node tools/build.mjs` (shared head, header, footer credit and scripts live in
+`src/partials/`; facts in `content/guild.json`); edit the sources, never the generated root pages. Words follow the
 `big-yikes-voice` skill.
 
-**Cache busting:** pages link `brand.css`, `site.js` and `season.js` with `?v=…`. GitHub Pages lets browsers cache them for 10 minutes, so bump the version on every page whenever one of those files changes.
+**Cache busting:** pages link `brand.css`, `site.js`, `season.js` and `progress.js` with `?v=…`. GitHub Pages lets browsers
+cache them for 10 minutes, so bump `assetVersion` in `src/site.json` and rebuild whenever one of those files changes;
+every generated page picks it up.
 
 **Checks before shipping:** `npx impeccable detect <url>` (desktop and `--viewport 390x844`) and an axe-core run
 (WCAG 2.1 AA) should both come back clean; they did on 2026-10-04 for every page and every Longhouse tab.

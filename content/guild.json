@@ -1,0 +1,10 @@
+{
+  "_about": "Facts the pages render. Change them here, run node tools/build.mjs, commit the result. Unconfirmed facts stay marked; see BACKLOG WEB-3.",
+  "discordInvite": "https://discord.gg/bigyikes",
+  "discordInviteShort": "discord.gg/bigyikes",
+  "weakauras": "https://wago.io/6cL-70vN-",
+  "membersFallback": "~400",
+  "realm": "Grobbulus (US)",
+  "realmNote": "The live site says Grobbulus; the parallel build's sources say Pagle. Confirm with Zev (WEB-3).",
+  "valheimHost": "valheim.yikesgaming.com"
+}

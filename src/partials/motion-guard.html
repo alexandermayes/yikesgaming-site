@@ -1,0 +1,6 @@
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    document.documentElement.classList.add('js-anim');
+    setTimeout(function () { if (!window.__introStarted) document.documentElement.classList.remove('js-anim'); }, 2500);
+  }
+</script>

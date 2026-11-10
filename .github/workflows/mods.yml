@@ -16,6 +16,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Check Thunderstore and rebuild if newer
         id: bump
         shell: pwsh
@@ -24,6 +27,11 @@ jobs:
           $out | Write-Host
           $line = $out | Where-Object { $_ -like 'changed:*' } | Select-Object -Last 1
           if ($line) { "changed=$($line.Substring(9).Trim())" >> $env:GITHUB_OUTPUT }
+      - name: Pages match their sources, links resolve
+        shell: pwsh
+        run: |
+          node tools/build.mjs --check
+          node tools/check.mjs
       - name: Short-URL copies match their originals
         shell: pwsh
         run: |
@@ -36,7 +44,7 @@ jobs:
         run: |
           git config user.name 'yikesheim-bot'
           git config user.email 'yikesheim-bot@users.noreply.github.com'
-          git add valheim/install.ps1 valheim/index.html valheim/Yikesheim-mods.zip tools/build-modpack.ps1 install uninstall
+          git add valheim/install.ps1 src/pages/valheim/index.html valheim/index.html valheim/Yikesheim-mods.zip tools/build-modpack.ps1 install uninstall
           git commit -m "Yikesheim mods: ${{ steps.bump.outputs.changed }}"
           git pull --rebase origin main
           git push
