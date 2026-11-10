@@ -1,5 +1,5 @@
 # Keeps Yikesheim's mod pins current: every hour, tools/bump-mods.ps1 checks Thunderstore for a newer BepInEx,
-# Valheim Plus or Runic Character Vault, rewrites the installer/zip/page, and commits. The server picks the new pins
+# Valheim Plus or Runic Character Vault, rewrites the installer/zip/page and the short-URL copies, and commits. The server picks the new pins
 # up within 10 minutes (big-yikes-bot/valheim/deploy/auto-update.sh) and posts the "re-run the install command" notice
 # in Discord. Run it by hand from the Actions tab if a release just dropped.
 name: Mod pins
@@ -23,12 +23,19 @@ jobs:
           $out | Write-Host
           $line = $out | Where-Object { $_ -like 'changed:*' } | Select-Object -Last 1
           if ($line) { "changed=$($line.Substring(9).Trim())" >> $env:GITHUB_OUTPUT }
+      - name: Short-URL copies match their originals
+        shell: pwsh
+        run: |
+          foreach ($pair in @(@('install', 'valheim/install.ps1'), @('uninstall', 'valheim/uninstall.ps1'))) {
+            if ((Get-FileHash $pair[0]).Hash -ne (Get-FileHash $pair[1]).Hash) { throw "$($pair[0]) differs from $($pair[1]): copy it (README, Short-URL copies)" }
+          }
       - name: Commit
         if: steps.bump.outputs.changed != ''
         shell: pwsh
         run: |
           git config user.name 'yikesheim-bot'
           git config user.email 'yikesheim-bot@users.noreply.github.com'
-          git add valheim/install.ps1 valheim/index.html valheim/Yikesheim-mods.zip tools/build-modpack.ps1
+          git add valheim/install.ps1 valheim/index.html valheim/Yikesheim-mods.zip tools/build-modpack.ps1 install uninstall
           git commit -m "Yikesheim mods: ${{ steps.bump.outputs.changed }}"
+          git pull --rebase origin main
           git push

@@ -4,7 +4,8 @@
 # newer than what valheim/install.ps1 pins, it downloads the package, takes its SHA-256, and rewrites the version, URL
 # and checksum in valheim/install.ps1 and tools/build-modpack.ps1, the version names in those scripts' player-facing
 # text and valheim/index.html, then rebuilds valheim/Yikesheim-mods.zip. It also refreshes "for Valheim x.y.z" on the
-# page from the newest "Patch x.y.z" post in Valheim's Steam news.
+# page from the newest "Patch x.y.z" post in Valheim's Steam news. Finally it re-copies the two short-URL scripts
+# (install, uninstall at the repo root) from their valheim/ originals, so `irm yikesgaming.com/install` never lags.
 #
 # The server follows these pins on its own (big-yikes-bot/valheim/deploy/auto-update.sh reads install.ps1 from the live
 # site), so a commit here is what rolls a mod update out to everyone. Exit code 0 and "changed" on stdout when it did.
@@ -66,4 +67,7 @@ if ($changed.Count -eq 0) { Write-Host 'nothing to do'; exit 0 }
 $utf8 = New-Object Text.UTF8Encoding $false
 foreach ($f in $files.Keys) { [IO.File]::WriteAllText($f, $files[$f], $utf8) }
 & $builder
+# The short URLs serve copies: players run `irm https://yikesgaming.com/install | iex`, so the copies must match the originals.
+Copy-Item (Join-Path $root 'valheim\install.ps1') (Join-Path $root 'install') -Force
+Copy-Item (Join-Path $root 'valheim\uninstall.ps1') (Join-Path $root 'uninstall') -Force
 Write-Output "changed: $($changed -join ', ')"
